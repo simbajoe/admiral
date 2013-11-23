@@ -1,0 +1,14 @@
+body {
+    background: #07aaef;
+    margin: 0;
+    padding: 0;
+}
+
+.map {
+    background: url('/static/img/map.jpg') no-repeat;
+    width: 1000px;
+    height: 841px;
+    margin: auto;
+    background-size: 1000px;
+}
+
