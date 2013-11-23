@@ -4,6 +4,8 @@
     exports.maxWorldX = 14;
     exports.maxWorldY = 14;
     exports.linesToBuildShips = 5;
+    exports.HOMEUP = 'up';
+    exports.HOMEDOWN = 'down';
     exports.unitsToBuild = {
         aircraftCarrier: 1,
         battleship: 2,

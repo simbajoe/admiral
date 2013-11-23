@@ -1,13 +1,15 @@
-var Player = module.exports = function(id, socket, world) {
+var Player = module.exports = function(id, socket, homeLoc, world) {
     this.socket = socket;
     this.type = 'players';
+    this.homelandLocation = homeLoc;
     this.id = id;
     this.world = world;
 };
 
 Player.prototype.exportToHash = function() {
     return {
-        id: this.id
+        id: this.id,
+        homelandLocation: this.homelandLocation
     };
 };
 

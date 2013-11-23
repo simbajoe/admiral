@@ -22,7 +22,13 @@ World.prototype.getHash = function() {
 };
 
 World.prototype.addPlayer = function(socket) {
-    var player = new Player(this.uniqueId, socket, this);
+    var player = null;
+    if (this.players.length == 0
+        || this.players[0].homelandLocation != Config.HOMEUP) {
+        player = new Player(this.uniqueId, socket, Config.HOMEUP, this);
+    } else {
+        player = new Player(this.uniqueId, socket, Config.HOMEDOWN, this);
+    }
     this.players.push(player);
     this.objectsToExport.push(player);
     this.uniqueId++;
