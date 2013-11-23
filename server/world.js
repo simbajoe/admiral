@@ -15,6 +15,7 @@ var World = module.exports = function() {
     }
     this.uniqueId = 1;
     this.phase = Config.PLANNING_PHASE;
+    this.currentTurn = null;
     this.addPlayer(Config.HOME_UP);
     this.addPlayer(Config.HOME_DOWN);
     this.winner = '';
@@ -58,9 +59,12 @@ World.prototype.removePlayer = function(player) {
 };
 
 World.prototype.exportToHash = function() {
-    return {
-        phase: this.phase
-    };
+    var result = {};
+    result.phase = this.phase;
+    if (this.phase != Config.PLANNING_PHASE) {
+        result.currentTurn = this.players[this.currentTurn].id;
+    }
+    return result;
 };
 
 World.prototype.getCell = function(location) {
@@ -95,7 +99,21 @@ World.prototype.checkCanEndPlanningPhase = function() {
     if (this.players[0].allUnitsPlaced
         && this.players[1].allUnitsPlaced) {
         this.phase = Config.MOVE_PHASE;
+        this.currentTurn = Math.round(Math.random());
         return true;
     }
+};
+
+World.prototype.makeMove = function(unitLocation, newPoint) {
+    var cell = this.getCell(command.params.from);
+    if (cell && cell.getObject()) {
+        cell.getObject().move(command.params.to);
+        this.currentTurn++;
+        if (this.currentTurn > 1) {
+            this.currentTurn = 0;
+        }
+        return true;
+    }
+    return false;
 };
 
