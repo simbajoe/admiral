@@ -28,4 +28,5 @@
         submarine: 6
     };
     exports.MOVE_MINE_SHIP = 'destroyer';
+    exports.MOVE_AIRPLANE_SHIP = 'aircraftCarrier';
 })(typeof exports === 'undefined'? this['Config']={}: exports);
