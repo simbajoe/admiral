@@ -1,13 +1,13 @@
 $(function() {
 
-    for (var i = 0; i < 14; i++) {
+    for (var y = 0; y < 14; y++) {
         var row = $('<div/>', {
                 'class': 'row'
             }).appendTo('.map');
-        for (var j = 0; j < 14; j++) {
+        for (var x = 0; x < 14; x++) {
             $('<div/>', {
-                'data-row': i,
-                'data-col': j,
+                'data-x': x,
+                'data-y': y,
                 'class': 'field'
             }).appendTo(row);
         }
@@ -35,16 +35,16 @@ $(function() {
         $('.field').html('');
         for (var v in this.player.units) {
             var unit = this.player.units[v];
-            $('.field[data-row="' + unit.location[0] + '"][data-col="' + unit.location[1] + '"]').html(unit.type);
+            $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]').html(unit.type);
         }
         console.log(this.phase, this.player);
         this[this.phase](snapshot);
     };
 
-    Game.prototype.hasUnitHere = function (i, j) {
+    Game.prototype.hasUnitHere = function (x, y) {
         for (var v in this.player.units) {
             var unit = this.player.units[v];
-            if (unit.location[0] == i && unit.location[1] == j) {
+            if (unit.location[0] == x && unit.location[1] == y) {
                 return true;
             }
         }
@@ -55,10 +55,10 @@ $(function() {
         var from = this.player.homelandLocation == 'up' ? 0 : 9;
         var to = this.player.homelandLocation == 'up' ? 5 : 14;
         var fields = [];
-        for (var i = from; i < to; i++) {
-            for (var j = 0; j < 14; j++) {
-                if (!this.hasUnitHere(i, j)) {
-                    fields.push([i, j]);
+        for (var y = from; y < to; y++) {
+            for (var x = 0; x < 14; x++) {
+                if (!this.hasUnitHere(x, y)) {
+                    fields.push([x, y]);
                 }
             }
         }
