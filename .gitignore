@@ -1,3 +1,4 @@
 /.idea
 /*.iml
 /.realsync
+/server/node_modules
