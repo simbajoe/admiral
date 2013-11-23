@@ -1,4 +1,4 @@
-var Player = module.exports = function(id, socket, team, world) {
+var Player = module.exports = function(id, socket, world) {
     this.socket = socket;
     this.type = 'players';
     this.id = id;

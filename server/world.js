@@ -22,8 +22,7 @@ World.prototype.getHash = function() {
 };
 
 World.prototype.addPlayer = function(socket) {
-    var team = this.getNewPlayerTeam();
-    var player = new Player(this.uniqueId, socket, team, this);
+    var player = new Player(this.uniqueId, socket, this);
     this.players.push(player);
     this.objectsToExport.push(player);
     this.uniqueId++;
@@ -46,7 +45,6 @@ World.prototype.getObjectById = function(id) {
 
 World.prototype.destroyObject = function(object) {
     this.objectsToExport = Utils.deleteFromArrById(object.id, this.objectsToExport);
-    this.objectsOnMap = Utils.deleteFromArrById(object.id, this.objectsOnMap);
     this[object.type] = Utils.deleteFromArrById(object.id, this[object.type]);
 };
 
@@ -69,4 +67,14 @@ World.prototype.getNeighbors = function(point) {
         }
     });
     return neighbors;
+};
+
+World.prototype.isLocationOnMap = function(location) {
+    if (location[0] < Config.minWorldX ||
+        location[0] > Config.maxWorldX ||
+        location[1] < Config.minWorldY ||
+        location[1] > Config.maxWorldY) {
+        return false;
+    }
+    return true;
 };
