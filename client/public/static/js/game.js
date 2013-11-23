@@ -45,10 +45,20 @@ $(function() {
         for (var v in this.player.units) {
             var unit = this.player.units[v];
             $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
-                /*.html(unit.type)*/
                 .addClass('unit')
                 .addClass(unit.type)
                 .parents('.field').addClass('with_unit');
+        }
+        for (var i in snapshot.players) {
+            if (i != this.id) {
+                for (var v in snapshot.players[i].units) {
+                    var unit = snapshot.players[i].units[v];
+                    $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
+                        .addClass('unit')
+                        .addClass('unknownUnit')
+                        .parents('.field').addClass('with_unit');
+                }
+            }
         }
         this[this.phase](snapshot);
     };
@@ -76,6 +86,9 @@ $(function() {
             var field = voidFields.splice(Math.floor(Math.random() * voidFields.length), 1)[0];
             this.placeUnit(unit, field);
         }
+    };
+
+    Game.prototype.move_phase = function (snapshot) {
     };
 
     Game.prototype.placeUnit = function (unit, place) {
