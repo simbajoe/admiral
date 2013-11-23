@@ -8,6 +8,7 @@ var World = module.exports = function() {
     this.players = [];
     this.cruisers = [];
     this.uniqueId = 1;
+    this.phase = Config.PLANNING;
     this.winner = '';
 };
 
@@ -21,6 +22,7 @@ World.prototype.getHash = function() {
         }
         result[object.type][object.id] = object.exportToHash();
     }
+    result.world = this.exportToHash();
     return result;
 };
 
@@ -86,4 +88,10 @@ World.prototype.isLocationOnMap = function(location) {
         return false;
     }
     return true;
+};
+
+Player.prototype.exportToHash = function() {
+    return {
+        phase: this.phase
+    };
 };
