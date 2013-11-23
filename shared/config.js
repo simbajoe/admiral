@@ -1,11 +1,11 @@
 (function(exports){
     exports.minWorldX = 0;
     exports.minWorldY = 0;
-    exports.maxWorldX = 14;
-    exports.maxWorldY = 14;
+    exports.maxWorldX = 13;
+    exports.maxWorldY = 13;
     exports.linesToBuildShips = 5;
-    exports.HOMEUP = 'up';
-    exports.HOMEDOWN = 'down';
+    exports.HOMEUP = [0, 1, 2, 3, 4];
+    exports.HOMEDOWN = [13, 12, 11, 10, 9];
     exports.PLANNING = 'planning_phase';
     exports.unitsToPlace = {
         aircraftCarrier: 1,

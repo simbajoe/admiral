@@ -1,4 +1,5 @@
 var Config = require('../shared/config.js');
+var Utils = require('../shared/utils.js');
 
 var Player = module.exports = function(id, socket, homeLoc, world) {
     this.socket = socket;
@@ -6,7 +7,7 @@ var Player = module.exports = function(id, socket, homeLoc, world) {
     this.homelandLocation = homeLoc;
     this.id = id;
     this.world = world;
-    this.unitsToPlace = Config.unitsToPlace;
+    this.unitsToPlace = Utils.copyOneStoryHash(Config.unitsToPlace);
 };
 
 Player.prototype.exportToHash = function() {
@@ -21,4 +22,9 @@ Player.prototype.broadcast = function(hash) {
     if (this.socket) {
         this.socket.emit("update", hash);
     }
+};
+
+Player.prototype.canPlace = function(type) {
+    return this.unitsToPlace[type] > 0;
+    return this.unitsToPlace[type] > 0;
 };

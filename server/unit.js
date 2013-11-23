@@ -13,7 +13,7 @@ Unit.prototype.init = function(id, location, owner, type) {
 Unit.prototype.exportToHash = function() {
     return {
         id: this.id,
-        location: this.location,
+        location: this.location.getPoint(),
         ownerId: this.owner.id
     };
 };

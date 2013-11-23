@@ -1,12 +1,57 @@
 var Player = require('./player.js');
-var Cruiser = require('./unit/cruiser.js');
+var Cell = require('./cell.js');
 var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
+
+var aircraftCarrier = require('./unit/aircraftCarrier.js');
+var battleship = require('./unit/battleship.js');
+var cruiser = require('./unit/cruiser.js');
+var fireShip = require('./unit/fireShip.js');
+var airplane = require('./unit/airplane.js');
+var MNB = require('./unit/MNB.js');
+var atomicBomb = require('./unit/atomicBomb.js');
+var raider = require('./unit/raider.js');
+var mine = require('./unit/mine.js');
+var destroyer = require('./unit/destroyer.js');
+var fixedMine = require('./unit/fixedMine.js');
+var cruisingSubmarine = require('./unit/cruisingSubmarine.js');
+var patrol = require('./unit/patrol.js');
+var torpedo = require('./unit/torpedo.js');
+var vedette = require('./unit/vedette.js');
+var minesweeper = require('./unit/minesweeper.js');
+var submarine = require('./unit/submarine.js');
+
+var units = {
+    aircraftCarrier: aircraftCarrier,
+    battleship: battleship,
+    cruiser: cruiser,
+    fireShip: fireShip,
+    airplane: airplane,
+    MNB: MNB,
+    atomicBomb: atomicBomb,
+    raider: raider,
+    mine: mine,
+    destroyer: destroyer,
+    fixedMine: fixedMine,
+    cruisingSubmarine: cruisingSubmarine,
+    patrol: patrol,
+    torpedo: torpedo,
+    vedette: vedette,
+    minesweeper: minesweeper,
+    submarine: submarine
+};
 
 var World = module.exports = function() {
     this.objectsToExport = [];
     this.players = [];
-    this.cruisers = [];
+    this.cells = [];
+    this.units = [];
+    for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
+        this.cells[x] = [];
+        for (var y = Config.minWorldY; y <= Config.maxWorldX; y++) {
+            this.cells[x][y] = new Cell(x,y);
+        }
+    }
     this.uniqueId = 1;
     this.phase = Config.PLANNING;
     this.winner = '';
@@ -29,7 +74,7 @@ World.prototype.getHash = function() {
 World.prototype.addPlayer = function(socket) {
     var player = null;
     if (this.players.length == 0
-        || this.players[0].homelandLocation != Config.HOMEUP) {
+        || !Utils.areArraysEq(this.players[0].homelandLocation, Config.HOMEUP)) {
         player = new Player(this.uniqueId, socket, Config.HOMEUP, this);
     } else {
         player = new Player(this.uniqueId, socket, Config.HOMEDOWN, this);
@@ -81,13 +126,10 @@ World.prototype.getNeighbors = function(point) {
 };
 
 World.prototype.isLocationOnMap = function(location) {
-    if (location[0] < Config.minWorldX ||
+    return !(location[0] < Config.minWorldX ||
         location[0] > Config.maxWorldX ||
         location[1] < Config.minWorldY ||
-        location[1] > Config.maxWorldY) {
-        return false;
-    }
-    return true;
+        location[1] > Config.maxWorldY);
 };
 
 World.prototype.exportToHash = function() {
@@ -95,3 +137,23 @@ World.prototype.exportToHash = function() {
         phase: this.phase
     };
 };
+
+World.prototype.getCell = function(location) {
+    return this.cells[location[0]][location[1]];
+};
+
+
+World.prototype.addUnit = function(owner, type, location) {
+    if (this.phase != Config.PLANNING
+        || !owner.canPlace(type, location)
+        || this.getCell(location).hasObject()) {
+        return;
+    }
+    var unit = new units[type](this.uniqueId, this.getCell(location), owner);
+    this.getCell(location).addObject(unit);
+    this.units.push(unit);
+    this.objectsToExport.push(unit);
+    this.uniqueId++;
+    return unit;
+};
+

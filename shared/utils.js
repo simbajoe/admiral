@@ -28,5 +28,25 @@
     };
     exports.getDist = function(point1, point2) {
         return Math.sqrt(Math.pow((point1[0] - point2[0]),2) + Math.pow((point1[1] - point2[1]),2));
-    }
+    };
+    exports.copyArray = function(arr) {
+        return arr.slice(0);
+    };
+    exports.copyOneStoryHash = function(obj) {
+        if (null == obj || "object" != typeof obj) return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+        }
+        return copy;
+    };
+    exports.areArraysEq = function(a, b) {
+        if (a === b) return true;
+        if (a == null || b == null) return false;
+        if (a.length != b.length) return false;
+        for (var i = 0; i < a.length; ++i) {
+            if (a[i] !== b[i]) return false;
+        }
+        return true;
+    };
 })(typeof exports === 'undefined'? this['Utils']={}: exports)
