@@ -5,11 +5,17 @@ $(function() {
                 'class': 'row'
             }).appendTo('.map');
         for (var x = 0; x < 14; x++) {
-            $('<div/>', {
+            var field = $('<div/>', {
                 'data-x': x,
                 'data-y': y,
                 'class': 'field'
             }).appendTo(row);
+            $('<div/>', {
+                'class': 'field_content'
+            }).appendTo(field);
+            $('<div/>', {
+                'class': 'field_holder'
+            }).appendTo(field);
         }
     };
 
@@ -32,10 +38,10 @@ $(function() {
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
-        $('.field').html('');
+        $('.field_content').html('');
         for (var v in this.player.units) {
             var unit = this.player.units[v];
-            $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]').html(unit.type);
+            $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content').html(unit.type);
         }
         console.log(this.phase, this.player);
         this[this.phase](snapshot);
@@ -55,7 +61,8 @@ $(function() {
         var from = this.player.homelandLocation == 'up' ? 0 : 9;
         var to = this.player.homelandLocation == 'up' ? 5 : 14;
         var fields = [];
-        for (var y = from; y < to; y++) {
+        for (var i = 0; i < this.player.homelandLocation.length; i++) {
+            var y = this.player.homelandLocation[i];
             for (var x = 0; x < 14; x++) {
                 if (!this.hasUnitHere(x, y)) {
                     fields.push([x, y]);
