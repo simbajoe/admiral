@@ -7,7 +7,7 @@
     exports.HOMEUP = 'up';
     exports.HOMEDOWN = 'down';
     exports.PLANNING = 'planning_phase';
-    exports.unitsToBuild = {
+    exports.unitsToPlace = {
         aircraftCarrier: 1,
         battleship: 2,
         cruiser: 6,

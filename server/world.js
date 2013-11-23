@@ -90,7 +90,7 @@ World.prototype.isLocationOnMap = function(location) {
     return true;
 };
 
-Player.prototype.exportToHash = function() {
+World.prototype.exportToHash = function() {
     return {
         phase: this.phase
     };
