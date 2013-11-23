@@ -37,7 +37,9 @@ Unit.prototype.checkPointIsNotFarToMove = function(newPint) {
 };
 
 Unit.prototype.move = function(toPoint) {
+    var cell = this.world.getCell(toPoint);
     if (!this.checkPointIsNotFarToMove(toPoint)
+        || !cell
         || this.world.getCell(toPoint).getObject()) {
         return false;
     }
@@ -49,17 +51,11 @@ Unit.prototype.move = function(toPoint) {
 
 Unit.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
-    for (var d = 1; d <= this.maxDistance; d++) {
-        var cells = [
-            this.world.getCell([this.location.x + d, this.location.y]),
-            this.world.getCell([this.location.x - d, this.location.y]),
-            this.world.getCell([this.location.x, this.location.y + d]),
-            this.world.getCell([this.location.x, this.location.y - d])
-        ];
-        for (var i in cells) {
-            if (cells[i] && !cells[i].getObject()) {
-                this.whereCanMove.push(cells[i].getPoint());
-            }
+    var points = this.location.getStraightNeighborPoints(this.maxDistance);
+    for (var i in points) {
+        var cell = this.world.getCell(points[i]);
+        if (cell && !cell.getObject()) {
+            this.whereCanMove.push(cell.getPoint());
         }
     }
 };

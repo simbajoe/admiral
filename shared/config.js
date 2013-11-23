@@ -27,4 +27,5 @@
         minesweeper: 6,
         submarine: 6
     };
+    exports.MOVE_MINE_SHIP = 'destroyer';
 })(typeof exports === 'undefined'? this['Config']={}: exports);

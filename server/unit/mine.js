@@ -1,49 +1,52 @@
 var Unit = require('../unit.js');
+var Config = require('../../shared/config.js');
 
 var Mine = module.exports = function(id, location, owner, world) {
     this.init(id, location, owner, 'mine', world);
-    this.maxDistance = 2;
 };
 Mine.prototype = new Unit();
 
-Mine.prototype.canBeMovedTo = function(point) {
-    if (!this.checkPointIsNotFarToMove(point)) {
+Mine.prototype.isSpecialUnitNearPoint = function(point) {
+    var goalCell = this.world.getCell(point);
+    if (!goalCell) {
         return false;
     }
+    var aroundPoints = goalCell.getAllNeighbors(this.maxDistance);
+    for (var i in aroundPoints) {
+        var cell = this.world.getCell(aroundPoints[i]);
+        if (cell && cell.getObject() && cell.getObject().type == Config.MOVE_MINE_SHIP) {
+            return true;
+        }
+    }
+    return false;
+};
+
+Mine.prototype.move = function(toPoint) {
+    var cell = this.world.getCell(toPoint);
+    if (!cell
+        || this.world.getCell(toPoint).getObject()
+        || !this.checkPointIsNotFarToMove(toPoint)
+        || !this.isSpecialUnitNearPoint(this.location.getPoint())
+        || !this.isSpecialUnitNearPoint(toPoint)
+        ) {
+        return false;
+    }
+    this.location.removeObject();
+    this.location = this.world.getCell(toPoint);
+    this.location.addObject(this);
     return true;
 };
 
 Mine.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
-    for (var d = 1; d <= this.maxDistance; d++) {
-        var cells = [
-            this.world.getCell([this.location.x + d, this.location.y]),
-            this.world.getCell([this.location.x - d, this.location.y]),
-            this.world.getCell([this.location.x, this.location.y + d]),
-            this.world.getCell([this.location.x, this.location.y - d])
-        ];
-        for (var i in cells) {
-            if (cells[i] && !cells[i].getObject()) {
-                this.whereCanMove.push(cells[i].getPoint());
-            }
+    var points = this.location.getAllNeighbors(this.maxDistance);
+    for (var i in points) {
+        var cell = this.world.getCell(points[i]);
+        if (cell
+            && !cell.getObject()
+            && this.isSpecialUnitNearPoint(this.location.getPoint())
+            && this.isSpecialUnitNearPoint(points[i])) {
+            this.whereCanMove.push(cell.getPoint());
         }
     }
-};
-
-Mine.prototype.checkPointIsNotFarToMove = function(newPint) {
-    return (this.location.x == toPoint[0]
-        && this.location.y - toPoint[1] <= this.maxDistance)
-        || (this.location.y == toPoint[1]
-        && this.location.x - toPoint[0] <= this.maxDistance);
-};
-
-Mine.prototype.move = function(toPoint) {
-    if (!this.checkPointIsNotFarToMove(toPoint)
-        || this.world.getCell(toPoint).getObject()) {
-        return false;
-    }
-    this.location.removeObject(this);
-    this.location = this.world.getCell(toPoint);
-    this.location.addObject(this);
-    return true;
 };
