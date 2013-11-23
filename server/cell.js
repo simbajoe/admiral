@@ -10,12 +10,12 @@ Cell.prototype.addObject = function(object) {
     this.object = object;
 };
 
-Cell.prototype.removeObject = function(object) {
+Cell.prototype.removeObject = function() {
     this.object = null;
 };
 
 Cell.prototype.getObject = function() {
-    return this.objects;
+    return this.object;
 };
 
 Cell.prototype.getPoint = function() {

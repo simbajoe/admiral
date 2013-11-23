@@ -6,6 +6,7 @@ var Unit = module.exports = function() {};
 Unit.prototype.init = function(id, location, owner, type, world) {
     this.id = id;
     this.location = location;
+    location.addObject(this);
     this.owner = owner;
     this.type = type;
     this.world = world;
@@ -33,14 +34,14 @@ Unit.prototype.checkPointIsNotFarToMove = function(newPint) {
         && this.location.y - toPoint[1] <= this.maxDistance)
         || (this.location.y == toPoint[1]
         && this.location.x - toPoint[0] <= this.maxDistance);
-}
+};
 
 Unit.prototype.move = function(toPoint) {
     if (!this.checkPointIsNotFarToMove(toPoint)
         || this.world.getCell(toPoint).getObject()) {
         return false;
     }
-    this.location.removeObject(this);
+    this.location.removeObject();
     this.location = this.world.getCell(toPoint);
     this.location.addObject(this);
     return true;
