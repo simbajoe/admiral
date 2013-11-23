@@ -19,16 +19,28 @@ body {
     margin-left: 91px;
 }
 
-.field {
+.field, .field_holder, .field_content {
     float: left;
-    width: 56.4px;
-    height: 56.4px;
-    background: white;
-    opacity: 0.0;
-    border: 1px solid black;
+    width: 58.4px;
+    height: 58.4px;
 }
 
-.field.active, .field:hover {
+.field {
+    position: relative;
+}
+
+.field_holder, .field_content {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.field_holder {
+    background: white;
+    opacity: 0.0;
+}
+
+.field_holder.active, .field_holder:hover {
     opacity: 0.3;
 }
 
