@@ -24,7 +24,7 @@ io.sockets.on("connection", function (socket) {
     socket.on("command", function (command) {
         updateGame();
     });
-    socket.player.broadcast(worldHash);
+    updateGame();
 });
 
 
@@ -44,6 +44,8 @@ function updateGame() {
         worldHash = world.getHash();
         return;
     }
+    i = world.players.length;
+    worldHash = world.getHash();
     while (i--) {
         worldHash.myId = world.players[i].id;
         world.players[i].broadcast(worldHash);

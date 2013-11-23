@@ -1,5 +1,6 @@
 var Player = require('./player.js');
 var Config = require('../shared/config.js');
+var Utils = require('../shared/utils.js');
 
 var World = module.exports = function() {
     this.objectsToExport = [];
