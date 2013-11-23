@@ -32,6 +32,11 @@ $(function() {
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
+        $('.field').html('');
+        for (var v in this.player.units) {
+            var unit = this.player.units[v];
+            $('.field[data-row="' + unit.location[0] + '"][data-col="' + unit.location[1] + '"]').html(unit.type);
+        }
         console.log(this.phase, this.player);
         this[this.phase](snapshot);
     };
