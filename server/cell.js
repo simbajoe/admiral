@@ -1,3 +1,5 @@
+var Utils = require('../shared/utils.js');
+
 var Cell = module.exports = function(x, y) {
     this.x = x;
     this.y = y;
@@ -6,6 +8,10 @@ var Cell = module.exports = function(x, y) {
 
 Cell.prototype.addObject = function(object) {
     this.objects.push(object);
+};
+
+Cell.prototype.removeObject = function(object) {
+    this.objects = Utils.deleteFromArrById(object.id, this.objects);
 };
 
 Cell.prototype.hasObject = function() {

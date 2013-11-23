@@ -41,7 +41,7 @@ var units = {
 
 var Player = module.exports = function(id, homeLoc, world) {
     this.units = [];
-    this.homelandLocation = homeLoc;
+    this.homelandLocation = Utils.copyArray(homeLoc);
     this.id = id;
     this.world = world;
     this.allUnitsPlaced = false;
@@ -60,8 +60,8 @@ Player.prototype.exportToHash = function() {
     }
     if (this.world.phase == Config.PLANNING_PHASE) {
         result.freeCells = [];
-        for (var y in this.homelandLocation) {
-            y = parseInt(y);
+        for (var i in this.homelandLocation) {
+            var y = parseInt(this.homelandLocation[i]);
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
                 if (!this.world.cells[x][y].hasObject()) {
                     result.freeCells.push([x,y]);
@@ -79,6 +79,7 @@ Player.prototype.broadcast = function(hash) {
 };
 
 Player.prototype.canPlace = function(type) {
+    console.log(this.unitsToPlace[type]);
     return this.unitsToPlace[type] > 0;
 };
 

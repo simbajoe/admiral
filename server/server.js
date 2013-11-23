@@ -25,9 +25,11 @@ io.sockets.on("connection", function (socket) {
     });
     socket.on("command", function (command) {
         if (command.type = 'place') {
-            world.addUnit(socket.player, command.params.type, command.params.location);
+            var unit = world.addUnit(socket.player, command.params.type, command.params.location);
+            if (unit) {
+                updateGame();
+            }
         }
-        updateGame();
     });
     updateGame();
 });

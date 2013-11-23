@@ -43,7 +43,6 @@ $(function() {
             var unit = this.player.units[v];
             $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content').html(unit.type);
         }
-        console.log(this.phase, this.player);
         this[this.phase](snapshot);
     };
 
@@ -61,6 +60,7 @@ $(function() {
         var unit = null;
         for (var v in this.player.unitsToPlace) {
             if (this.player.unitsToPlace[v] > 0) {
+                console.log(v, 'found');
                 unit = v;
             }
         }
@@ -72,7 +72,6 @@ $(function() {
     };
 
     Game.prototype.placeUnit = function (unit, place) {
-        console.log(unit, place);
         this.send('place', { 'location': place, 'type': unit });
     };
 
@@ -80,7 +79,7 @@ $(function() {
     var game = new Game(socket);
 
     socket.on("update", function (snapshot) {
-        console.log(snapshot);
+        //console.log(snapshot);
         game.update(snapshot);
     });
 });

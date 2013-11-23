@@ -62,6 +62,10 @@ World.prototype.exportToHash = function() {
 };
 
 World.prototype.getCell = function(location) {
+    if (this.cells[location[0]] === undefined
+        || this.cells[location[0]][location[1]] === undefined) {
+        return null;
+    }
     return this.cells[location[0]][location[1]];
 };
 
@@ -69,7 +73,13 @@ World.prototype.getCell = function(location) {
 World.prototype.addUnit = function(owner, type, location) {
     if (this.phase != Config.PLANNING_PHASE
         || !owner.canPlace(type, location)
-        || this.getCell(location).hasObject()) {
+        || this.getCell(location).hasObject()
+        || !location
+        || !type
+        || !owner) {
+        console.log(owner.id, type, location);
+        console.log('owner can place:', owner.canPlace(type, location));
+        console.log('cell already has object:', this.getCell(location).hasObject());
         return null;
     }
     var unit = owner.addUnit(this.uniqueId, location, type);
