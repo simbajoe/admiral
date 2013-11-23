@@ -79,7 +79,6 @@ Player.prototype.broadcast = function(hash) {
 };
 
 Player.prototype.canPlace = function(type) {
-    console.log(this.unitsToPlace[type]);
     return this.unitsToPlace[type] > 0;
 };
 

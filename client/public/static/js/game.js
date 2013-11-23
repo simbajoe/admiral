@@ -67,8 +67,8 @@ $(function() {
         var unit = null;
         for (var v in this.player.unitsToPlace) {
             if (this.player.unitsToPlace[v] > 0) {
-                console.log(v, 'found');
                 unit = v;
+                break;
             }
         }
         var voidFields = this.player.freeCells;
@@ -86,7 +86,7 @@ $(function() {
     var game = new Game(socket);
 
     socket.on("update", function (snapshot) {
-        //console.log(snapshot);
+        console.log(snapshot);
         game.update(snapshot);
     });
 });

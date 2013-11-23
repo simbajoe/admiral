@@ -24,8 +24,14 @@ io.sockets.on("connection", function (socket) {
         socket.player.removeSocket();
     });
     socket.on("command", function (command) {
-        if (command.type = 'place') {
+        if (command.type == 'place') {
+            console.log(command);
             var unit = world.addUnit(socket.player, command.params.type, command.params.location);
+            if (unit) {
+                updateGame();
+            }
+        }
+        if (command.type == 'move') {
             if (unit) {
                 updateGame();
             }

@@ -4,6 +4,7 @@ var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
 
 var World = module.exports = function() {
+    this.objects = [];
     this.players = [];
     this.cells = [];
     for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
@@ -37,6 +38,7 @@ World.prototype.addPlayer = function(homeland) {
         return;
     }
     var player = new Player(this.uniqueId, homeland, this);
+    this.objects.push(player);
     this.players.push(player);
     this.uniqueId++;
     return player;
@@ -77,12 +79,10 @@ World.prototype.addUnit = function(owner, type, location) {
         || !location
         || !type
         || !owner) {
-        console.log(owner.id, type, location);
-        console.log('owner can place:', owner.canPlace(type, location));
-        console.log('cell already has object:', this.getCell(location).hasObject());
         return null;
     }
     var unit = owner.addUnit(this.uniqueId, location, type);
+    this.objects.push(unit);
     this.uniqueId++;
     this.checkCanEndPlanningPhase();
     return unit;
