@@ -14,6 +14,9 @@ world = new World();
 worldHash = world.getHash();
 
 io.sockets.on("connection", function (socket) {
+    if (world.players.length > 1) {
+        return;
+    }
     socket.player = world.addPlayer(socket);
     socket.on("disconnect", function () {
         world.removePlayer(socket.player);
