@@ -25,7 +25,16 @@
       <file leaf-file-name="server.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="9" selection-start="520" selection-end="520" vertical-scroll-proportion="0.37935844">
+            <state line="13" column="22" selection-start="495" selection-end="495" vertical-scroll-proportion="0.027894003">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="player.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/player.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="19" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -34,7 +43,7 @@
       <file leaf-file-name="world.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/world.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="36" vertical-scroll-proportion="0.0">
+            <state line="17" column="9" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -43,7 +52,7 @@
       <file leaf-file-name="utils.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shared/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="13" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0">
+            <state line="30" column="5" selection-start="928" selection-end="928" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -65,8 +74,12 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/shared/config.js" />
+        <option value="$PROJECT_DIR$/shared/utils.js" />
         <option value="$PROJECT_DIR$/server/world.js" />
+        <option value="$PROJECT_DIR$/server/player.js" />
         <option value="$PROJECT_DIR$/server/server.js" />
+        <option value="$PROJECT_DIR$/.nodemonignore" />
       </list>
     </option>
   </component>
@@ -180,6 +193,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lenny\Dropbox\dev\admiral" />
       <recent name="C:\Users\lenny\Dropbox\dev\admiral\shared" />
       <recent name="C:\Users\lenny\Dropbox\dev\admiral\server" />
     </key>
@@ -209,13 +223,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1608" height="864" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -291,21 +305,63 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shared/utils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0">
+        <state line="30" column="5" selection-start="928" selection-end="928" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/world.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="36" vertical-scroll-proportion="0.0">
+        <state line="17" column="9" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/config.local.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/config.local.example.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="18" selection-start="38" selection-end="38" vertical-scroll-proportion="0.023709903">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="19" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.nodemonignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="9" selection-start="520" selection-end="520" vertical-scroll-proportion="0.37935844">
+        <state line="13" column="22" selection-start="495" selection-end="495" vertical-scroll-proportion="0.027894003">
           <folding />
         </state>
       </provider>

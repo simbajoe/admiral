@@ -20,65 +20,30 @@ io.sockets.on("connection", function (socket) {
         world.removePlayer(socket.player);
     });
     socket.on("command", function (command) {
-        if (command.type=="build") {
-            world.addTower(socket.player, command);
-        }
+        updateGame();
     });
     socket.player.broadcast(worldHash);
 });
 
 
-function game() {
-    function getTime() {
-        var time = process.hrtime();
-        return (time[0] * 1e9 + time[1])/1e6;
-    }
-    var lastTime = getTime();
-    loop();
-    function loop() {
-        var now = getTime();
-        var elapsed = now - lastTime;
-        lastTime = now;
-        var t = 0;
-        var dt;
-        while (t < elapsed) {
-            if (elapsed - t > Config.dtMax) {
-                dt = Config.dtMax;
-            } else {
-                dt = elapsed - t;
-            }
-            t += dt;
-            var typesToUpdate = ['spawners', 'towers', 'mobs', 'players'];
-            for (var j in typesToUpdate) {
-                i = world[typesToUpdate[j]].length;
-                while (i--) {
-                    world[typesToUpdate[j]][i].update(dt);
-                }
-            }
-        }
-        worldHash = world.getHash();
-        worldHash.score = score;
+function updateGame() {
+    var i = 0;
+    if (world.winner) {
+        var playerSockets = [];
         i = world.players.length;
         while (i--) {
-            worldHash.myId = world.players[i].id;
-            world.players[i].broadcast(worldHash);
+            playerSockets.push(world.players[i].socket);
         }
-        if (world.winner) {
-            score[world.winner] += 1;
-            var playerSockets = [];
-            i = world.players.length;
-            while (i--) {
-                playerSockets.push(world.players[i].socket);
-            }
-            world = new World();
-            i = playerSockets.length;
-            while (i--) {
-                playerSockets[i].player = world.addPlayer(playerSockets[i]);;
-            }
-            worldHash = world.getHash();
-            setTimeout(game, 3000);
-            return;
+        world = new World();
+        i = playerSockets.length;
+        while (i--) {
+            playerSockets[i].player = world.addPlayer(playerSockets[i]);
         }
-        setTimeout(loop, 100);
+        worldHash = world.getHash();
+        return;
+    }
+    while (i--) {
+        worldHash.myId = world.players[i].id;
+        world.players[i].broadcast(worldHash);
     }
 }

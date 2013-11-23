@@ -2,18 +2,6 @@
     exports.arePointsEq = function(point, point2) {
         return point[0] == point2[0] && point[1] == point2[1];
     };
-    exports.cloneBuildCommand = function(command) {
-        return {
-            type: command.type,
-            params: {
-                type: command.params.type,
-                location: [
-                    command.params.location[0],
-                    command.params.location[1]
-                ]
-            }
-        };
-    };
     exports.clonePoint = function(point) {
         return [
             point[0],

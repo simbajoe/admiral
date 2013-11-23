@@ -5,21 +5,7 @@ var World = module.exports = function() {
     this.objectsToExport = [];
     this.players = [];
     this.uniqueId = 1;
-    this.worldGenerated = false;
-    this.worldGenerated = true;
     this.winner = '';
-};
-
-World.prototype.getNewPlayerTeam = function() {
-    var red = 0, blue = 0;
-    for (var id in this.players) {
-        if (this.players[id].team == 'red') {
-            red++;
-        } else {
-            blue++;
-        }
-    }
-    return blue > red ? 'red' : 'blue';
 };
 
 World.prototype.getHash = function() {
