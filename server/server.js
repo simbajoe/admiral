@@ -14,10 +14,12 @@ world = new World();
 worldHash = world.getHash();
 
 io.sockets.on("connection", function (socket) {
-    if (world.players.length > 1) {
+    var player = world.getPlayerWithoutSocket();
+    if (!player) {
         return;
     }
-    socket.player = world.addPlayer(socket);
+    socket.player = player;
+    player.addSocket(socket);
     socket.on("disconnect", function () {
         world.removePlayer(socket.player);
     });

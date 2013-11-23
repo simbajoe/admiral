@@ -39,10 +39,8 @@ var units = {
     submarine: Submarine
 };
 
-var Player = module.exports = function(id, socket, homeLoc, world) {
-    this.socket = socket;
+var Player = module.exports = function(id, homeLoc, world) {
     this.units = [];
-    this.type = 'players';
     this.homelandLocation = homeLoc;
     this.id = id;
     this.world = world;
@@ -98,4 +96,8 @@ Player.prototype.addUnit = function(id, location, type) {
     this.units.push(unit);
     this.checkAllUnitsPlaced();
     return unit;
+};
+
+Player.prototype.addSocket = function(socket) {
+    this.socket = socket;
 };
