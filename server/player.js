@@ -101,3 +101,7 @@ Player.prototype.addUnit = function(id, location, type) {
 Player.prototype.addSocket = function(socket) {
     this.socket = socket;
 };
+
+Player.prototype.removeSocket = function(socket) {
+    this.socket = null;
+};

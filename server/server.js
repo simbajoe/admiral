@@ -21,7 +21,7 @@ io.sockets.on("connection", function (socket) {
     socket.player = player;
     player.addSocket(socket);
     socket.on("disconnect", function () {
-        world.removePlayer(socket.player);
+        socket.player.removeSocket();
     });
     socket.on("command", function (command) {
         if (command.type = 'place') {
