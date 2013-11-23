@@ -31,44 +31,51 @@ $(function() {
     Game.prototype.update = function (snapshot) {
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
-        if (this.phase != snapshot.world.phase) {
-            this.phase = snapshot.world.phase;
-            this.units = [];
-            console.log(this.player);
-            this[this.phase](snapshot);
+        this.phase = snapshot.world.phase;
+        console.log(this.phase, this.player);
+        this[this.phase](snapshot);
+    };
+
+    Game.prototype.hasUnitHere = function (i, j) {
+        for (var v in this.player.units) {
+            var unit = this.player.units[v];
+            if (unit.location[0] == i && unit.location[1] == j) {
+                return true;
+            }
         }
+        return false;
+    };
+
+    Game.prototype.fieldsToPlace = function () {
+        var from = this.player.homelandLocation == 'up' ? 0 : 9;
+        var to = this.player.homelandLocation == 'up' ? 5 : 14;
+        var fields = [];
+        for (var i = from; i < to; i++) {
+            for (var j = 0; j < 14; j++) {
+                if (!this.hasUnitHere(i, j)) {
+                    fields.push([i, j]);
+                }
+            }
+        }
+        return fields;
     };
 
     Game.prototype.planning_phase = function (snapshot) {
-        console.log('planning');
-        var unitsToPlace = [];
-        var from = this.player.homelandLocation == 'up' ? 0 : 9;
-        var to = this.player.homelandLocation == 'up' ? 5 : 14;
-        var fieldsToPlace = [];
-        for (var i = from; i < to; i++) {
-            for (var j = 0; j < 14; j++) {
-                fieldsToPlace.push([i, j]);
-            }
-        }
+        var unit = null;
         for (var v in this.player.unitsToPlace) {
-            for (var i = 0; i < this.player.unitsToPlace[v]; i++) {
-                unitsToPlace.push(v);
+            if (this.player.unitsToPlace[v] > 0) {
+                unit = v;
             }
         }
-        var me = this;
-        var f = function () {
-            if (me.phase == 'planning_phase' && me.units.length < unitsToPlace.length) {
-                var field = fieldsToPlace.splice(Math.floor(Math.random() * fieldsToPlace.length), 1)[0];
-                me.placeUnit(unitsToPlace[me.units.length], field);
-                setTimeout(f, 200);
-            }
-        };
-        f();
+        var voidFields = this.fieldsToPlace();
+        if (unit) {
+            var field = voidFields.splice(Math.floor(Math.random() * voidFields.length), 1)[0];
+            this.placeUnit(unit, field);
+        }
     };
 
     Game.prototype.placeUnit = function (unit, place) {
         console.log(unit, place);
-        this.units.push([unit, place]);
         this.send('place', { 'location': place, 'type': unit });
     };
 
