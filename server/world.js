@@ -14,7 +14,7 @@ var World = module.exports = function() {
         }
     }
     this.uniqueId = 1;
-    this.phase = Config.PLANNING;
+    this.phase = Config.PLANNING_PHASE;
     this.winner = '';
 };
 
@@ -34,10 +34,10 @@ World.prototype.getHash = function() {
 World.prototype.addPlayer = function(socket) {
     var player = null;
     if (this.players.length == 0
-        || !Utils.areArraysEq(this.players[0].homelandLocation, Config.HOMEUP)) {
-        player = new Player(this.uniqueId, socket, Config.HOMEUP, this);
+        || !Utils.areArraysEq(this.players[0].homelandLocation, Config.HOME_UP)) {
+        player = new Player(this.uniqueId, socket, Config.HOME_UP, this);
     } else {
-        player = new Player(this.uniqueId, socket, Config.HOMEDOWN, this);
+        player = new Player(this.uniqueId, socket, Config.HOME_DOWN, this);
     }
     this.players.push(player);
     this.objectsToExport.push(player);
@@ -48,48 +48,6 @@ World.prototype.addPlayer = function(socket) {
 World.prototype.removePlayer = function(player) {
     this.players = Utils.deleteFromArrById(player.id, this.players);
     this.objectsToExport = Utils.deleteFromArrById(player.id, this.objectsToExport);
-};
-
-World.prototype.getObjectById = function(id) {
-    for (var i in this.objectsToExport) {
-        if (this.objectsToExport[i].id == id) {
-            return this.objectsToExport[i];
-        }
-    }
-    return null;
-};
-
-World.prototype.destroyObject = function(object) {
-    this.objectsToExport = Utils.deleteFromArrById(object.id, this.objectsToExport);
-    this[object.type] = Utils.deleteFromArrById(object.id, this[object.type]);
-};
-
-World.prototype.getNeighbors = function(point) {
-    var neighbors = [];
-    var newPoints = [
-        [point[0] - 1, point[1]],
-        [point[0] + 1, point[1]],
-        [point[0], point[1] - 1],
-        [point[0], point[1] + 1],
-        [point[0] - 1, point[1] + 1],
-        [point[0] - 1, point[1] - 1],
-        [point[0] + 1, point[1] + 1],
-        [point[0] + 1, point[1] - 1]
-    ];
-    var me = this;
-    newPoints.forEach(function(newPoint) {
-        if (me.isLocationOnMap(newPoint)) {
-            neighbors.push(newPoint);
-        }
-    });
-    return neighbors;
-};
-
-World.prototype.isLocationOnMap = function(location) {
-    return !(location[0] < Config.minWorldX ||
-        location[0] > Config.maxWorldX ||
-        location[1] < Config.minWorldY ||
-        location[1] > Config.maxWorldY);
 };
 
 World.prototype.exportToHash = function() {
@@ -104,13 +62,28 @@ World.prototype.getCell = function(location) {
 
 
 World.prototype.addUnit = function(owner, type, location) {
-    if (this.phase != Config.PLANNING
+    if (this.phase != Config.PLANNING_PHASE
         || !owner.canPlace(type, location)
         || this.getCell(location).hasObject()) {
-        return;
+        console.log(owner.id, 'tried to place', type);
+        console.log(this.phase != Config.PLANNING_PHASE, owner.canPlace(type, location), this.getCell(location).hasObject());
+        console.log(this.phase);
+        return null;
     }
     var unit = owner.addUnit(this.uniqueId, location, type);
     this.uniqueId++;
+    this.checkCanEndPlanningPhase();
     return unit;
+};
+
+World.prototype.checkCanEndPlanningPhase = function() {
+    if (this.players.length < 2) {
+        return false;
+    }
+    if (this.players[0].allUnitsPlaced
+        && this.players[1].allUnitsPlaced) {
+        this.phase = Config.MOVE_PHASE;
+        return true;
+    }
 };
 

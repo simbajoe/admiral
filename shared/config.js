@@ -4,9 +4,10 @@
     exports.maxWorldX = 13;
     exports.maxWorldY = 13;
     exports.linesToBuildShips = 5;
-    exports.HOMEUP = [0, 1, 2, 3, 4];
-    exports.HOMEDOWN = [13, 12, 11, 10, 9];
-    exports.PLANNING = 'planning_phase';
+    exports.HOME_UP = [0, 1, 2, 3, 4];
+    exports.HOME_DOWN = [13, 12, 11, 10, 9];
+    exports.PLANNING_PHASE = 'planning_phase';
+    exports.MOVE_PHASE = 'move_phase';
     exports.unitsToPlace = {
         aircraftCarrier: 1,
         battleship: 2,

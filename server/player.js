@@ -46,6 +46,7 @@ var Player = module.exports = function(id, socket, homeLoc, world) {
     this.homelandLocation = homeLoc;
     this.id = id;
     this.world = world;
+    this.allUnitsPlaced = false;
     this.unitsToPlace = Utils.copyOneStoryHash(Config.unitsToPlace);
 };
 
@@ -58,6 +59,16 @@ Player.prototype.exportToHash = function() {
     };
     for (var i in this.units) {
         result.units[this.units[i].id] = this.units[i].exportToHash();
+    }
+    if (this.world.phase == Config.PLANNING_PHASE) {
+        result.freeCells = [];
+        for (var y in this.homelandLocation) {
+            for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
+                if (!this.world.cells[x][y].hasObject()) {
+                    result.freeCells.push([x,y]);
+                }
+            }
+        }
     }
     return result;
 };
@@ -72,10 +83,19 @@ Player.prototype.canPlace = function(type) {
     return this.unitsToPlace[type] > 0;
 };
 
+Player.prototype.checkAllUnitsPlaced = function() {
+    for (var i in this.unitsToPlace) {
+        if (this.unitsToPlace[i] > 1) {
+            return false;
+        }
+    }
+    return this.allUnitsPlaced = true;
+};
+
 Player.prototype.addUnit = function(id, location, type) {
-    var unit = new units[type](id, this.world.getCell(location), this);
+    var unit = new units[type](id, this.world.getCell(location), this, this.world);
     this.unitsToPlace[type]--;
-    this.world.getCell(location).addObject(unit);
     this.units.push(unit);
+    this.checkAllUnitsPlaced();
     return unit;
 };
