@@ -19,7 +19,7 @@ body {
     margin-left: 91px;
 }
 
-.field, .field_holder, .field_content {
+.field, .field_holder, .field_content, .field_back {
     float: left;
     width: 58.4px;
     height: 58.4px;
@@ -30,7 +30,7 @@ body {
     overflow: hidden;
 }
 
-.field_holder, .field_content {
+.field_holder, .field_content, .field_back {
     position: absolute;
     left: 0;
     top: 0;
@@ -44,4 +44,67 @@ body {
 .field_holder.active, .field_holder:hover {
     opacity: 0.3;
 }
+
+.field.with_unit .field_back {
+    background-color: white;
+    opacity: 0.5;
+}
+
+.unit {
+    background-size: 58.4px auto;
+    background-repeat: no-repeat;
+}
+
+.aircraftCarrier {
+    background-image: url('/static/img/icons/aircraftCarrier.png');
+}
+.battleship {
+    background-image: url('/static/img/icons/battleship.png');
+}
+.destroyer {
+    background-image: url('/static/img/icons/destroyer.png');
+}
+.mine {
+    background-image: url('/static/img/icons/mine.png');
+}
+.patrol {
+    background-image: url('/static/img/icons/patrol.png');
+}
+.torpedo {
+    background-image: url('/static/img/icons/torpedo.png');
+}
+.airplane {
+    background-image: url('/static/img/icons/airplane.png');
+}
+.cruiser {
+    background-image: url('/static/img/icons/cruiser.png');
+}
+.fireShip {
+    background-image: url('/static/img/icons/fireShip.png');
+}
+.minesweeper {
+    background-image: url('/static/img/icons/minesweeper.png');
+}
+.raider {
+    background-image: url('/static/img/icons/raider.png');
+}
+.vedette {
+    background-image: url('/static/img/icons/vedette.png');
+}
+.atomicBomb {
+    background-image: url('/static/img/icons/atomicBomb.png');
+}
+.cruisingSubmarine {
+    background-image: url('/static/img/icons/cruisingSubmarine.png');
+}
+.fixedMine {
+    background-image: url('/static/img/icons/fixedMine.png');
+}
+.MNB {
+    background-image: url('/static/img/icons/MNB.png');
+}
+.submarine {
+    background-image: url('/static/img/icons/submarine.png');
+}
+
 
