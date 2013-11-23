@@ -14,6 +14,7 @@ Unit.prototype.exportToHash = function() {
     return {
         id: this.id,
         location: this.location.getPoint(),
-        ownerId: this.owner.id
+        ownerId: this.owner.id,
+        type: this.type
     };
 };

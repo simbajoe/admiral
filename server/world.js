@@ -3,49 +3,10 @@ var Cell = require('./cell.js');
 var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
 
-var aircraftCarrier = require('./unit/aircraftCarrier.js');
-var battleship = require('./unit/battleship.js');
-var cruiser = require('./unit/cruiser.js');
-var fireShip = require('./unit/fireShip.js');
-var airplane = require('./unit/airplane.js');
-var MNB = require('./unit/MNB.js');
-var atomicBomb = require('./unit/atomicBomb.js');
-var raider = require('./unit/raider.js');
-var mine = require('./unit/mine.js');
-var destroyer = require('./unit/destroyer.js');
-var fixedMine = require('./unit/fixedMine.js');
-var cruisingSubmarine = require('./unit/cruisingSubmarine.js');
-var patrol = require('./unit/patrol.js');
-var torpedo = require('./unit/torpedo.js');
-var vedette = require('./unit/vedette.js');
-var minesweeper = require('./unit/minesweeper.js');
-var submarine = require('./unit/submarine.js');
-
-var units = {
-    aircraftCarrier: aircraftCarrier,
-    battleship: battleship,
-    cruiser: cruiser,
-    fireShip: fireShip,
-    airplane: airplane,
-    MNB: MNB,
-    atomicBomb: atomicBomb,
-    raider: raider,
-    mine: mine,
-    destroyer: destroyer,
-    fixedMine: fixedMine,
-    cruisingSubmarine: cruisingSubmarine,
-    patrol: patrol,
-    torpedo: torpedo,
-    vedette: vedette,
-    minesweeper: minesweeper,
-    submarine: submarine
-};
-
 var World = module.exports = function() {
     this.objectsToExport = [];
     this.players = [];
     this.cells = [];
-    this.units = [];
     for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
         this.cells[x] = [];
         for (var y = Config.minWorldY; y <= Config.maxWorldX; y++) {
@@ -59,13 +20,12 @@ var World = module.exports = function() {
 
 World.prototype.getHash = function() {
     var id;
-    var result = {};
-    for (var num in this.objectsToExport) {
-        var object = this.objectsToExport[num];
-        if (typeof(result[object.type]) === 'undefined') {
-            result[object.type] = {};
-        }
-        result[object.type][object.id] = object.exportToHash();
+    var result = {
+        players: {},
+        world: {}
+    };
+    for (var i in this.players) {
+        result.players[this.players[i].id] = this.players[i].exportToHash();
     }
     result.world = this.exportToHash();
     return result;
@@ -149,10 +109,7 @@ World.prototype.addUnit = function(owner, type, location) {
         || this.getCell(location).hasObject()) {
         return;
     }
-    var unit = new units[type](this.uniqueId, this.getCell(location), owner);
-    this.getCell(location).addObject(unit);
-    this.units.push(unit);
-    this.objectsToExport.push(unit);
+    var unit = owner.addUnit(this.uniqueId, location, type);
     this.uniqueId++;
     return unit;
 };
