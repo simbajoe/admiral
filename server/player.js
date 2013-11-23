@@ -61,6 +61,7 @@ Player.prototype.exportToHash = function() {
     if (this.world.phase == Config.PLANNING_PHASE) {
         result.freeCells = [];
         for (var y in this.homelandLocation) {
+            y = parseInt(y);
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
                 if (!this.world.cells[x][y].hasObject()) {
                     result.freeCells.push([x,y]);

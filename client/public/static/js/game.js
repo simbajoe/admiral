@@ -57,21 +57,6 @@ $(function() {
         return false;
     };
 
-    Game.prototype.fieldsToPlace = function () {
-        var from = this.player.homelandLocation == 'up' ? 0 : 9;
-        var to = this.player.homelandLocation == 'up' ? 5 : 14;
-        var fields = [];
-        for (var i = 0; i < this.player.homelandLocation.length; i++) {
-            var y = this.player.homelandLocation[i];
-            for (var x = 0; x < 14; x++) {
-                if (!this.hasUnitHere(x, y)) {
-                    fields.push([x, y]);
-                }
-            }
-        }
-        return fields;
-    };
-
     Game.prototype.planning_phase = function (snapshot) {
         var unit = null;
         for (var v in this.player.unitsToPlace) {
@@ -79,7 +64,7 @@ $(function() {
                 unit = v;
             }
         }
-        var voidFields = this.fieldsToPlace();
+        var voidFields = this.player.freeCells;
         if (unit) {
             var field = voidFields.splice(Math.floor(Math.random() * voidFields.length), 1)[0];
             this.placeUnit(unit, field);

@@ -27,6 +27,7 @@ body {
 
 .field {
     position: relative;
+    overflow: hidden;
 }
 
 .field_holder, .field_content {
