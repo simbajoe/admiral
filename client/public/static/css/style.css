@@ -10,5 +10,25 @@ body {
     height: 841px;
     margin: auto;
     background-size: 1000px;
+    padding-top: 12px;
+}
+
+.row {
+    float: left;
+    clear: both;
+    margin-left: 91px;
+}
+
+.field {
+    float: left;
+    width: 56.4px;
+    height: 56.4px;
+    background: white;
+    opacity: 0.0;
+    border: 1px solid black;
+}
+
+.field.active, .field:hover {
+    opacity: 0.3;
 }
 
