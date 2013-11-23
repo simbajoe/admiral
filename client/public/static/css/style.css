@@ -106,5 +106,8 @@ body {
 .submarine {
     background-image: url('/static/img/icons/submarine.png');
 }
+.unknownUnit {
+    background-image: url('/static/img/icons/unknownUnit.png');
+}
 
 
