@@ -22,6 +22,9 @@ io.sockets.on("connection", function (socket) {
         world.removePlayer(socket.player);
     });
     socket.on("command", function (command) {
+        if (command.type = 'place') {
+
+        }
         updateGame();
     });
     updateGame();

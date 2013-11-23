@@ -1,10 +1,12 @@
 var Player = require('./player.js');
+var Cruiser = require('./unit/cruiser.js');
 var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
 
 var World = module.exports = function() {
     this.objectsToExport = [];
     this.players = [];
+    this.cruisers = [];
     this.uniqueId = 1;
     this.winner = '';
 };
