@@ -37,7 +37,7 @@ Unit.prototype.checkPointIsNotFarToMove = function(newPint) {
 
 Unit.prototype.move = function(toPoint) {
     if (!this.checkPointIsNotFarToMove(toPoint)
-        || this.world.getCell(toPoint).hasObject()) {
+        || this.world.getCell(toPoint).getObject()) {
         return false;
     }
     this.location.removeObject(this);
@@ -56,7 +56,7 @@ Unit.prototype.setWhereCanMove = function() {
             this.world.getCell([this.location.x, this.location.y - d])
         ];
         for (var i in cells) {
-            if (cells[i] && !cells[i].hasObject()) {
+            if (cells[i] && !cells[i].getObject()) {
                 this.whereCanMove.push(cells[i].getPoint());
             }
         }

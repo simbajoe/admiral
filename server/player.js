@@ -63,7 +63,7 @@ Player.prototype.exportToHash = function() {
         for (var i in this.homelandLocation) {
             var y = parseInt(this.homelandLocation[i]);
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
-                if (!this.world.cells[x][y].hasObject()) {
+                if (!this.world.cells[x][y].getObject()) {
                     result.freeCells.push([x,y]);
                 }
             }

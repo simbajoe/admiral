@@ -75,7 +75,7 @@ World.prototype.getCell = function(location) {
 World.prototype.addUnit = function(owner, type, location) {
     if (this.phase != Config.PLANNING_PHASE
         || !owner.canPlace(type, location)
-        || this.getCell(location).hasObject()
+        || this.getCell(location).getObject()
         || !location
         || !type
         || !owner) {

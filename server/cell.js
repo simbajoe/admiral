@@ -3,19 +3,19 @@ var Utils = require('../shared/utils.js');
 var Cell = module.exports = function(x, y) {
     this.x = x;
     this.y = y;
-    this.objects = [];
+    this.object = null;
 };
 
 Cell.prototype.addObject = function(object) {
-    this.objects.push(object);
+    this.object = object;
 };
 
 Cell.prototype.removeObject = function(object) {
-    this.objects = Utils.deleteFromArrById(object.id, this.objects);
+    this.object = null;
 };
 
-Cell.prototype.hasObject = function() {
-    return this.objects.length > 0;
+Cell.prototype.getObject = function() {
+    return this.objects;
 };
 
 Cell.prototype.getPoint = function() {

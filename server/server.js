@@ -25,14 +25,15 @@ io.sockets.on("connection", function (socket) {
     });
     socket.on("command", function (command) {
         if (command.type == 'place') {
-            console.log(command);
             var unit = world.addUnit(socket.player, command.params.type, command.params.location);
             if (unit) {
                 updateGame();
             }
         }
         if (command.type == 'move') {
-            if (unit) {
+            var cell = world.getCell(command.params.from);
+            if (cell && cell.getObject()) {
+                cell.getObject().move(command.params.to);
                 updateGame();
             }
         }
