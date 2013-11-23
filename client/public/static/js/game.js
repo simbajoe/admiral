@@ -11,6 +11,9 @@ $(function() {
                 'class': 'field'
             }).appendTo(row);
             $('<div/>', {
+                'class': 'field_back'
+            }).appendTo(field);
+            $('<div/>', {
                 'class': 'field_content'
             }).appendTo(field);
             $('<div/>', {
@@ -38,10 +41,14 @@ $(function() {
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
-        $('.field_content').html('');
+        $('.field_content').html('').removeClass().addClass('field_content');
         for (var v in this.player.units) {
             var unit = this.player.units[v];
-            $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content').html(unit.type);
+            $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
+                /*.html(unit.type)*/
+                .addClass('unit')
+                .addClass(unit.type)
+                .parents('.field').addClass('with_unit');
         }
         this[this.phase](snapshot);
     };
