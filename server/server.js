@@ -12,7 +12,6 @@ var i = 0;
 
 world = new World();
 worldHash = world.getHash();
-game();
 
 io.sockets.on("connection", function (socket) {
     socket.player = world.addPlayer(socket);
