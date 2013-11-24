@@ -54,9 +54,11 @@ Player.prototype.exportToHash = function() {
         id: this.id,
         playerNum: this.playerNum,
         homelandLocation: this.homelandLocation,
-        unitsToPlace: this.unitsToPlace,
         units: {}
     };
+    if (this.world.phase == Config.PLANNING_PHASE) {
+        result.unitsToPlace = this.unitsToPlace;
+    }
     for (var i in this.units) {
         result.units[this.units[i].id] = this.units[i].exportToHash();
     }

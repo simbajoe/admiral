@@ -90,6 +90,9 @@ World.prototype.checkCanEndPlanningPhase = function() {
 };
 
 World.prototype.makeMove = function(unitLocation, newPoint) {
+    if (this.phase != Config.MOVE_PHASE) {
+        return false;
+    }
     var fromCell = this.cells.get(unitLocation);
     var toCell = this.cells.get(newPoint);
     if (fromCell && fromCell.getObject() && toCell) {
@@ -101,9 +104,11 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
 };
 
 
-World.prototype.makeAttack = function() {
-    this.currentTurn++;
-    if (this.currentTurn > 1) {
-        this.currentTurn = 0;
+World.prototype.makeAttack = function(data) {
+    if (data.skip) {
+        this.currentTurn++;
+        if (this.currentTurn > 1) {
+            this.currentTurn = 0;
+        }
     }
 };

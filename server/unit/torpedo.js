@@ -4,8 +4,8 @@ var Utils = require('../../shared/utils.js');
 
 var Torpedo = module.exports = function(id, location, owner, world) {
     this.init(id, location, owner, 'torpedo', world);
-    this.maxDistance = 2;
     this.specialUnit = Config.MOVE_TORPEDO_SHIP;
+    this.maxDistance = 2;
 };
 Torpedo.prototype = new Unit();
 
@@ -49,6 +49,37 @@ Torpedo.prototype.setWhereCanMove = function() {
                 && cell.getDist(this.location) == 1) {
                 this.whereCanMove.push(cell.getPoint());
             }
+        }
+    }
+};
+
+Torpedo.prototype.getUnitsCanShoot = function() {
+    var neighbors = this.location.getStraightNeighborCells(1);
+    var specUnits = [];
+    for (var i in neighbors) {
+        if (neighbors[i].getObject() && neighbors[i].getObject().type != this.specialUnit) {
+            specUnits.push(neighbors[i].getObject());
+        }
+    }
+    return specUnits;
+};
+
+Torpedo.prototype.canAttack = function() {
+    var shootingUnits = this.getUnitsCanShoot();
+    return shootingUnits.length > 0;
+};
+
+Torpedo.prototype.setWhereCanAttack = function() {
+    this.whereCanAttack = [];
+    if (!this.canAttack()) {
+        return false;
+    }
+    var shootingUnits = this.getUnitsCanShoot();
+    var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
+    for (var i in cells) {
+        var object = cells[i].getObject();
+        if (object && object.owner.id != this.owner.id && !this.location.areObjectsBetween(cells[i])) {
+            this.whereCanAttack.push(cells[i].getPoint());
         }
     }
 };

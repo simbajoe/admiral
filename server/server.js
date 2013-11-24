@@ -24,14 +24,21 @@ io.sockets.on("connection", function (socket) {
         socket.player.removeSocket();
     });
     socket.on("command", function (command) {
+        var isSuccess = null;
         if (command.type == 'place') {
-            var unit = world.addUnit(socket.player, command.params.type, command.params.location);
-            if (unit) {
+            isSuccess = world.addUnit(socket.player, command.params.type, command.params.location);
+            if (isSuccess) {
                 updateGame();
             }
         }
         if (command.type == 'move') {
-            var isSuccess = world.makeMove(command.params.from, command.params.to);
+            isSuccess = world.makeMove(command.params.from, command.params.to);
+            if (isSuccess) {
+                updateGame();
+            }
+        }
+        if (command.type == 'attack') {
+            isSuccess = world.makeAttack(command.params);
             if (isSuccess) {
                 updateGame();
             }
