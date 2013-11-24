@@ -106,6 +106,7 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
 
 World.prototype.makeAttack = function(data) {
     if (data.skip) {
+        this.phase = Config.MOVE_PHASE;
         this.currentTurn++;
         if (this.currentTurn > 1) {
             this.currentTurn = 0;

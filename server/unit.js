@@ -75,8 +75,7 @@ Unit.prototype.setWhereCanAttack = function() {
     this.whereCanAttack = [];
     var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
     for (var i in cells) {
-        var object = cells[i].getObject();
-        if (object && object.owner.id != this.owner.id && !this.location.areObjectsBetween(cells[i])) {
+        if (cells[i].hasEnemyObject(this.owner) && !this.location.areObjectsBetween(cells[i])) {
             this.whereCanAttack.push(cells[i].getPoint());
         }
     }

@@ -75,11 +75,36 @@ Torpedo.prototype.setWhereCanAttack = function() {
         return false;
     }
     var shootingUnits = this.getUnitsCanShoot();
-    var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
-    for (var i in cells) {
-        var object = cells[i].getObject();
-        if (object && object.owner.id != this.owner.id && !this.location.areObjectsBetween(cells[i])) {
-            this.whereCanAttack.push(cells[i].getPoint());
+    var points = [], moveCell = null, cell = null;
+    for (var i in shootingUnits) {
+        var unit = shootingUnits[i];
+        var x = this.location.x;
+        var y = this.location.y;
+        if (this.location.x == unit.x) {
+            var dy = y - unit.y;
+            moveCell = this.location.cells.get([unit.x, unit.y+3*dy]);
+            points = [
+                [unit.x, unit.y + 4*dy],
+                [unit.x - 1, unit.y + 3*dy],
+                [unit.x + 1, unit.y + 3*dy]
+            ];
+        } else {
+            var dx = x - unit.x;
+            moveCell = this.location.cells.get([unit.x + 3*dx, unit.y]);
+            points = [
+                [unit.x + 4*dx, unit.y],
+                [unit.x + 3*dx, unit.y - 1],
+                [unit.x + 3*dx, unit.y + 1]
+            ];
+        }
+        if (!moveCell || this.location.areObjectsBetween(moveCell)) {
+            continue;
+        }
+        for (var j in points) {
+            cell = this.world.cells.get(points[j]);
+            if (cell && cell.hasEnemyObject(this.owner)) {
+                this.whereCanAttack.push(cell.getPoint());
+            }
         }
     }
 };

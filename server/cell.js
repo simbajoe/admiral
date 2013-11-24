@@ -109,3 +109,7 @@ Cell.prototype.areObjectsBetween = function(cell) {
     }
     return false;
 };
+
+Cell.prototype.hasEnemyObject = function(player) {
+    return this.getObject() && this.getObject().owner.id != player.id;
+};
