@@ -50,3 +50,7 @@ Cell.prototype.getAllNeighbors = function(distance) {
     var diagN = this.getDiagonalFirstNeighborPoints();
     return strN.concat(diagN);
 };
+
+Cell.prototype.isEq = function(cell) {
+    return cell.x == this.x && cell.y == this.y;
+};

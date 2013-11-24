@@ -29,4 +29,5 @@
     };
     exports.MOVE_MINE_SHIP = 'destroyer';
     exports.MOVE_AIRPLANE_SHIP = 'aircraftCarrier';
+    exports.MOVE_TORPEDO_SHIP = 'vedette';
 })(typeof exports === 'undefined'? this['Config']={}: exports);

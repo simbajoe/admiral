@@ -22,7 +22,7 @@ UnitSatellite.prototype.move = function(toPoint) {
     var cell = this.world.getCell(toPoint);
     if (!cell
         || this.world.getCell(toPoint).getObject()
-        || !this.checkPointIsNotFarToMove(toPoint)
+        || !this.checkPointIsNearToMove(toPoint)
         || !this.isSpecialUnitNearPoint(this.location.getPoint())
         || !this.isSpecialUnitNearPoint(toPoint)
         ) {

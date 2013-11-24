@@ -29,7 +29,7 @@ Unit.prototype.exportToHash = function() {
     return result;
 };
 
-Unit.prototype.checkPointIsNotFarToMove = function(newPint) {
+Unit.prototype.checkPointIsNearToMove = function(newPint) {
     return (this.location.x == toPoint[0]
         && this.location.y - toPoint[1] <= this.maxDistance)
         || (this.location.y == toPoint[1]
@@ -38,7 +38,7 @@ Unit.prototype.checkPointIsNotFarToMove = function(newPint) {
 
 Unit.prototype.move = function(toPoint) {
     var cell = this.world.getCell(toPoint);
-    if (!this.checkPointIsNotFarToMove(toPoint)
+    if (!this.checkPointIsNearToMove(toPoint)
         || !cell
         || this.world.getCell(toPoint).getObject()) {
         return false;
