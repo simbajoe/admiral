@@ -14,7 +14,7 @@ AtomicBomb.prototype.setWhereAttack = function() {
             var cell = this.world.cells.get(x,y);
             if (cell) {
                 this.whereCouldAttack.push(cell);
-                if (cell.hasEnemyObject()) {
+                if (cell.hasEnemyObject(this.owner)) {
                     this.whereCouldAttack.push(cell);
                 }
             }
