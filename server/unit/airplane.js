@@ -4,6 +4,7 @@ var Config = require('../../shared/config.js');
 var Airplane = module.exports = function(id, location, owner, world) {
     this.init(id, location, owner, 'airplane', world);
     this.specialUnit = Config.MOVE_AIRPLANE_SHIP;
+    this.needBattle = false;
 };
 
 Airplane.prototype = new UnitSatellite();
@@ -56,4 +57,25 @@ Airplane.prototype.setWhereAttack = function() {
             }
         }
     }
+};
+
+Airplane.prototype.attack = function(toLocation) {
+    this.setWhereAttack();
+    var cell = null;
+    for (var i in this.whereCouldAttack) {
+        cell = this.world.cells.get(this.whereCouldAttack[i]);
+        if (toLocation.isEq(cell)) {
+            cell.getObject().destroy();
+            break;
+        }
+    }
+    this.destroy();
+    return true;
+};
+
+Airplane.prototype.harm = function(offender) {
+    if (this.canAttack()) {
+        offender.destroy();
+    }
+    this.destroy();
 };

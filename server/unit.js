@@ -16,6 +16,7 @@ Unit.prototype.init = function(id, location, owner, type, world) {
     this.whereCouldAttack = [];
     this.maxDistance = 1;
     this.maxFireDistance = 1;
+    this.needBattle = true;
 };
 
 Unit.prototype.exportToHash = function() {
@@ -84,17 +85,23 @@ Unit.prototype.setWhereAttack = function() {
     }
 };
 
-Unit.prototype.attack = function(toLocation) {
-    var unit = toLocation.getObject();
-    if (!unit) {
+Unit.prototype.attack = function(toLocation) { //all special units don't run this function
+    var victim = toLocation.getObject();
+    if (!victim) {
         return false;
     }
-    //todo: add code here
-    unit.harm(this);
+    if (!victim.needBattle) {
+        victim.harm(this);
+        return true;
+    }
+    this.world.addBattle(this, victim);
     return true;
 };
 
-Unit.prototype.harm = function(offender) {
+Unit.prototype.harm = function(offender) { //all special units don't run this function
+    if (offender.type in Config.KILLERS) {
+        this.destroy();
+    }
     return true;
 };
 

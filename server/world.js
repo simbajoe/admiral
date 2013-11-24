@@ -1,5 +1,6 @@
 var Player = require('./player.js');
 var Cells = require('./cells.js');
+var Battle = require('./battle.js');
 var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
 
@@ -13,6 +14,7 @@ var World = module.exports = function() {
     this.addPlayer(Config.PLAYER1);
     this.addPlayer(Config.PLAYER2);
     this.winner = '';
+    this.battle = null;
 };
 
 World.prototype.getHash = function() {
@@ -131,4 +133,9 @@ World.prototype.makeAttack = function(data) {
     this.switchActivePlayer();
     this.phase = Config.MOVE_PHASE;
     return true;
+};
+
+
+World.prototype.addBattle = function(offender, defender) {
+    this.battle = new Battle(offender, defender, this);
 };

@@ -6,6 +6,7 @@ var Torpedo = module.exports = function(id, location, owner, world) {
     this.init(id, location, owner, 'torpedo', world);
     this.specialUnit = Config.MOVE_TORPEDO_SHIP;
     this.maxDistance = 2;
+    this.needBattle = false;
 };
 Torpedo.prototype = new Unit();
 
@@ -110,4 +111,25 @@ Torpedo.prototype.setWhereAttack = function() {
             }
         }
     }
+};
+
+Torpedo.prototype.attack = function(toLocation) {
+    this.setWhereAttack();
+    var cell = null;
+    for (var i in this.whereCouldAttack) {
+        cell = this.world.cells.get(this.whereCouldAttack[i]);
+        if (toLocation.isEq(cell)) {
+            cell.getObject().destroy();
+            break;
+        }
+    }
+    this.destroy();
+    return true;
+};
+
+Torpedo.prototype.harm = function(offender) {
+    if (this.canAttack()) {
+        offender.destroy();
+    }
+    this.destroy();
 };

@@ -14,26 +14,146 @@
     exports.MOVE_PHASE = 'move_phase';
     exports.ATTACK_PHASE = 'attack_phase';
     exports.unitsToPlace = {
-        aircraftCarrier: 1,
-        battleship: 2,
-        cruiser: 6,
-        fireShip: 1,
-        airplane: 1,
-        MNB: 2,
-        atomicBomb: 1,
-        raider: 2,
-        mine: 6,
-        destroyer: 6,
-        fixedMine: 1,
-        cruisingSubmarine: 1,
-        patrol: 6,
-        torpedo: 6,
-        vedette: 6,
-        minesweeper: 6,
-        submarine: 6
+        aircraftCarrier: 1, //A
+        battleship: 2, //l
+        cruiser: 6, //kr
+        fireShip: 1, //
+        airplane: 1, //C
+        MNB: 2, //vmb
+        atomicBomb: 1, //ab
+        raider: 2, //p
+        mine: 6, //m
+        destroyer: 6, //es
+        fixedMine: 1, //sm
+        cruisingSubmarine: 1, //krpl
+        patrol: 6, //st
+        torpedo: 6, //t
+        vedette: 6, //tk
+        minesweeper: 6, //tr
+        submarine: 6 //pl
     };
     exports.MOVE_MINE_SHIP = 'destroyer';
     exports.MOVE_AIRPLANE_SHIP = 'aircraftCarrier';
     exports.MOVE_TORPEDO_SHIP = 'vedette';
     exports.KILL_MINE = 'minesweeper';
+    exports.KILLERS = ['airplane', 'torpedo'];
+    exports.ATTACK_LESS_UNITS = ['MNB', 'mine', 'fixedMine'];
+    exports.possibleGroups = [
+        {
+            units: ['submarine'],
+            fireValue: 1
+        },
+        {
+            units: ['minesw{eeper'],
+            fireValue: 2
+        },
+        {
+            units: ['submarine', 'submarine'],
+            fireValue: 3
+        },
+        {
+            units: ['minesweeper', 'minesweeper'],
+            fireValue: 4
+        },
+        {
+            units: ['vedette'],
+            fireValue: 5
+        },
+        {
+            units: ['submarine', 'submarine', 'submarine'],
+            fireValue: 6
+        },
+        {
+            units: ['minesweeper', 'minesweeper', 'minesweeper'],
+            fireValue: 7
+        },
+        {
+            units: ['vedette', 'vedette'],
+            fireValue: 8
+        },
+        {
+            units: ['cruisingSubmarine'],
+            fireValue: 9
+        },
+        {
+            units: ['patrol'],
+            fireValue: 10
+        },
+        {
+            units: ['vedette', 'vedette', 'vedette'],
+            fireValue: 11
+        },
+        {
+            units: ['patrol', 'cruisingSubmarine'],
+            fireValue: 12
+        },
+        {
+            units: ['destroyer'],
+            fireValue: 13
+        },
+        {
+            units: ['patrol', 'patrol'],
+            fireValue: 14
+        },
+        {
+            units: ['raider'],
+            fireValue: 15
+        },
+        {
+            units: ['patrol', 'patrol', 'cruisingSubmarine'],
+            fireValue: 16
+        },
+        {
+            units: ['cruiser'],
+            fireValue: 17
+        },
+        {
+            units: ['destroyer', 'destroyer'],
+            fireValue: 18
+        },
+        {
+            units: ['patrol', 'patrol', 'patrol'],
+            fireValue: 18 //eq 2destroyer
+        },
+        {
+            units: ['raider', 'destroyer'],
+            fireValue: 19
+        },
+        {
+            units: ['destroyer', 'destroyer', 'destroyer'],
+            fireValue: 20
+        },
+        {
+            units: ['raider', 'raider'],
+            fireValue: 21
+        },
+        {
+            units: ['battleship'],
+            fireValue: 22
+        },
+        {
+            units: ['cruiser', 'cruiser'],
+            fireValue: 23
+        },
+        {
+            units: ['raider', 'destroyer', 'destroyer'],
+            fireValue: 24
+        },
+        {
+            units: ['raider', 'raider', 'destroyer'],
+            fireValue: 24 //eq 2destr + raider
+        },
+        {
+            units: ['aircraftCarrier'],
+            fireValue: 25
+        },
+        {
+            units: ['cruiser', 'cruiser', 'cruiser'],
+            fireValue: 26
+        },
+        {
+            units: ['battleship', 'battleship'],
+            fireValue: 27
+        }
+    ];
 })(typeof exports === 'undefined'? this['Config']={}: exports);
