@@ -117,8 +117,8 @@ World.prototype.makeAttack = function(data) {
         this.switchActivePlayer();
         return true;
     }
-    var from = world.cells.get(data.from);
-    var to = world.cells.get(data.to);
+    var from = this.cells.get(data.from);
+    var to = this.cells.get(data.to);
     if (!from
         || !from.getObject()
         || !to) {

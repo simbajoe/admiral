@@ -15,4 +15,5 @@ Mine.prototype.harm = function(offender) {
         return;
     }
     offender.destroy();
+    this.destroy();
 };
