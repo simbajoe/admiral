@@ -110,6 +110,40 @@ $(function() {
         }
     };
 
+    Game.prototype.attack_phase = function (snapshot) {
+        if (snapshot.world.currentTurn != this.id) {
+            return;
+        }
+        var me = this;
+        var skip = true;
+        for (var v in this.player.units) {
+            var unit = this.player.units[v];
+            if (unit.whereCanAttack.length) {
+                skip = false;
+                $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
+                    .addClass('can_move')
+                    .data('whereCanMove', unit.whereCanAttack)
+                    .click(function () {
+                        $('.field').removeClass('move_from').removeClass('move_to').removeData('from');
+                        $(this).addClass('move_from');
+                        var whereCanMove = $(this).data('whereCanMove');
+                        for (var i = 0; i < whereCanMove.length; i++) {
+                            var p = whereCanMove[i];
+                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to')
+                                .data('from', [$(this).data('x'), $(this).data('y')])
+                                .click(function () {
+                                    me.send('attack', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
+                                    $('.field').unbind('click');
+                                });
+                        }
+                    });
+            }
+        }
+        if (skip) {
+            me.send('attack', { 'skip': true });
+        }
+    };
+
     Game.prototype.placeUnit = function (unit, place) {
         this.send('place', { 'location': place, 'type': unit });
     };
