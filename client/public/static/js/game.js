@@ -40,6 +40,7 @@ $(function() {
     Game.prototype.update = function (snapshot) {
         $('.field_content').html('').removeClass().addClass('field_content');
         $('.field').removeClass().addClass('field').removeData('whereCanMove').unbind('click').removeData('from');
+        $('body').unbind('keypress');
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
@@ -134,6 +135,7 @@ $(function() {
                                 .click(function () {
                                     me.send('attack', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
                                     $('.field').unbind('click');
+                                    $('body').unbind('keypress');
                                 });
                         }
                     });
@@ -142,6 +144,16 @@ $(function() {
         if (skip) {
             me.send('attack', { 'skip': true });
             $('.field').unbind('click');
+            $('body').unbind('keypress');
+        } else {
+            $("body").keypress(function(event) {
+                // w
+                if (event.charCode == 119) {
+                    me.send('attack', { 'skip': true });
+                    $('.field').unbind('click');
+                    $('body').unbind('keypress');
+                }
+            });
         }
     };
 
