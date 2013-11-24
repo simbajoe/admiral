@@ -111,5 +111,7 @@ World.prototype.makeAttack = function(data) {
         if (this.currentTurn > 1) {
             this.currentTurn = 0;
         }
+        return true;
     }
+    return false;
 };
