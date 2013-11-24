@@ -13,6 +13,7 @@ Unit.prototype.init = function(id, location, owner, type, world) {
     this.location.addObject(this);
     this.whereCanMove = [];
     this.whereCanAttack = [];
+    this.whereCouldAttack = [];
     this.maxDistance = 1;
     this.maxFireDistance = 1;
 };
@@ -29,8 +30,9 @@ Unit.prototype.exportToHash = function() {
         result.whereCanMove = this.whereCanMove;
     }
     if (this.world.phase == Config.ATTACK_PHASE) {
-        this.setWhereCanAttack();
+        this.setWhereAttack();
         result.whereCanAttack = this.whereCanAttack;
+        result.whereCouldAttack = this.whereCouldAttack;
     }
     return result;
 };
@@ -71,10 +73,11 @@ Unit.prototype.setWhereCanMove = function() {
     }
 };
 
-Unit.prototype.setWhereCanAttack = function() {
+Unit.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
     var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
     for (var i in cells) {
+        this.whereCouldAttack.push(cells[i].getPoint());
         if (cells[i].hasEnemyObject(this.owner) && !this.location.areObjectsBetween(cells[i])) {
             this.whereCanAttack.push(cells[i].getPoint());
         }

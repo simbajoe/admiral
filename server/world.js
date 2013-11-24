@@ -48,10 +48,6 @@ World.prototype.getPlayerWithoutSocket = function() {
     return null;
 };
 
-World.prototype.removePlayer = function(player) {
-    this.players = Utils.deleteFromArrById(player.id, this.players);
-};
-
 World.prototype.exportToHash = function() {
     var result = {};
     result.phase = this.phase;

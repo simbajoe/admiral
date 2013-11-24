@@ -69,7 +69,7 @@ Torpedo.prototype.canAttack = function() {
     return shootingUnits.length > 0;
 };
 
-Torpedo.prototype.setWhereCanAttack = function() {
+Torpedo.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
     if (!this.canAttack()) {
         return false;
@@ -102,8 +102,11 @@ Torpedo.prototype.setWhereCanAttack = function() {
         }
         for (var j in points) {
             cell = this.world.cells.get(points[j]);
-            if (cell && cell.hasEnemyObject(this.owner)) {
-                this.whereCanAttack.push(cell.getPoint());
+            if (cell) {
+                this.whereCouldAttack.push(cell.getPoint());
+                if (cell.hasEnemyObject(this.owner)) {
+                    this.whereCanAttack.push(cell.getPoint());
+                }
             }
         }
     }

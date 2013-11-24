@@ -4,7 +4,6 @@ var Config = require('../../shared/config.js');
 var Airplane = module.exports = function(id, location, owner, world) {
     this.init(id, location, owner, 'airplane', world);
     this.specialUnit = Config.MOVE_AIRPLANE_SHIP;
-    this.maxFireDistance = Config.maxWorldX - Config.minWorldX;
 };
 
 Airplane.prototype = new UnitSatellite();
@@ -25,8 +24,9 @@ Airplane.prototype.canAttack = function() {
     return shootingUnits.length > 0;
 };
 
-Airplane.prototype.setWhereCanAttack = function() {
+Airplane.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
+    this.whereCouldAttack = [];
     if (!this.canAttack()) {
         return false;
     }
@@ -37,15 +37,21 @@ Airplane.prototype.setWhereCanAttack = function() {
         if (this.location.x == unit.x) {
             for (var y = Config.minWorldY; y <= Config.maxWorldY; y++) {
                 cell = this.world.cells.get([unit.x, y]);
-                if (cell && cell.hasEnemyObject(this.owner)) {
-                    this.whereCanAttack.push(cell.getPoint());
+                if (cell) {
+                    this.whereCouldAttack.push(cell.getPoint());
+                    if (cell.hasEnemyObject(this.owner)) {
+                        this.whereCanAttack.push(cell.getPoint());
+                    }
                 }
             }
         } else {
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
                 cell = this.world.cells.get([x, unit.y]);
-                if (cell && cell.hasEnemyObject(this.owner)) {
-                    this.whereCanAttack.push(cell.getPoint());
+                if (cell) {
+                    this.whereCouldAttack.push(cell.getPoint());
+                    if (cell.hasEnemyObject(this.owner)) {
+                        this.whereCanAttack.push(cell.getPoint());
+                    }
                 }
             }
         }
