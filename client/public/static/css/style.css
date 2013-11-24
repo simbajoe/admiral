@@ -56,18 +56,31 @@ body {
 }
 
 .field.with_unit.can_move.move_from .field_back {
-    background-color: #ff0;
-    opacity: 0.4;
+    /*background-color: #ff0;*/
+    opacity: 0.6;
 }
 
-.field.move_to .field_back {
-    background-color: #ff0;
-    opacity: 0.4;
+.field.move_to .field_content {
+    border: 2px dotted #fff;
+    width: 54.4px;
+    height: 54.4px;
 }
 
 .unit {
     background-size: 58.4px auto;
     background-repeat: no-repeat;
+    opacity: 0.5;
+}
+.field.with_unit.can_move .unit {
+    opacity: 1;
+}
+
+.field.with_unit.can_move.move_from .unit {
+    opacity: 1;
+    border: 2px solid #ff0;
+    width: 54.4px;
+    height: 54.4px;
+    background-size: 54.4px auto;
 }
 
 .aircraftCarrier {
