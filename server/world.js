@@ -109,5 +109,9 @@ World.prototype.makeAttack = function(data) {
         }
         return true;
     }
-    return false;
+    if (!data.from || !data.to) {
+        return null;
+    }
+    this.phase = Config.MOVE_PHASE;
+    return true;
 };
