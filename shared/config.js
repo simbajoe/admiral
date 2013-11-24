@@ -35,4 +35,5 @@
     exports.MOVE_MINE_SHIP = 'destroyer';
     exports.MOVE_AIRPLANE_SHIP = 'aircraftCarrier';
     exports.MOVE_TORPEDO_SHIP = 'vedette';
+    exports.KILL_MINE = 'minesweeper';
 })(typeof exports === 'undefined'? this['Config']={}: exports);

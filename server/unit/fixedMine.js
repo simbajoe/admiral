@@ -10,5 +10,4 @@ FixedMine.prototype = new Unit();
 
 FixedMine.prototype.harm = function(offender) {
     offender.destroy();
-    return true;
 };
