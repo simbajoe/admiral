@@ -1,8 +1,9 @@
 var Utils = require('../shared/utils.js');
 
-var Cell = module.exports = function(x, y) {
+var Cell = module.exports = function(x, y, cells) {
     this.x = x;
     this.y = y;
+    this.cells = cells;
     this.object = null;
 };
 
@@ -22,32 +23,45 @@ Cell.prototype.getPoint = function() {
     return [this.x, this.y];
 };
 
-Cell.prototype.getStraightNeighborPoints = function(distance) {
-    var points = [];
-    var point = this.getPoint();
+Cell.prototype.getStraightNeighborCells = function(distance) {
+    var points = [], cells = [];
     for (var d = 1; d <= distance; d++) {
-        points.push([point[0] + d, point[1]]);
-        points.push([point[0] - d, point[1]]);
-        points.push([point[0], point[1] + d]);
-        points.push([point[0], point[1] - d]);
+        points = [
+            [this.x + d, this.y],
+            [this.x - d, this.y],
+            [this.x, this.y + d],
+            [this.x, this.y - d]
+        ];
+        for (var i in points) {
+            var cell = this.cells.get(points[i]);
+            if (cell) {
+                cells.push(cell);
+            }
+        }
     }
-    return points;
+    return cells;
 };
 
-Cell.prototype.getDiagonalFirstNeighborPoints = function() {
-    var point = this.getPoint();
+Cell.prototype.getDiagonalFirstNeighborCells = function() {
     var points = [
-        [point[0] + 1, point[1]  + 1],
-        [point[0] - 1, point[1] + 1],
-        [point[0] + 1, point[1] - 1],
-        [point[0] - 1, point[1] - 1]
+        [this.x + 1, this.y  + 1],
+        [this.x - 1, this.y + 1],
+        [this.x + 1, this.y - 1],
+        [this.x - 1, this.y - 1]
     ];
-    return points;
+    var cells = [];
+    for (var i in points) {
+        var cell = this.cells.get(points[i]);
+        if (cell) {
+            cells.push(cell);
+        }
+    }
+    return cells;
 };
 
 Cell.prototype.getAllNeighbors = function(distance) {
-    var strN = this.getStraightNeighborPoints(distance);
-    var diagN = this.getDiagonalFirstNeighborPoints();
+    var strN = this.getStraightNeighborCells(distance);
+    var diagN = this.getDiagonalFirstNeighborCells();
     return strN.concat(diagN);
 };
 
@@ -59,31 +73,39 @@ Cell.prototype.getDist = function(cell) {
     return Math.sqrt(Math.pow((this.x - cell.x),2) + Math.pow((this.y - cell.y),2));
 };
 
-Cell.prototype.getPointsBetween = function(cell) {
-    var result = [];
+Cell.prototype.getCellsBetween = function(cell) {
+    var result = [], newCell = null;
     if (this.isEq(cell)
         || (this.x != cell.x && this.y != cell.y)) {
         return result;
     }
     if (this.x = cell.x) {
         for (var y = Math.min(this.y, cell.y) + 1; y <= Math.max(this.y, cell.y) - 1; y++) {
-            result.push([this.x, y]);
+            newCell = this.cells.get([this.x, y]);
+            if (newCell) {
+                result.push(cell);
+            }
         }
         return result;
     }
     for (var x = Math.min(this.x, cell.x) + 1; y <= Math.max(this.x, cell.x) - 1; y++) {
-        result.push([x, this.y]);
+        newCell = this.cells.get([this.x, y]);
+        if (newCell) {
+            result.push(cell);
+        }
     }
     return result;
 };
 
 Cell.prototype.areObjectsBetween = function(cell) {
-    var pointsBetween = this.getPointsBetween(cell);
-    for (var i in pointsBetween) {
-        var cell = pointsBetween[i];
-        if (!cell || cell.getObject()) {
-            return false;
+    var cellsBetween = this.getCellsBetween(cell);
+    if (cellsBetween.length == 0) {
+        return false;
+    }
+    for (var i in cellsBetween) {
+        if (cellsBetween[i].getObject()) {
+            return true;
         }
     }
-    return true;
+    return false;
 };

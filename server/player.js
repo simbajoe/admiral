@@ -63,7 +63,7 @@ Player.prototype.exportToHash = function() {
         for (var i in this.homelandLocation) {
             var y = parseInt(this.homelandLocation[i]);
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
-                if (!this.world.getCell([x,y]).getObject()) {
+                if (!this.world.cells.get([x,y]).getObject()) {
                     result.freeCells.push([x,y]);
                 }
             }
@@ -92,7 +92,7 @@ Player.prototype.checkAllUnitsPlaced = function() {
 };
 
 Player.prototype.addUnit = function(id, location, type) {
-    var unit = new units[type](id, this.world.getCell(location), this, this.world);
+    var unit = new units[type](id, this.world.cells.get(location), this, this.world);
     this.unitsToPlace[type]--;
     this.units.push(unit);
     this.checkAllUnitsPlaced();

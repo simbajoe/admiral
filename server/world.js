@@ -1,18 +1,12 @@
 var Player = require('./player.js');
-var Cell = require('./cell.js');
+var Cells = require('./cells.js');
 var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
 
 var World = module.exports = function() {
     this.objects = [];
     this.players = [];
-    this.cells = [];
-    for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
-        this.cells[x] = [];
-        for (var y = Config.minWorldY; y <= Config.maxWorldX; y++) {
-            this.cells[x][y] = new Cell(x,y);
-        }
-    }
+    this.cells = new Cells();
     this.uniqueId = 1;
     this.phase = Config.PLANNING_PHASE;
     this.currentTurn = null;
@@ -67,19 +61,10 @@ World.prototype.exportToHash = function() {
     return result;
 };
 
-World.prototype.getCell = function(location) {
-    if (this.cells[location[0]] === undefined
-        || this.cells[location[0]][location[1]] === undefined) {
-        return null;
-    }
-    return this.cells[location[0]][location[1]];
-};
-
-
 World.prototype.addUnit = function(owner, type, location) {
     if (this.phase != Config.PLANNING_PHASE
         || !owner.canPlace(type, location)
-        || this.getCell(location).getObject()
+        || this.cells.get(location).getObject()
         || !location
         || !type
         || !owner) {
@@ -105,9 +90,10 @@ World.prototype.checkCanEndPlanningPhase = function() {
 };
 
 World.prototype.makeMove = function(unitLocation, newPoint) {
-    var cell = this.getCell(command.params.from);
-    if (cell && cell.getObject()) {
-        cell.getObject().move(command.params.to);
+    var fromCell = this.cells.get(unitLocation);
+    var toCell = this.cells.get(newPoint);
+    if (fromCell && fromCell.getObject() && toCell) {
+        fromCell.getObject().move(toCell);
         //after move can be attack, move turn can be skipped, though if move turn skipped must be attack
         this.currentTurn++;
         if (this.currentTurn > 1) {

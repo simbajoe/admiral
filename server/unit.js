@@ -29,33 +29,31 @@ Unit.prototype.exportToHash = function() {
     return result;
 };
 
-Unit.prototype.checkPointIsNearToMove = function(newPint) {
-    return (this.location.x == toPoint[0]
-        && this.location.y - toPoint[1] <= this.maxDistance)
-        || (this.location.y == toPoint[1]
-        && this.location.x - toPoint[0] <= this.maxDistance);
+Unit.prototype.checkCellIsNearToMove = function(cell) {
+    return (this.location.x == cell.x
+        && this.location.y - cell.y <= this.maxDistance)
+        || (this.location.y == cell.y
+        && this.location.x - cell.x <= this.maxDistance);
 };
 
-Unit.prototype.move = function(toPoint) {
-    var cell = this.world.getCell(toPoint);
-    if (!this.checkPointIsNearToMove(toPoint)
-        || !cell
-        || this.world.getCell(toPoint).getObject()
+Unit.prototype.move = function(cell) {
+    if (!this.checkCellIsNearToMove(cell)
+        || cell.getObject()
         || this.location.areObjectsBetween(cell)) {
         return false;
     }
     this.location.removeObject();
-    this.location = this.world.getCell(toPoint);
+    this.location = cell;
     this.location.addObject(this);
     return true;
 };
 
 Unit.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
-    var points = this.location.getStraightNeighborPoints(this.maxDistance);
-    for (var i in points) {
-        var cell = this.world.getCell(points[i]);
-        if (cell && !cell.getObject() && !this.location.areObjectsBetween(cell)) {
+    var cells = this.location.getStraightNeighborCells(this.maxDistance);
+    for (var i in cells) {
+        var cell = cells[i];
+        if (!cell.getObject() && !this.location.areObjectsBetween(cell)) {
             this.whereCanMove.push(cell.getPoint());
         }
     }

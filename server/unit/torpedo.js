@@ -10,32 +10,26 @@ var Torpedo = module.exports = function(id, location, owner, world) {
 Torpedo.prototype = new Unit();
 
 
-Torpedo.prototype.getSpecialUnitsNearPoint = function(point) {
+Torpedo.prototype.getSpecialUnitsNearPoint = function(cell) {
     var specialUnits = [];
-    var goalCell = this.world.getCell(point);
-    if (!goalCell) {
-        return false;
-    }
-    var aroundPoints = goalCell.getAllNeighbors(this.maxDistance);
-    for (var i in aroundPoints) {
-        var cell = this.world.getCell(aroundPoints[i]);
-        if (cell && cell.getObject() && cell.getObject().type == this.specialUnit) {
+    var aroundCells = cell.getAllNeighbors(this.maxDistance);
+    for (var i in aroundCells) {
+        var cell = aroundCells[i];
+        if (cell.getObject() && cell.getObject().type == this.specialUnit) {
             specialUnits.push(cell.getObject());
         }
     }
     return specialUnits;
 };
 
-Torpedo.prototype.move = function(toPoint) {
+Torpedo.prototype.move = function(cell) {
     this.setWhereCanMove();
-    var cell = this.world.getCell(toPoint);
-    if (!cell
-        || this.world.getCell(toPoint).getObject()
-        || !this.checkPointIsNearToMove(toPoint)) {
+    if (cell.getObject()
+        || !this.checkCellIsNearToMove(cell)) {
         return false;
     }
     for (var j in this.whereCanMove) {
-        var tmpCell = this.world.getCell(this.whereCanMove[j]);
+        var tmpCell = this.world.cells.get(this.whereCanMove[j]);
         if (tmpCell && tmpCell.isEq(cell)) {
             this.location.removeObject();
             this.location = tmpCell;
@@ -48,30 +42,29 @@ Torpedo.prototype.move = function(toPoint) {
 
 Torpedo.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
-    var i = 0, j = 0, cell = null, diagPoints = [], allNeighborPoints = [], specialUnitLocationPoint = [], point= [];
-    var specialUnits = this.getSpecialUnitsNearPoint(this.location.getPoint());
+    var i = 0, j = 0, cell = null, diagCells = [], allNeighborCells = [], specialUnitLocation = [], point= [];
+    var specialUnits = this.getSpecialUnitsNearPoint(this.location);
     for (i in specialUnits) {
-        specialUnitLocationPoint = specialUnits[i].location.getPoint();
-        if (Math.abs(specialUnitLocationPoint[0] - this.location.x) == 1 //check if this torpedo is on diagonal (can move 2 points)
-            && Math.abs(specialUnitLocationPoint[1] - this.location.y) == 1) {
-            diagPoints = specialUnits[i].location.getDiagonalFirstNeighborPoints();
-            for (j in diagPoints) {
-                cell = this.world.getCell(diagPoints[j]);
-                if (cell
-                    && !cell.getObject()
+        specialUnitLocation = specialUnits[i].location;
+        if (Math.abs(specialUnitLocation.x - this.location.x) == 1 //check if this torpedo is on diagonal (can move 2 points)
+            && Math.abs(specialUnitLocation.y - this.location.y) == 1) {
+            diagCells = specialUnits[i].location.getDiagonalFirstNeighborCells();
+            for (j in diagCells) {
+                cell = diagCells[j];
+                if (!cell.getObject()
                     && (cell.x == this.location.x
                         || cell.y == this.location.y)
                     && !this.location.isEq(cell)) {
-                    this.whereCanMove.push(diagPoints[j]);
+                    this.whereCanMove.push(diagCells[j].getPoint());
                 }
             }
         }
-        allNeighborPoints = specialUnits[i].location.getAllNeighbors(this.maxDistance);
-        for (j in allNeighborPoints) {
-            cell = this.world.getCell(allNeighborPoints[j]);
+        allNeighborCells = specialUnits[i].location.getAllNeighbors(this.maxDistance);
+        for (j in allNeighborCells) {
+            cell = allNeighborCells[j];
             if (cell
                 && !cell.getObject()
-                && cell.getDist(this.location.getPoint()) == 1) {
+                && cell.getDist(this.location) == 1) {
                 this.whereCanMove.push([cell.getPoint()]);
             }
         }
