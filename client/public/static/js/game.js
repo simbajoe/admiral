@@ -42,6 +42,7 @@ $(function() {
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
         $('.field_content').html('').removeClass().addClass('field_content');
+        $('.field').removeClass().addClass('field');
         for (var v in this.player.units) {
             var unit = this.player.units[v];
             $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
@@ -89,6 +90,24 @@ $(function() {
     };
 
     Game.prototype.move_phase = function (snapshot) {
+        if (snapshot.world.currentTurn != this.id) {
+            return;
+        }
+        for (var v in this.player.units) {
+            var unit = this.player.units[v];
+            if (unit.whereCanMove.length) {
+                $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
+                    .addClass('can_move')
+                    .click(function () {
+                        $('.field').removeClass('move_from').removeClass('move_to');
+                        $(this).addClass('move_from');
+                        for (var i = 0; i <= unit.whereCanMove.length; i++) {
+                            var p = unit.whereCanMove[i];
+                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to');
+                        }
+                    });
+            }
+        }
     };
 
     Game.prototype.placeUnit = function (unit, place) {
