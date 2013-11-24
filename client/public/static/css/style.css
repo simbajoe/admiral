@@ -46,8 +46,23 @@ body {
 }
 
 .field.with_unit .field_back {
-    background-color: white;
-    opacity: 0.5;
+    background-color: #000;
+    opacity: 0.3;
+}
+
+.field.with_unit.can_move .field_back {
+    background-color: #fff;
+    opacity: 0.3;
+}
+
+.field.with_unit.can_move.move_from .field_back {
+    background-color: #ff0;
+    opacity: 0.4;
+}
+
+.field.move_to .field_back {
+    background-color: #ff0;
+    opacity: 0.4;
 }
 
 .unit {
