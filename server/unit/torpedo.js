@@ -22,24 +22,6 @@ Torpedo.prototype.getSpecialUnitsNearPoint = function(cell) {
     return specialUnits;
 };
 
-Torpedo.prototype.move = function(cell) {
-    this.setWhereCanMove();
-    if (cell.getObject()
-        || !this.checkCellIsNearToMove(cell)) {
-        return false;
-    }
-    for (var j in this.whereCanMove) {
-        var tmpCell = this.world.cells.get(this.whereCanMove[j]);
-        if (tmpCell && tmpCell.isEq(cell)) {
-            this.location.removeObject();
-            this.location = tmpCell;
-            tmpCell.addObject(this);
-            return true;
-        }
-    }
-    return false;
-};
-
 Torpedo.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
     var i = 0, j = 0, cell = null, diagCells = [], allNeighborCells = [], specialUnitLocation = null;

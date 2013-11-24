@@ -14,20 +14,6 @@ UnitSatellite.prototype.isSpecialUnitNearPoint = function(cell) {
     return false;
 };
 
-UnitSatellite.prototype.move = function(cell) {
-    if (!cell.getObject()
-        || !this.checkCellIsNearToMove(cell)
-        || !this.isSpecialUnitNearPoint(this.location)
-        || !this.isSpecialUnitNearPoint(cell)
-        || this.location.areObjectsBetween(cell)) {
-        return false;
-    }
-    this.location.removeObject();
-    this.location = cell;
-    this.location.addObject(this);
-    return true;
-};
-
 UnitSatellite.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
     var cells = this.location.getStraightNeighborCells(this.maxDistance);

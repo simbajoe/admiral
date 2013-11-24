@@ -12,7 +12,9 @@ Unit.prototype.init = function(id, location, owner, type, world) {
     this.world = world;
     this.location.addObject(this);
     this.whereCanMove = [];
+    this.whereCanAttack = [];
     this.maxDistance = 1;
+    this.maxFireDistance = 1;
 };
 
 Unit.prototype.exportToHash = function() {
@@ -26,6 +28,10 @@ Unit.prototype.exportToHash = function() {
         this.setWhereCanMove();
         result.whereCanMove = this.whereCanMove;
     }
+    if (this.world.phase == Config.ATTACK_PHASE) {
+        this.setWhereCanAttack();
+        result.whereCanAttack = this.whereCanAttack;
+    }
     return result;
 };
 
@@ -37,15 +43,21 @@ Unit.prototype.checkCellIsNearToMove = function(cell) {
 };
 
 Unit.prototype.move = function(cell) {
-    if (!this.checkCellIsNearToMove(cell)
-        || cell.getObject()
-        || this.location.areObjectsBetween(cell)) {
+    this.setWhereCanMove();
+    if (cell.getObject()
+        || !this.checkCellIsNearToMove(cell)) {
         return false;
     }
-    this.location.removeObject();
-    this.location = cell;
-    this.location.addObject(this);
-    return true;
+    for (var j in this.whereCanMove) {
+        var tmpCell = this.world.cells.get(this.whereCanMove[j]);
+        if (tmpCell && tmpCell.isEq(cell)) {
+            this.location.removeObject();
+            this.location = tmpCell;
+            tmpCell.addObject(this);
+            return true;
+        }
+    }
+    return false;
 };
 
 Unit.prototype.setWhereCanMove = function() {
@@ -55,6 +67,17 @@ Unit.prototype.setWhereCanMove = function() {
         var cell = cells[i];
         if (!cell.getObject() && !this.location.areObjectsBetween(cell)) {
             this.whereCanMove.push(cell.getPoint());
+        }
+    }
+};
+
+Unit.prototype.setWhereCanAttack = function() {
+    this.whereCanAttack = [];
+    var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
+    for (var i in cells) {
+        var object = cells[i].getObject();
+        if (object && object.owner.id != this.owner.id && !this.location.areObjectsBetween(cells[i])) {
+            this.whereCanAttack.push(cells[i].getPoint());
         }
     }
 };

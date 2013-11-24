@@ -94,13 +94,16 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
     var toCell = this.cells.get(newPoint);
     if (fromCell && fromCell.getObject() && toCell) {
         fromCell.getObject().move(toCell);
-        //after move can be attack, move turn can be skipped, though if move turn skipped must be attack
-        this.currentTurn++;
-        if (this.currentTurn > 1) {
-            this.currentTurn = 0;
-        }
+        this.phase = Config.ATTACK_PHASE;
         return true;
     }
     return false;
 };
 
+
+World.prototype.makeAttack = function() {
+    this.currentTurn++;
+    if (this.currentTurn > 1) {
+        this.currentTurn = 0;
+    }
+};
