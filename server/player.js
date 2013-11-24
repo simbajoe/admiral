@@ -110,3 +110,7 @@ Player.prototype.addSocket = function(socket) {
 Player.prototype.removeSocket = function(socket) {
     this.socket = null;
 };
+
+Player.prototype.removeUnit = function(unit) {
+    this.units = Utils.deleteFromArrById(unit.id, this.units);
+};

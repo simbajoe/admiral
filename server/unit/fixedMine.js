@@ -7,3 +7,8 @@ var FixedMine = module.exports = function(id, location, owner, world) {
 };
 
 FixedMine.prototype = new Unit();
+
+FixedMine.prototype.harm = function(offender) {
+    offender.destroy();
+    return true;
+};

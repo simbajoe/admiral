@@ -73,6 +73,10 @@ World.prototype.addUnit = function(owner, type, location) {
     return unit;
 };
 
+World.prototype.removeUnit = function(unit) {
+    this.objects = Utils.deleteFromArrById(unit.id, this.objects);
+};
+
 World.prototype.checkCanEndPlanningPhase = function() {
     if (this.players.length < 2) {
         return false;
@@ -99,19 +103,32 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
     return false;
 };
 
+World.prototype.switchActivePlayer = function() {
+    this.currentTurn++;
+    if (this.currentTurn > 1) {
+        this.currentTurn = 0;
+    }
+};
+
 
 World.prototype.makeAttack = function(data) {
     if (data.skip) {
         this.phase = Config.MOVE_PHASE;
-        this.currentTurn++;
-        if (this.currentTurn > 1) {
-            this.currentTurn = 0;
-        }
+        this.switchActivePlayer();
         return true;
     }
-    if (!data.from || !data.to) {
-        return null;
+    var from = world.cells.get(data.from);
+    var to = world.cells.get(data.to);
+    if (!from
+        || !from.getObject()
+        || !to) {
+        return false;
     }
+    var success = from.getObject().attack(to);
+    if (!success) {
+        return false;
+    }
+    this.switchActivePlayer();
     this.phase = Config.MOVE_PHASE;
     return true;
 };

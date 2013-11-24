@@ -83,3 +83,24 @@ Unit.prototype.setWhereAttack = function() {
         }
     }
 };
+
+Unit.prototype.attack = function(toLocation) {
+    var unit = toLocation.getObject();
+    if (!unit) {
+        return false;
+    }
+    //todo: add code here
+    unit.harm(this);
+    return true;
+};
+
+Unit.prototype.harm = function(offender) {
+    return true;
+};
+
+Unit.prototype.destroy = function() {
+    this.world.removeUnit(this);
+    this.owner.removeUnit(this);
+    this.location.removeObject(this);
+    delete this;
+};
