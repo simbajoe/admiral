@@ -42,7 +42,7 @@ Torpedo.prototype.move = function(cell) {
 
 Torpedo.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
-    var i = 0, j = 0, cell = null, diagCells = [], allNeighborCells = [], specialUnitLocation = [], point= [];
+    var i = 0, j = 0, cell = null, diagCells = [], allNeighborCells = [], specialUnitLocation = null;
     var specialUnits = this.getSpecialUnitsNearPoint(this.location);
     for (i in specialUnits) {
         specialUnitLocation = specialUnits[i].location;
@@ -54,18 +54,18 @@ Torpedo.prototype.setWhereCanMove = function() {
                 if (!cell.getObject()
                     && (cell.x == this.location.x
                         || cell.y == this.location.y)
-                    && !this.location.isEq(cell)) {
+                    && !this.location.isEq(cell)
+                    && !this.location.areObjectsBetween(cell)) {
                     this.whereCanMove.push(diagCells[j].getPoint());
                 }
             }
         }
-        allNeighborCells = specialUnits[i].location.getAllNeighbors(this.maxDistance);
+        allNeighborCells = specialUnits[i].location.getAllNeighbors(2); //get all other points
         for (j in allNeighborCells) {
             cell = allNeighborCells[j];
-            if (cell
-                && !cell.getObject()
+            if (!cell.getObject()
                 && cell.getDist(this.location) == 1) {
-                this.whereCanMove.push([cell.getPoint()]);
+                this.whereCanMove.push(cell.getPoint());
             }
         }
     }
