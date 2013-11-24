@@ -38,6 +38,7 @@ $(function() {
     };
 
     Game.prototype.update = function (snapshot) {
+        $('.field').removeClass('move_from').removeClass('move_to').removeData('whereCanMove').unbind('click');
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
@@ -75,6 +76,7 @@ $(function() {
     };
 
     Game.prototype.planning_phase = function (snapshot) {
+        $('.field.with_unit').addClass('can_move');
         var unit = null;
         for (var v in this.player.unitsToPlace) {
             if (this.player.unitsToPlace[v] > 0) {
@@ -90,7 +92,6 @@ $(function() {
     };
 
     Game.prototype.move_phase = function (snapshot) {
-        $('.field').removeClass('move_from').removeClass('move_to').removeData('whereCanMove').unbind('click');
         if (snapshot.world.currentTurn != this.id) {
             return;
         }
