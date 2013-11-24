@@ -38,28 +38,18 @@ $(function() {
     };
 
     Game.prototype.update = function (snapshot) {
-        $('.field').removeClass('move_from').removeClass('move_to').removeData('whereCanMove').unbind('click');
+        $('.field_content').html('').removeClass().addClass('field_content');
+        $('.field').removeClass().addClass('field').removeData('whereCanMove').unbind('click').removeData('from');
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
-        $('.field_content').html('').removeClass().addClass('field_content');
-        $('.field').removeClass().addClass('field');
-        for (var v in this.player.units) {
-            var unit = this.player.units[v];
-            $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
-                .addClass('unit')
-                .addClass(unit.type)
-                .parents('.field').addClass('with_unit');
-        }
         for (var i in snapshot.players) {
-            if (i != this.id) {
-                for (var v in snapshot.players[i].units) {
-                    var unit = snapshot.players[i].units[v];
-                    $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
-                        .addClass('unit')
-                        .addClass('unknownUnit')
-                        .parents('.field').addClass('with_unit');
-                }
+            for (var v in snapshot.players[i].units) {
+                var unit = snapshot.players[i].units[v];
+                $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
+                    .addClass('unit')
+                    .addClass(i == this.id ? unit.type : 'unknownUnit')
+                    .parents('.field').addClass('with_unit');
             }
         }
         this[this.phase](snapshot);
@@ -95,6 +85,7 @@ $(function() {
         if (snapshot.world.currentTurn != this.id) {
             return;
         }
+        var me = this;
         for (var v in this.player.units) {
             var unit = this.player.units[v];
             if (unit.whereCanMove.length) {
@@ -102,12 +93,17 @@ $(function() {
                     .addClass('can_move')
                     .data('whereCanMove', unit.whereCanMove)
                     .click(function () {
-                        $('.field').removeClass('move_from').removeClass('move_to');
+                        $('.field').removeClass('move_from').removeClass('move_to').removeData('from');
                         $(this).addClass('move_from');
                         var whereCanMove = $(this).data('whereCanMove');
                         for (var i = 0; i < whereCanMove.length; i++) {
                             var p = whereCanMove[i];
-                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to');
+                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to')
+                                .data('from', [$(this).data('x'), $(this).data('y')])
+                                .click(function () {
+                                    me.send('move', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
+                                    $('.field').unbind('click');
+                                });
                         }
                     });
             }
