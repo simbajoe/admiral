@@ -60,13 +60,17 @@ World.prototype.exportToHash = function() {
 };
 
 World.prototype.addUnit = function(owner, type, location) {
-    if (this.phase != Config.PLANNING_PHASE
-        || !owner.canPlace(type, location)
-        || this.cells.get(location).getObject()
-        || !location
-        || !type
-        || !owner) {
-        return null;
+    if (this.phase != Config.PLANNING_PHASE) {
+        throw "addUnit: not a planning phase: `" + this.phase + "`";
+    }
+    if (!owner.canPlace(type, location)) {
+        throw "addUnit: can't place: type=`" + type + "`, location=`" + JSON.stringify(location) + "`";
+    }
+    if (this.cells.get(location).getObject()) {
+        throw "addUnit: can't place, already have object: location=`" + JSON.stringify(location) + "`";
+    }
+    if (!location || !type || !owner) {
+        throw "addUnit: wrong input: location=`" + JSON.stringify(location) + "`, type=`" + type + "`";
     }
     var unit = owner.addUnit(this.uniqueId, location, type);
     this.objects.push(unit);

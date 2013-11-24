@@ -88,7 +88,7 @@ Player.prototype.canPlace = function(type) {
 
 Player.prototype.checkAllUnitsPlaced = function() {
     for (var i in this.unitsToPlace) {
-        if (this.unitsToPlace[i] > 1) {
+        if (this.unitsToPlace[i] > 0) {
             return false;
         }
     }
