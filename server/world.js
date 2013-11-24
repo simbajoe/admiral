@@ -10,8 +10,8 @@ var World = module.exports = function() {
     this.uniqueId = 1;
     this.phase = Config.PLANNING_PHASE;
     this.currentTurn = null;
-    this.addPlayer(Config.HOME_UP);
-    this.addPlayer(Config.HOME_DOWN);
+    this.addPlayer(Config.PLAYER1);
+    this.addPlayer(Config.PLAYER2);
     this.winner = '';
 };
 
