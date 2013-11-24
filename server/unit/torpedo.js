@@ -80,7 +80,7 @@ Torpedo.prototype.setWhereCanAttack = function() {
         var unit = shootingUnits[i];
         var x = this.location.x;
         var y = this.location.y;
-        if (this.location.x == unit.x) {
+        if (x == unit.x) {
             var dy = y - unit.y;
             moveCell = this.location.cells.get([unit.x, unit.y+3*dy]);
             points = [
