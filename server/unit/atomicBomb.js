@@ -5,3 +5,9 @@ var AtomicBomb = module.exports = function(id, location, owner, world) {
 };
 
 AtomicBomb.prototype = new Unit();
+
+AtomicBomb.prototype.setWhereAttack = function() {
+    this.whereCanAttack = [];
+    this.whereCouldAttack = [];
+    var shootingUnits = this.getUnitsCanShoot();
+};
