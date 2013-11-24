@@ -111,5 +111,5 @@ Cell.prototype.areObjectsBetween = function(cell) {
 };
 
 Cell.prototype.hasEnemyObject = function(player) {
-    return this.getObject() && this.getObject().owner.id != player.id;
+    return this.getObject() && this.getObject().owner.id != player.id
 };

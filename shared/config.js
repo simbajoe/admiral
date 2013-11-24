@@ -36,15 +36,13 @@
     exports.MOVE_AIRPLANE_SHIP = 'aircraftCarrier';
     exports.MOVE_TORPEDO_SHIP = 'vedette';
     exports.KILL_MINE = 'minesweeper';
-    exports.KILLERS = ['airplane', 'torpedo'];
-    exports.ATTACK_LESS_UNITS = ['MNB', 'mine', 'fixedMine'];
     exports.possibleGroups = [
         {
             units: ['submarine'],
             fireValue: 1
         },
         {
-            units: ['minesw{eeper'],
+            units: ['minesweeper'],
             fireValue: 2
         },
         {
