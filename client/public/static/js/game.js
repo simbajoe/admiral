@@ -141,6 +141,7 @@ $(function() {
         }
         if (skip) {
             me.send('attack', { 'skip': true });
+            $('.field').unbind('click');
         }
     };
 
