@@ -30,7 +30,7 @@ UnitSatellite.prototype.move = function(cell) {
 
 UnitSatellite.prototype.setWhereCanMove = function() {
     this.whereCanMove = [];
-    var cells = this.location.getAllNeighbors(this.maxDistance);
+    var cells = this.location.getStraightNeighborCells(this.maxDistance);
     for (var i in cells) {
         var cell = cells[i];
         if (!cell.getObject()
