@@ -71,7 +71,7 @@ Torpedo.prototype.setWhereCanMove = function() {
             cell = this.world.getCell(allNeighborPoints[j]);
             if (cell
                 && !cell.getObject()
-                && Utils.getDist(cell.getPoint(), this.location.getPoint()) == 1) {
+                && cell.getDist(this.location.getPoint()) == 1) {
                 this.whereCanMove.push([cell.getPoint()]);
             }
         }

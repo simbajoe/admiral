@@ -54,3 +54,36 @@ Cell.prototype.getAllNeighbors = function(distance) {
 Cell.prototype.isEq = function(cell) {
     return cell.x == this.x && cell.y == this.y;
 };
+
+Cell.prototype.getDist = function(cell) {
+    return Math.sqrt(Math.pow((this.x - cell.x),2) + Math.pow((this.y - cell.y),2));
+};
+
+Cell.prototype.getPointsBetween = function(cell) {
+    var result = [];
+    if (this.isEq(cell)
+        || (this.x != cell.x && this.y != cell.y)) {
+        return result;
+    }
+    if (this.x = cell.x) {
+        for (var y = Math.min(this.y, cell.y) + 1; y <= Math.max(this.y, cell.y) - 1; y++) {
+            result.push([this.x, y]);
+        }
+        return result;
+    }
+    for (var x = Math.min(this.x, cell.x) + 1; y <= Math.max(this.x, cell.x) - 1; y++) {
+        result.push([x, this.y]);
+    }
+    return result;
+};
+
+Cell.prototype.areObjectsBetween = function(cell) {
+    var pointsBetween = this.getPointsBetween(cell);
+    for (var i in pointsBetween) {
+        var cell = pointsBetween[i];
+        if (!cell || cell.getObject()) {
+            return false;
+        }
+    }
+    return true;
+};

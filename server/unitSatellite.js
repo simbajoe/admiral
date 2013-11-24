@@ -25,7 +25,7 @@ UnitSatellite.prototype.move = function(toPoint) {
         || !this.checkPointIsNearToMove(toPoint)
         || !this.isSpecialUnitNearPoint(this.location.getPoint())
         || !this.isSpecialUnitNearPoint(toPoint)
-        ) {
+        || this.location.areObjectsBetween(cell)) {
         return false;
     }
     this.location.removeObject();
@@ -42,7 +42,8 @@ UnitSatellite.prototype.setWhereCanMove = function() {
         if (cell
             && !cell.getObject()
             && this.isSpecialUnitNearPoint(this.location.getPoint())
-            && this.isSpecialUnitNearPoint(points[i])) {
+            && this.isSpecialUnitNearPoint(points[i])
+            && !this.location.areObjectsBetween(cell)) {
             this.whereCanMove.push(cell.getPoint());
         }
     }

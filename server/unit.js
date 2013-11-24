@@ -40,7 +40,8 @@ Unit.prototype.move = function(toPoint) {
     var cell = this.world.getCell(toPoint);
     if (!this.checkPointIsNearToMove(toPoint)
         || !cell
-        || this.world.getCell(toPoint).getObject()) {
+        || this.world.getCell(toPoint).getObject()
+        || this.location.areObjectsBetween(cell)) {
         return false;
     }
     this.location.removeObject();
@@ -54,7 +55,7 @@ Unit.prototype.setWhereCanMove = function() {
     var points = this.location.getStraightNeighborPoints(this.maxDistance);
     for (var i in points) {
         var cell = this.world.getCell(points[i]);
-        if (cell && !cell.getObject()) {
+        if (cell && !cell.getObject() && !this.location.areObjectsBetween(cell)) {
             this.whereCanMove.push(cell.getPoint());
         }
     }
