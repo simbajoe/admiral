@@ -79,11 +79,11 @@ Cell.prototype.getCellsBetween = function(cell) {
         || (this.x != cell.x && this.y != cell.y)) {
         return result;
     }
-    if (this.x = cell.x) {
+    if (this.x == cell.x) {
         for (var y = Math.min(this.y, cell.y) + 1; y <= Math.max(this.y, cell.y) - 1; y++) {
             newCell = this.cells.get([this.x, y]);
             if (newCell) {
-                result.push(cell);
+                result.push(newCell);
             }
         }
         return result;
@@ -91,7 +91,7 @@ Cell.prototype.getCellsBetween = function(cell) {
     for (var x = Math.min(this.x, cell.x) + 1; y <= Math.max(this.x, cell.x) - 1; y++) {
         newCell = this.cells.get([this.x, y]);
         if (newCell) {
-            result.push(cell);
+            result.push(newCell);
         }
     }
     return result;
