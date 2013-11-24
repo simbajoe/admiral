@@ -55,7 +55,7 @@ body {
     opacity: 0.3;
 }
 
-.field.with_unit.can_move.move_from .field_back {
+.field.with_unit.move_from .field_back {
     /*background-color: #ff0;*/
     opacity: 0.6;
 }
@@ -75,7 +75,7 @@ body {
     opacity: 1;
 }
 
-.field.with_unit.can_move.move_from .unit {
+.field.with_unit.move_from .unit {
     opacity: 1;
     border: 2px solid #ff0;
     width: 54.4px;
