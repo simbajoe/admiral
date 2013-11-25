@@ -6,14 +6,14 @@ var checkPhase = function(test, world, phase) {
     test.ok(
         world.phase == phase,
         'Wrong phase: `' + world.phase + '`. Expected: `' + phase + '`'
-        );
+    );
 };
 
 var checkCurrnetTurn = function(test, world, playerId) {
     test.ok(
         world.currentTurn == playerId - 1,
         'Wrong phase: `' + world.currentTurn + '`. Expected: `' + (playerId - 1) + '`'
-        );
+    );
 };
 
 var moveAndCheck = function(test, world, playerId, from, to) {
@@ -41,17 +41,37 @@ var attackAndCheck = function(test, world, playerId, data) {
         world.makeAttack(data);
         return;
     }
+    console.log(data);
     var fromCell = world.cells.get(data.from);
     var toCell = world.cells.get(data.to);
     var fromUnit = fromCell.getObject();
     var toUnit = toCell.getObject();
+    test.ok(
+        fromUnit !== null && toUnit !== null,
+        'Attack error: from: `' + JSON.stringify(data.from) + '`, to: `'
+        + JSON.stringify(data.to) + '`'
+    );
     world.makeAttack(data);
     var fromUnit2 = fromCell.getObject();
     var toUnit2 = toCell.getObject();
+};
+
+var checkObject = function (test, world, place, expectedUnit, expectedPlayer) {
+    var cell = world.cells.get(place);
+    var obj = null;
+    var player = null;
+    if (cell) {
+        obj = cell.getObject();
+        if (obj) {
+            player = obj.owner.id;
+            obj = obj.type;
+        }
+    }
+    expectedPlayer = expectedPlayer ? expectedPlayer - 1 : null;
     test.ok(
-        fromUnit !== null && toUnit !== null,
-        'Attack error: from: `' + JSON.stringify(from) + '`, to: `'
-        + JSON.stringify(to) + '`'
+        obj === expectedUnit && player === expectedPlayer,
+        'Check object: place: `' + JSON.stringify(place) + '`, have: `'
+        + obj + '`: `' + player + '`, expected: `' + expectedUnit + '`: `' + expectedPlayer + '`'
     );
 };
 
@@ -91,6 +111,33 @@ exports.testMobCreation = function(test) {
 
     moveAndCheck(test, world, Config.PLAYER2, [9, 10], [9, 8]);
     attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [6, 5], [7, 5]);
+    attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER2, [0, 10], [0, 9]);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [8, 4], [8, 5]);
+    attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER2, [0, 9], [0, 8]);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [8, 3], [8, 4]);
+    attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER2, [0, 8], [1, 8]);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [3, 4], [3, 5]);
+    attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER2, [7, 10], [7, 9]);
+    console.log(Fixture.getMap(world));
+    attackAndCheck(test, world, Config.PLAYER2, {from: [1, 8], to: [1, 2]});
+    checkObject(test, world, [1, 8], null, null);
+    checkObject(test, world, [1, 2], null, null);
 
     console.log(Fixture.getMap(world));
 
