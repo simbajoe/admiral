@@ -60,14 +60,21 @@ World.prototype.exportToHash = function() {
 };
 
 World.prototype.addUnit = function(owner, type, location) {
+    // it's not very good, but we don't have prediction on client
+    // so he doesn't really know if the unit was placed
+    // and 
     if (this.phase != Config.PLANNING_PHASE) {
-        throw "addUnit: not a planning phase: `" + this.phase + "`";
+        return false;
+        /*throw "addUnit: not a planning phase: `" + this.phase + "`";*/
     }
     if (!owner.canPlace(type, location)) {
-        throw "addUnit: can't place: type=`" + type + "`, location=`" + JSON.stringify(location) + "`";
+        return false;
+        /*throw "addUnit: can't place: type=`" + type + "`, location=`"*/
+        /*+ JSON.stringify(location) + "`, owner: `" + owner.id + "`";*/
     }
     if (this.cells.get(location).getObject()) {
-        throw "addUnit: can't place, already have object: location=`" + JSON.stringify(location) + "`";
+        return false;
+        /*throw "addUnit: can't place, already have object: location=`" + JSON.stringify(location) + "`";*/
     }
     if (!location || !type || !owner) {
         throw "addUnit: wrong input: location=`" + JSON.stringify(location) + "`, type=`" + type + "`";
