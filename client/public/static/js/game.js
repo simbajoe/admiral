@@ -157,6 +157,38 @@ $(function() {
         }
     };
 
+    Game.prototype.support_phase = function (snapshot) {
+        if (snapshot.world.currentTurn != this.id) {
+            return;
+        }
+        if (!this.player.supportCells || !this.player.supportCells.length) {
+            me.send('support', { 'skip': true });
+            $('.field').unbind('click');
+            $('body').unbind('keypress');
+        } else {
+            $("body").keypress(function(event) {
+                // w
+                if (event.charCode == 119) {
+                    me.send('support', { 'skip': true });
+                    $('.field').unbind('click');
+                    $('body').unbind('keypress');
+                }
+            });
+        }
+        var me = this;
+        for (var v in this.player.supportCells) {
+            var place = this.player.supportCells[v];
+            $('.field[data-x="' + place[0] + '"][data-y="' + place[1] + '"]')
+                .addClass('can_move')
+                .data('whereCanMove', unit.whereCanMove)
+                .click(function () {
+                    me.send('support', { 'target': $(this).data('from') });
+                    $('.field').unbind('click');
+                    $('body').unbind('keypress');
+                });
+        }
+    };
+
     Game.prototype.placeUnit = function (unit, place) {
         this.send('place', { 'location': place, 'type': unit });
     };
