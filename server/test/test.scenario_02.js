@@ -41,7 +41,6 @@ var attackAndCheck = function(test, world, playerId, data) {
         world.makeAttack(data);
         return;
     }
-    console.log(data);
     var fromCell = world.cells.get(data.from);
     var toCell = world.cells.get(data.to);
     var fromUnit = fromCell.getObject();
@@ -134,13 +133,32 @@ exports.testMobCreation = function(test) {
     attackAndCheck(test, world, Config.PLAYER1, {skip: true});
 
     moveAndCheck(test, world, Config.PLAYER2, [7, 10], [7, 9]);
-    console.log(Fixture.getMap(world));
-    attackAndCheck(test, world, Config.PLAYER2, {from: [1, 8], to: [1, 2]});
-    checkObject(test, world, [1, 8], null, null);
-    checkObject(test, world, [1, 2], null, null);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [5, 3], [4, 3]);
+    attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER2, [9, 11], [9, 9]);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [6, 3], [5, 3]);
+    attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER2, [8, 10], [8, 8]);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
+    moveAndCheck(test, world, Config.PLAYER1, [6, 2], [6, 3]);
+    attackAndCheck(test, world, Config.PLAYER1, {from: [8, 5], to: [8, 8]});
+    checkObject(test, world, [8, 5], null, null);
+    checkObject(test, world, [8, 8], null, null);
+
+    moveAndCheck(test, world, Config.PLAYER2, [10, 10], [8, 10]);
+    attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+
 
     console.log(Fixture.getMap(world));
 
     test.done();
 };
+
 
