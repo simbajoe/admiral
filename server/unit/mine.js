@@ -19,6 +19,6 @@ Mine.prototype.harm = function(offender) {
     this.destroy();
 };
 
-Mine.prototype.attack = function(toLocation) {
+Mine.prototype.attack = function(victim) {
     throw 'Mine cannot attack';
 };

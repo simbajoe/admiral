@@ -13,7 +13,7 @@ Airplane.prototype.getUnitsCanShoot = function() {
     var neighbors = this.location.getStraightNeighborCells(1);
     var specUnits = [];
     for (var i in neighbors) {
-        if (neighbors[i].getObject() && neighbors[i].getObject().type != this.specialUnit) {
+        if (neighbors[i].getObject() && neighbors[i].getObject().type == this.specialUnit) {
             specUnits.push(neighbors[i].getObject());
         }
     }
@@ -34,10 +34,10 @@ Airplane.prototype.setWhereAttack = function() {
     var shootingUnits = this.getUnitsCanShoot();
     var points = [], cell = null;
     for (var i in shootingUnits) {
-        var unit = shootingUnits[i];
-        if (this.location.x == unit.x) {
+        var unitLocation = shootingUnits[i].location;
+        if (this.location.x == unitLocation.x) {
             for (var y = Config.minWorldY; y <= Config.maxWorldY; y++) {
-                cell = this.world.cells.get([unit.x, y]);
+                cell = this.world.cells.get([unitLocation.x, y]);
                 if (cell) {
                     this.whereCouldAttack.push(cell.getPoint());
                     if (cell.hasEnemyObject(this.owner)) {
@@ -47,7 +47,7 @@ Airplane.prototype.setWhereAttack = function() {
             }
         } else {
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
-                cell = this.world.cells.get([x, unit.y]);
+                cell = this.world.cells.get([x, unitLocation.y]);
                 if (cell) {
                     this.whereCouldAttack.push(cell.getPoint());
                     if (cell.hasEnemyObject(this.owner)) {
@@ -59,13 +59,13 @@ Airplane.prototype.setWhereAttack = function() {
     }
 };
 
-Airplane.prototype.attack = function(toLocation) {
+Airplane.prototype.attack = function(victim) {
     this.setWhereAttack();
     var cell = null;
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
-        if (toLocation.isEq(cell)) {
-            cell.getObject().destroy();
+        if (victim.location.isEq(cell)) {
+            victim.destroy();
             break;
         }
     }

@@ -7,14 +7,14 @@ var FireShip = module.exports = function(id, location, owner, world) {
 
 FireShip.prototype = new Unit();
 
-FireShip.prototype.attack = function(toLocation) {
+FireShip.prototype.attack = function(victim) {
     this.setWhereAttack();
     var cell = null;
     //todo: whereCouldAttack can be triggered only after 1 turn being near victim
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
-        if (toLocation.isEq(cell)) {
-            cell.getObject().destroy();
+        if (victim.location.isEq(cell)) {
+            victim.destroy();
             break;
         }
     }

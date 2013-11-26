@@ -28,9 +28,9 @@ var moveAndCheck = function(test, world, playerId, from, to) {
     var toUnit2 = toCell.getObject();
     test.ok(
         fromUnit !== null && toUnit === null
-        && fromUnit == toUnit2 && fromUnit2 === null,
+            && fromUnit == toUnit2 && fromUnit2 === null,
         'Move error: from: `' + JSON.stringify(from) + '`, to: `'
-        + JSON.stringify(to) + '`'
+            + JSON.stringify(to) + '`'
     );
 };
 
@@ -49,7 +49,7 @@ var attackAndCheck = function(test, world, playerId, data) {
     test.ok(
         fromUnit !== null && toUnit !== null,
         'Attack error: from: `' + JSON.stringify(data.from) + '`, to: `'
-        + JSON.stringify(data.to) + '`'
+            + JSON.stringify(data.to) + '`'
     );
     world.makeAttack(data);
     var fromUnit2 = fromCell.getObject();
@@ -71,7 +71,7 @@ var checkObject = function (test, world, place, expectedUnit, expectedPlayer) {
     test.ok(
         obj === expectedUnit && player === expectedPlayer,
         'Check object: place: `' + JSON.stringify(place) + '`, have: `'
-        + obj + '`: `' + player + '`, expected: `' + expectedUnit + '`: `' + expectedPlayer + '`'
+            + obj + '`: `' + player + '`, expected: `' + expectedUnit + '`: `' + expectedPlayer + '`'
     );
 };
 
@@ -89,12 +89,12 @@ exports.testMobCreation = function(test) {
             world.addUnit(world.players[p], unit[0], unit[1]);
             i++;
             test.ok(
-                    world.players[p].units.length == i,
-                    'Unit was not added: ' + JSON.stringify(unit)
+                world.players[p].units.length == i,
+                'Unit was not added: ' + JSON.stringify(unit)
                     + '. Have units: ' + world.players[p].units.length
                     + '. Expected: ' + i
                     + '. Player: ' + p + '.'
-                   );
+            );
         }
     }
 
@@ -143,4 +143,3 @@ exports.testMobCreation = function(test) {
 
     test.done();
 };
-

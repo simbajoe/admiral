@@ -17,17 +17,17 @@
         aircraftCarrier: 1, //A
         battleship: 2, //l
         cruiser: 6, //kr
-        fireShip: 1, //
-        airplane: 1, //C
-        MNB: 2, //vmb
-        atomicBomb: 1, //ab
+        fireShip: 1, //special attack&harm
+        airplane: 1, //C; special attack&harm
+        MNB: 2, //vmb; special attack&harm
+        atomicBomb: 1, //ab; special attack&harm
         raider: 2, //p
-        mine: 6, //m
+        mine: 6, //m; special attack&harm
         destroyer: 6, //es
-        fixedMine: 1, //sm
+        fixedMine: 1, //sm; special attack&harm
         cruisingSubmarine: 1, //krpl
         patrol: 6, //st
-        torpedo: 6, //t
+        torpedo: 6, //t; special attack&harm
         vedette: 6, //tk
         minesweeper: 6, //tr
         submarine: 6 //pl

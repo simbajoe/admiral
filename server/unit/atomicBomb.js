@@ -21,9 +21,9 @@ AtomicBomb.prototype.setWhereAttack = function() {
     }
 };
 
-AtomicBomb.prototype.attack = function(toLocation) {
+AtomicBomb.prototype.attack = function(victim) {
     this.setWhereAttack();
-    if (!this.location.isEq(toLocation)) {
+    if (!victim.id != this.id) {
         return false;
     }
     var cell = null;

@@ -14,6 +14,6 @@ FixedMine.prototype.harm = function(offender) {
     this.destroy();
 };
 
-FixedMine.prototype.attack = function(toLocation) {
+FixedMine.prototype.attack = function(victim) {
     throw 'Fixed mine cannot attack';
 };

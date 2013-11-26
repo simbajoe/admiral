@@ -15,6 +15,6 @@ MNB.prototype.harm = function(offender) {
     return true;
 };
 
-MNB.prototype.attack = function(toLocation) {
+MNB.prototype.attack = function(victim) {
     throw 'MNB cannot attack';
 };

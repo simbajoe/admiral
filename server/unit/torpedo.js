@@ -58,7 +58,7 @@ Torpedo.prototype.getUnitsCanShoot = function() {
     var neighbors = this.location.getStraightNeighborCells(1);
     var specUnits = [];
     for (var i in neighbors) {
-        if (neighbors[i].getObject() && neighbors[i].getObject().type != this.specialUnit) {
+        if (neighbors[i].getObject() && neighbors[i].getObject().type == this.specialUnit) {
             specUnits.push(neighbors[i].getObject());
         }
     }
@@ -78,24 +78,24 @@ Torpedo.prototype.setWhereAttack = function() {
     var shootingUnits = this.getUnitsCanShoot();
     var points = [], moveCell = null, cell = null;
     for (var i in shootingUnits) {
-        var unit = shootingUnits[i];
+        var unitLocation = shootingUnits[i].location;
         var x = this.location.x;
         var y = this.location.y;
-        if (x == unit.x) {
-            var dy = y - unit.y;
-            moveCell = this.location.cells.get([unit.x, unit.y+3*dy]);
+        if (x == unitLocation.x) {
+            var dy = y - unitLocation.y;
+            moveCell = this.location.cells.get([unitLocation.x, unitLocation.y+3*dy]);
             points = [
-                [unit.x, unit.y + 4*dy],
-                [unit.x - 1, unit.y + 3*dy],
-                [unit.x + 1, unit.y + 3*dy]
+                [unitLocation.x, unitLocation.y + 4*dy],
+                [unitLocation.x - 1, unitLocation.y + 3*dy],
+                [unitLocation.x + 1, unitLocation.y + 3*dy]
             ];
         } else {
-            var dx = x - unit.x;
-            moveCell = this.location.cells.get([unit.x + 3*dx, unit.y]);
+            var dx = x - unitLocation.x;
+            moveCell = this.location.cells.get([unitLocation.x + 3*dx, unitLocation.y]);
             points = [
-                [unit.x + 4*dx, unit.y],
-                [unit.x + 3*dx, unit.y - 1],
-                [unit.x + 3*dx, unit.y + 1]
+                [unitLocation.x + 4*dx, unitLocation.y],
+                [unitLocation.x + 3*dx, unitLocation.y - 1],
+                [unitLocation.x + 3*dx, unitLocation.y + 1]
             ];
         }
         if (!moveCell || this.location.areObjectsBetween(moveCell)) {
@@ -113,12 +113,12 @@ Torpedo.prototype.setWhereAttack = function() {
     }
 };
 
-Torpedo.prototype.attack = function(toLocation) {
+Torpedo.prototype.attack = function(victim) {
     this.setWhereAttack();
     var cell = null;
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
-        if (toLocation.isEq(cell)) {
+        if (victim.location.isEq(cell)) {
             cell.getObject().destroy();
             break;
         }
