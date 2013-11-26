@@ -73,6 +73,14 @@ Player.prototype.exportToHash = function() {
             }
         }
     }
+    if (this.phase == Config.SUPPORT_PHASE
+        && this.world.battle.currentSupportPlayer.id == this.id) {
+        result.supportCells = [];
+        var supportCells = this.world.battle.getSupportCells();
+        for (var i in supportCells) {
+            result.supportCells.push(supportCells[i].getPoint());
+        }
+    }
     return result;
 };
 

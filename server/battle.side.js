@@ -57,6 +57,18 @@ BattleSide.prototype.getPossibleGroups = function(unitType) {
 };
 
 BattleSide.prototype.canHaveSupport = function() {
+    var cells = this.getSupportCells();
+    return cells.length > 0;
+};
+
+BattleSide.prototype.loose = function() {
+    for (var i in this.units) {
+        this.units[i].destroy();
+    }
+};
+
+BattleSide.prototype.getSupportCells = function() {
+    var result = [];
     for (var i in this.units) {
         var unit =  this.units[i];
         var cells = unit.location.getStraightNeighborCells(1);
@@ -66,17 +78,11 @@ BattleSide.prototype.canHaveSupport = function() {
                 var possibleGroups = this.getPossibleGroups(unit.type);
                 for (var k in possibleGroups) {
                     if (possibleGroups[k].indexOf(cell.getObject().type) > -1) {
-                        return true;
+                        result.push(cell);
                     }
                 }
             }
         }
     }
-    return false;
-};
-
-BattleSide.prototype.loose = function() {
-    for (var i in this.units) {
-        this.units[i].destroy();
-    }
+    return result;
 };

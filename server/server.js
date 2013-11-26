@@ -50,7 +50,7 @@ io.sockets.on("connection", function (socket) {
 
 function updateGame() {
     var i = 0;
-    if (world.winnerPlayer) {
+    if (world.winner) {
         var playerSockets = [];
         i = world.players.length;
         while (i--) {

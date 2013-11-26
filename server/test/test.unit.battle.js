@@ -12,7 +12,7 @@ exports.testBattle = function(test) {
     var unit3 = world.addUnit(world.players[0], 'cruisingSubmarine', [0,1]);
     b.addUnit(unit3);
     test.ok(b.offender.fireValue < b.defender.fireValue, 'Not correct fire value patrol+cruisingSubmarine vs patrol');
-    test.ok(b.winnerPlayer.id == world.players[0].id, 'Incorrect winner of the game');
+    test.ok(b.winner.id == world.players[0].id, 'Incorrect winner of the game');
     test.done();
 };
 

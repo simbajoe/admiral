@@ -13,7 +13,7 @@ var World = module.exports = function() {
     this.currentTurn = null;
     this.addPlayer(Config.PLAYER1);
     this.addPlayer(Config.PLAYER2);
-    this.winnerPlayer = '';
+    this.winner = false;
     this.battle = null;
 };
 
@@ -53,8 +53,12 @@ World.prototype.getPlayerWithoutSocket = function() {
 World.prototype.exportToHash = function() {
     var result = {};
     result.phase = this.phase;
-    if (this.phase != Config.PLANNING_PHASE) {
+    result.winner = this.winner;
+    if (this.phase == Config.ATTACK_PHASE || this.phase == Config.MOVE_PHASE) {
         result.currentTurn = this.players[this.currentTurn].id;
+    }
+    if (this.phase == Config.SUPPORT_PHASE) {
+        result.currentTurn = this.battle.currentSupportPlayer.id;
     }
     return result;
 };
@@ -147,15 +151,20 @@ World.prototype.makeAttack = function(data) {
         return true;
     }
     var battle = new Battle(offender, victim);
-    if (battle.winnerPlayer || battle.draw) {
+    if (battle.winner || battle.draw) {
         this.switchActivePlayer();
         this.phase = Config.MOVE_PHASE;
         return true;
     }
-    //TODO: set support phase, ask for units
+    this.battle = battle;
+    this.setSupportPhase();
     this.switchActivePlayer();
     this.phase = Config.MOVE_PHASE;
     return true;
+};
+
+World.prototype.setSupportPhase = function() {
+    this.phase = Config.SUPPORT_PHASE;
 };
 
 
