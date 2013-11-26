@@ -13,7 +13,7 @@ var World = module.exports = function() {
     this.currentTurn = null;
     this.addPlayer(Config.PLAYER1);
     this.addPlayer(Config.PLAYER2);
-    this.winner = '';
+    this.winnerPlayer = '';
     this.battle = null;
 };
 
@@ -131,16 +131,28 @@ World.prototype.makeAttack = function(data) {
         return true;
     }
     var from = this.cells.get(data.from);
+    var offender = from.getObject();
     var to = this.cells.get(data.to);
+    var victim = to.getObject();
     if (!from
-        || !from.getObject()
-        || !to) {
+        || !offender
+        || !to
+        || !victim) {
         return false;
     }
-    var success = from.getObject().attack(to);
-    if (!success) {
-        return false;
+    var success = from.getObject().attack(victim);
+    if (success) {
+        this.switchActivePlayer();
+        this.phase = Config.MOVE_PHASE;
+        return true;
     }
+    var battle = new Battle(offender, victim);
+    if (battle.winnerPlayer || battle.draw) {
+        this.switchActivePlayer();
+        this.phase = Config.MOVE_PHASE;
+        return true;
+    }
+    //TODO: set support phase, ask for units
     this.switchActivePlayer();
     this.phase = Config.MOVE_PHASE;
     return true;

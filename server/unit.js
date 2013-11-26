@@ -85,17 +85,12 @@ Unit.prototype.setWhereAttack = function() {
     }
 };
 
-Unit.prototype.attack = function(toLocation) { //all special units don't run this function
-    var victim = toLocation.getObject();
-    if (!victim) {
-        return false;
-    }
+Unit.prototype.attack = function(victim) { //all special units don't run this function
     if (!victim.needBattle) {
         victim.harm(this);
         return true;
     }
-    this.world.addBattle(this, victim);
-    return true;
+    return false;
 };
 
 Unit.prototype.harm = function(offender) { //all special units don't run this function
