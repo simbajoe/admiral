@@ -103,7 +103,6 @@ exports.testSupportGreen02 = function(test) {
     "|12 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
->>>>>>> de2cf2ea66b144dc5f140bac69cd3040dc47e4ca
     ];
 
     Util.checkWorld(test, world, map_expected, Config.PLAYER1, Config.SUPPORT_PHASE);
