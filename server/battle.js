@@ -12,14 +12,9 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
     this.update();
 };
 
-Battle.prototype.defenderWins = function() {
-    this.winner = this.defender.owner;
-    this.offender.loose();
-};
-
-Battle.prototype.offenderWins = function() {
-    this.winner = this.defender.owner;
-    this.defender.loose();
+Battle.prototype.setWinner = function(side) {
+    this.winner = side.owner;
+    side.loose();
 };
 
 Battle.prototype.getSupportCells = function() {
@@ -32,13 +27,16 @@ Battle.prototype.getSupportCells = function() {
 
 
 Battle.prototype.update = function() {
+    this.currentSupportPlayer = null;
+    this.currentSupportSide = null;
     if (this.defender.fireValue > this.offender.fireValue) {
         if (this.offender.canHaveSupport()) {
             this.currentSupportPlayer = this.offender.owner;
             this.currentSupportSide = this.offender;
             return;
         } else {
-            this.defenderWins();
+
+            this.setWinner(this.defender);
             return;
         }
     }
@@ -48,7 +46,7 @@ Battle.prototype.update = function() {
             this.currentSupportSide = this.defender;
             return;
         } else {
-            this.offenderWins();
+            this.setWinner(this.offender);
             return;
         }
     }
@@ -62,8 +60,7 @@ Battle.prototype.update = function() {
             this.currentSupportPlayer = this.defender.owner;
             this.currentSupportSide = this.defender;
         }
-        //TODO: add draw trigger
-        this.draw = true;
+        this.setDraw();
     }
 };
 
@@ -76,5 +73,18 @@ Battle.prototype.addUnit = function(unit) {
     if (this.offender.owner.id == unit.owner.id) {
         this.offender.addUnit(unit);
         this.update();
+    }
+};
+
+Battle.prototype.setDraw = function() {
+    this.draw = true;
+    var numOfUnitsToReplace = Math.min(this.offender.units.length, this.defender.units.length);
+    for (var i = 0; i < numOfUnitsToReplace; i++) {
+        var offLocation = this.offender.units[i].location;
+        var defLocation = this.defender.units[i].location;
+        offLocation.removeObject();
+        defLocation.removeObject();
+        offLocation.addObject(this.defender.units[i]);
+        defLocation.addObject(this.offender.units[i]);
     }
 };

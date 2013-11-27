@@ -40,8 +40,7 @@ exports.testCanHaveSupport = function(test) {
     var b = new Battle(unit1, unit2);
     test.ok(!b.defender.canHaveSupport([unit1]), 'Single unit can have support');
     var unit3 = world.addUnit(world.players[0], 'cruisingSubmarine', [0,1]);
-    b.defender.addUnit(unit3);
-    test.ok(b.defender.canHaveSupport([unit1, unit3]), 'Patrol can not have cruisingSubmarine support');
+    test.ok(b.defender.canHaveSupport(), 'Patrol can not have cruisingSubmarine support');
     test.done();
 };
 

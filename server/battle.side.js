@@ -36,9 +36,9 @@ BattleSide.prototype.canAdd = function(unit) {
 
 
 BattleSide.prototype.addUnit = function(unit) {
-    if (this.units.length == 3 || !this.canAdd(unit)) {
+    if (this.units.length == 3 || !this.canAdd(unit) || unit.owner.id != this.owner.id) {
         console.log('Adding unit', unit.type, 'to group', this.unitTypes);
-        throw new Error('Cannot add unit to group, no such group or group already has unit');
+        throw new Error('Cannot add unit to group, no such group or group already has unit or side owner is not the same');
     }
     this.units.push(unit);
     this.unitTypes.push(unit.type);
@@ -71,7 +71,7 @@ BattleSide.prototype.getSupportCells = function() {
     var result = [];
     var unitIds = [];
     for (var i in this.units) {
-        unitIds.push(this.units[i])
+        unitIds.push(this.units[i].id)
     }
     for (var i in this.units) {
         var unit =  this.units[i];
