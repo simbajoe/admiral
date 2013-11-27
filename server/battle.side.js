@@ -83,6 +83,7 @@ BattleSide.prototype.getSupportCells = function() {
                 for (var k in possibleGroups) {
                     if (possibleGroups[k].indexOf(cell.getObject().type) > -1) {
                         result.push(cell);
+                        break;
                     }
                 }
             }
