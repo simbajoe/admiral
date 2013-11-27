@@ -49,6 +49,12 @@ io.sockets.on("connection", function (socket) {
                 updateGame();
             }
         }
+        if (command.type == 'skip') {
+            isSuccess = world.skipTurn();
+            if (isSuccess) {
+                updateGame();
+            }
+        }
     });
     updateGame();
 });

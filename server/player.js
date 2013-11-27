@@ -39,11 +39,10 @@ var units = {
     submarine: Submarine
 };
 
-var Player = module.exports = function(id, playerNum, world) {
+var Player = module.exports = function(id, homeland, world) {
     this.units = [];
-    this.homelandLocation = Utils.copyArray(Config.homelandLocation[playerNum]);
+    this.homelandLocation = Utils.copyArray(homeland);
     this.id = id;
-    this.playerNum = playerNum;
     this.world = world;
     this.allUnitsPlaced = false;
     this.unitsToPlace = Utils.copyOneStoryHash(Config.unitsToPlace);
@@ -52,7 +51,6 @@ var Player = module.exports = function(id, playerNum, world) {
 Player.prototype.exportToHash = function() {
     var result = {
         id: this.id,
-        playerNum: this.playerNum,
         homelandLocation: this.homelandLocation,
         units: {}
     };

@@ -64,7 +64,7 @@ var map_template_02 = [
 
 (function(exports){
 
-    exports.loadSource = function (source) {
+    exports.loadSource = function (source, playerId1, playerId2) {
         var units = {};
         var p1 = [];
         for (var y = 0; y < 5; y++) {
@@ -75,7 +75,7 @@ var map_template_02 = [
                 }
             }
         }
-        units[Config.PLAYER1 - 1] = p1;
+        units[playerId1] = p1;
         var p2 = [];
         for (var y = 9; y < 14; y++) {
             for (var x = 0; x < 14; x++) {
@@ -85,7 +85,7 @@ var map_template_02 = [
                 }
             }
         }
-        units[Config.PLAYER2 - 1] = p2;
+        units[playerId2] = p2;
         return units;
     };
 
@@ -127,10 +127,10 @@ var map_template_02 = [
         return map;
     };
 
-    exports.loadUnits = function (source) {
+    exports.loadUnits = function (source, player1Id, player2Id) {
         var units = {};
-        units[Config.PLAYER1] = [];
-        units[Config.PLAYER2] = [];
+        units[player1Id] = [];
+        units[player2Id] = [];
         for (var y = 0; y < 14; y++) {
             for (var x = 0; x < 14; x++) {
                 var u = source[y + 3].slice(x * 3 + 6, x * 3 + 9).trim();
@@ -145,7 +145,7 @@ var map_template_02 = [
     };
 
     exports.setupWorld = function (test, world, map, currentTurn, phase) {
-        var units = exports.loadUnits(map);
+        var units = exports.loadUnits(map, world.players[0].id, world.players[1].id);
         for (var p in units) {
             var i = 0;
             for (var u in units[p]) {
@@ -161,13 +161,13 @@ var map_template_02 = [
                 );
             }
         }
-        world.currentTurn = currentTurn - 1;
+        world.currentTurn = currentTurn;
         world.phase = phase;
     };
 
     exports.checkWorld = function (test, world, map, currentTurn, phase) {
         test.deepEqual(exports.getMap(world), map, "checkWorld: wrong map");
-        test.equal(currentTurn - 1, world.currentTurn, "checkWorld: wrong currentTurn");
+        test.equal(currentTurn, world.currentTurn, "checkWorld: wrong currentTurn");
         test.equal(phase, world.phase, "checkWorld: wrong phase");
     };
 
@@ -180,8 +180,8 @@ var map_template_02 = [
 
     var checkCurrnetTurn = exports.checkCurrnetTurn = function(test, world, playerId) {
         test.ok(
-            world.currentTurn == playerId - 1,
-            'Wrong player: `' + world.currentTurn + '`. Expected: `' + (playerId - 1) + '`'
+            world.currentTurn == playerId,
+            'Wrong player: `' + world.currentTurn + '`. Expected: `' + (playerId) + '`'
         );
     };
 
@@ -207,7 +207,7 @@ var map_template_02 = [
         checkPhase(test, world, Config.ATTACK_PHASE);
         checkCurrnetTurn(test, world, playerId);
         if (data.skip) {
-            world.makeAttack(data);
+            world.skipTurn(world.getPlayerById(playerId));
             return;
         }
         var fromCell = world.cells.get(data.from);
@@ -225,10 +225,10 @@ var map_template_02 = [
     var supportAndCheck = exports.supportAndCheck = function(test, world, playerId, target) {
         checkPhase(test, world, Config.SUPPORT_PHASE);
         checkCurrnetTurn(test, world, playerId);
-        /*if (data.skip) {*/
-        /*world.makeSupport(target);*/
-        /*return;*/
-        /*}*/
+        if (target.skip) {
+            world.skipTurn(world.getPlayerById(playerId));
+            return;
+        }
         var cell = world.cells.get(target);
         var unit = cell.getObject();
         test.ok(

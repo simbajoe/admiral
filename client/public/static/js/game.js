@@ -37,6 +37,12 @@ $(function() {
         });
     };
 
+    Game.prototype.skip = function () {
+        socket.emit("command", {
+            type: 'skip'
+        });
+    };
+
     Game.prototype.update = function (snapshot) {
         $('.field_content').html('').removeClass().addClass('field_content');
         $('.field').removeClass().addClass('field').removeData('whereCanMove').unbind('click').removeData('from');
@@ -142,14 +148,14 @@ $(function() {
             }
         }
         if (skip) {
-            me.send('attack', { 'skip': true });
+            me.skip();
             $('.field').unbind('click');
             $('body').unbind('keypress');
         } else {
             $("body").keypress(function(event) {
                 // w
                 if (event.charCode == 119) {
-                    me.send('attack', { 'skip': true });
+                    me.skip();
                     $('.field').unbind('click');
                     $('body').unbind('keypress');
                 }
@@ -162,14 +168,14 @@ $(function() {
             return;
         }
         if (!this.player.supportCells || !this.player.supportCells.length) {
-            me.send('support', { 'skip': true });
+            me.skip();
             $('.field').unbind('click');
             $('body').unbind('keypress');
         } else {
             $("body").keypress(function(event) {
                 // w
                 if (event.charCode == 119) {
-                    me.send('support', { 'skip': true });
+                    me.skip();
                     $('.field').unbind('click');
                     $('body').unbind('keypress');
                 }

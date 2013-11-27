@@ -14,7 +14,11 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
 
 Battle.prototype.setWinner = function(side) {
     this.winner = side.owner;
-    side.loose();
+    if (side === this.defender) {
+        this.offender.loose();
+        return;
+    }
+    this.defender.loose();
 };
 
 Battle.prototype.getSupportCells = function() {
@@ -87,4 +91,14 @@ Battle.prototype.setDraw = function() {
         offLocation.addObject(this.defender.units[i]);
         defLocation.addObject(this.offender.units[i]);
     }
+};
+
+Battle.prototype.skipSupport = function(player) {
+    if (this.offender.owner === player) {
+        this.offender.skipSupport();
+    }
+    if (this.defender.owner === player) {
+        this.defender.skipSupport();
+    }
+    this.update();
 };

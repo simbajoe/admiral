@@ -4,12 +4,10 @@
     exports.maxWorldX = 13;
     exports.maxWorldY = 13;
     exports.linesToBuildShips = 5;
-    exports.PLAYER1 = 1;
-    exports.PLAYER2 = 2;
-    exports.homelandLocation = {
-        1: [0, 1, 2, 3, 4],
-        2: [13, 12, 11, 10, 9]
-    };
+    exports.homelandLocation = [
+        [0, 1, 2, 3, 4],
+        [13, 12, 11, 10, 9]
+    ];
     exports.PLANNING_PHASE = 'planning_phase';
     exports.MOVE_PHASE = 'move_phase';
     exports.ATTACK_PHASE = 'attack_phase';

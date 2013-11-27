@@ -6,7 +6,12 @@ var BattleSide = module.exports = function(unit) {
     this.units = [];
     this.unitTypes = [];
     this.fireValue = 0;
+    this.skipSupport = false;
     this.addUnit(unit);
+};
+
+BattleSide.prototype.skipSupport = function() {
+    this.skipSupport = true;
 };
 
 BattleSide.prototype.updateFireValue = function() {
@@ -58,7 +63,7 @@ BattleSide.prototype.getPossibleGroups = function(unitType) {
 
 BattleSide.prototype.canHaveSupport = function() {
     var cells = this.getSupportCells();
-    return cells.length > 0;
+    return cells.length > 0 && !this.skipSupport;
 };
 
 BattleSide.prototype.loose = function() {

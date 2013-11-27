@@ -27,8 +27,8 @@ exports.testSupportGreen01 = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 6], to: [8, 5]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [8, 6], to: [8, 5]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -40,7 +40,7 @@ exports.testSupportGreen01 = function(test) {
     "|3  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "|4  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "|5  | .  .  .  .  .  .  .  .  2v 2v .  .  .  .  |",
-    "|6  | .  .  .  .  .  .  .  1v .  .  .  .  .  .  |",
+    "|6  | .  .  .  .  .  .  .  1s 1s .  .  .  .  .  |",
     "|7  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "|8  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "|9  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
@@ -51,7 +51,7 @@ exports.testSupportGreen01 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[0].id, Config.SUPPORT_PHASE);
 
     test.done();
 };
@@ -81,8 +81,8 @@ exports.testSupportGreen02 = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 6], to: [8, 5]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [8, 6], to: [8, 5]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -105,8 +105,8 @@ exports.testSupportGreen02 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER1, Config.SUPPORT_PHASE);
-    Util.supportAndCheck(test, world, Config.PLAYER1, [7, 6]);
+    Util.checkWorld(test, world, map_expected, world.players[0].id, Config.SUPPORT_PHASE);
+    Util.supportAndCheck(test, world, world.players[0].id, [7, 6]);
 
     map_expected = [
     "+-----------------------------------------------+",
@@ -128,8 +128,7 @@ exports.testSupportGreen02 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
-
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
 };
@@ -159,8 +158,8 @@ exports.testSupportGreen03 = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 5], to: [8, 6]});
+    Util.setupWorld(test, world, map, world.players[1].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[1].id, {from: [8, 6], to: [8, 5]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -183,8 +182,8 @@ exports.testSupportGreen03 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.SUPPORT_PHASE);
-    Util.supportAndCheck(test, world, Config.PLAYER2, [7, 6]);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.SUPPORT_PHASE);
+    Util.supportAndCheck(test, world, world.players[1].id, [7, 6]);
 
     map_expected = [
     "+-----------------------------------------------+",
@@ -207,8 +206,8 @@ exports.testSupportGreen03 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.SUPPORT_PHASE);
-    Util.supportAndCheck(test, world, Config.PLAYER2, [7, 7]);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.SUPPORT_PHASE);
+    Util.supportAndCheck(test, world, world.players[1].id, [7, 7]);
 
     map_expected = [
     "+-----------------------------------------------+",
@@ -231,8 +230,8 @@ exports.testSupportGreen03 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER1, Config.SUPPORT_PHASE);
-    Util.supportAndCheck(test, world, Config.PLAYER1, [9, 5]);
+    Util.checkWorld(test, world, map_expected, world.players[0].id, Config.SUPPORT_PHASE);
+    Util.supportAndCheck(test, world, world.players[0].id, [9, 5]);
 
     map_expected = [
     "+-----------------------------------------------+",
@@ -255,7 +254,7 @@ exports.testSupportGreen03 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
 };
@@ -285,8 +284,8 @@ exports.testSupportGreen04 = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 6], to: [8, 5]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [8, 6], to: [8, 5]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -309,8 +308,8 @@ exports.testSupportGreen04 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER1, Config.SUPPORT_PHASE);
-    Util.supportAndCheck(test, world, Config.PLAYER1, {skip: 1});
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.SUPPORT_PHASE);
+    Util.supportAndCheck(test, world, world.players[1].id, {skip: 1});
 
     test.done();
 };
@@ -340,8 +339,8 @@ exports.testSupportGreen05 = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 6], to: [8, 5]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [8, 6], to: [8, 5]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -364,8 +363,8 @@ exports.testSupportGreen05 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER1, Config.SUPPORT_PHASE);
-    Util.supportAndCheck(test, world, Config.PLAYER1, [8, 7]);
+    Util.checkWorld(test, world, map_expected, world.players[0].id, Config.SUPPORT_PHASE);
+    Util.supportAndCheck(test, world, world.players[0].id, [8, 7]);
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -388,7 +387,7 @@ exports.testSupportGreen05 = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
 };
@@ -419,8 +418,8 @@ exports.testBattleDraw = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 6], to: [8, 5]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [8, 6], to: [8, 5]});
 
     var map_expected = [
         "+-----------------------------------------------+",
@@ -443,7 +442,7 @@ exports.testBattleDraw = function(test) {
         "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
 };

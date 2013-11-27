@@ -27,8 +27,8 @@ exports.testAirplainAgainstChargedTorpedo = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [6, 3], to: [6, 9]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [6, 3], to: [6, 9]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -51,7 +51,7 @@ exports.testAirplainAgainstChargedTorpedo = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
 };
@@ -81,8 +81,8 @@ exports.testAirplainAgainstTorpedo = function(test) {
 
     var world = new World();
 
-    Util.setupWorld(test, world, map, Config.PLAYER1, Config.ATTACK_PHASE);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [6, 3], to: [6, 9]});
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[0].id, {from: [6, 3], to: [6, 9]});
 
     var map_expected = [
     "+-----------------------------------------------+",
@@ -105,7 +105,7 @@ exports.testAirplainAgainstTorpedo = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    Util.checkWorld(test, world, map_expected, Config.PLAYER2, Config.MOVE_PHASE);
+    Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
 };

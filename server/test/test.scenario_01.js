@@ -2,7 +2,7 @@ var World = require('../world');
 var Config = require('../../shared/config.js');
 var Util = require('../test_util.js');
 
-exports.testMobCreation = function(test) {
+exports.testUnitsCreation = function(test) {
     var world = new World();
 
     // PLANNING
@@ -29,60 +29,60 @@ exports.testMobCreation = function(test) {
     "+-----------------------------------------------+"
     ];
 
-    var units = Util.loadSource(source);
+    var units = Util.loadSource(source, world.players[0].id, world.players[1].id);
     for (var p in units) {
         var i = 0;
         for (var u in units[p]) {
             var unit = units[p][u];
-            world.addUnit(world.players[p], unit[0], unit[1]);
+            world.addUnit(world.getPlayerById(p), unit[0], unit[1]);
             i++;
             test.ok(
-                world.players[p].units.length == i,
+                world.getPlayerById(p).units.length == i,
                 'Unit was not added: ' + JSON.stringify(unit)
-                    + '. Have units: ' + world.players[p].units.length
+                    + '. Have units: ' + world.getPlayerById(p).units.length
                     + '. Expected: ' + i
                     + '. Player: ' + p + '.'
             );
         }
     }
 
-    world.currentTurn = Config.PLAYER1 - 1;
+    world.currentTurn = world.players[0].id;
 
-    Util.moveAndCheck(test, world, Config.PLAYER1, [11, 4], [11, 5]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+    Util.moveAndCheck(test, world, world.players[0].id, [11, 4], [11, 5]);
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER2, [0, 9], [1, 9]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+    Util.moveAndCheck(test, world, world.players[1].id, [0, 9], [1, 9]);
+    Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER1, [6, 4], [6, 5]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+    Util.moveAndCheck(test, world, world.players[0].id, [6, 4], [6, 5]);
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER2, [9, 10], [9, 8]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+    Util.moveAndCheck(test, world, world.players[1].id, [9, 10], [9, 8]);
+    Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER1, [6, 5], [7, 5]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+    Util.moveAndCheck(test, world, world.players[0].id, [6, 5], [7, 5]);
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER2, [0, 10], [0, 9]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+    Util.moveAndCheck(test, world, world.players[1].id, [0, 10], [0, 9]);
+    Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER1, [8, 4], [8, 5]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+    Util.moveAndCheck(test, world, world.players[0].id, [8, 4], [8, 5]);
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER2, [0, 9], [0, 8]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+    Util.moveAndCheck(test, world, world.players[1].id, [0, 9], [0, 8]);
+    Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER1, [8, 3], [8, 4]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+    Util.moveAndCheck(test, world, world.players[0].id, [8, 3], [8, 4]);
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER2, [0, 8], [1, 8]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+    Util.moveAndCheck(test, world, world.players[1].id, [0, 8], [1, 8]);
+    Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER1, [3, 4], [3, 5]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
+    Util.moveAndCheck(test, world, world.players[0].id, [3, 4], [3, 5]);
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
 
-    Util.moveAndCheck(test, world, Config.PLAYER2, [7, 10], [7, 9]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {from: [1, 8], to: [1, 2]});
+    Util.moveAndCheck(test, world, world.players[1].id, [7, 10], [7, 9]);
+    Util.attackAndCheck(test, world, world.players[1].id, {from: [1, 8], to: [1, 2]});
     Util.checkObject(test, world, [1, 8], null, null);
     Util.checkObject(test, world, [1, 2], null, null);
 
