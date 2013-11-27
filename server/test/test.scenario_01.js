@@ -37,12 +37,12 @@ exports.testMobCreation = function(test) {
             world.addUnit(world.players[p], unit[0], unit[1]);
             i++;
             test.ok(
-                    world.players[p].units.length == i,
-                    'Unit was not added: ' + JSON.stringify(unit)
+                world.players[p].units.length == i,
+                'Unit was not added: ' + JSON.stringify(unit)
                     + '. Have units: ' + world.players[p].units.length
                     + '. Expected: ' + i
                     + '. Player: ' + p + '.'
-                   );
+            );
         }
     }
 
@@ -82,31 +82,11 @@ exports.testMobCreation = function(test) {
     Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
 
     Util.moveAndCheck(test, world, Config.PLAYER2, [7, 10], [7, 9]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
-
-    Util.moveAndCheck(test, world, Config.PLAYER1, [5, 3], [4, 3]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
-
-    Util.moveAndCheck(test, world, Config.PLAYER2, [9, 11], [9, 9]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
-
-    Util.moveAndCheck(test, world, Config.PLAYER1, [6, 3], [5, 3]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {skip: true});
-
-    Util.moveAndCheck(test, world, Config.PLAYER2, [8, 10], [8, 8]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
-
-    Util.moveAndCheck(test, world, Config.PLAYER1, [6, 2], [6, 3]);
-    Util.attackAndCheck(test, world, Config.PLAYER1, {from: [8, 5], to: [8, 8]});
-    Util.checkObject(test, world, [8, 5], null, null);
-    Util.checkObject(test, world, [8, 8], null, null);
-
-    Util.moveAndCheck(test, world, Config.PLAYER2, [10, 10], [8, 10]);
-    Util.attackAndCheck(test, world, Config.PLAYER2, {skip: true});
+    Util.attackAndCheck(test, world, Config.PLAYER2, {from: [1, 8], to: [1, 2]});
+    Util.checkObject(test, world, [1, 8], null, null);
+    Util.checkObject(test, world, [1, 2], null, null);
 
     /*console.log(Util.getMap(world));*/
 
     test.done();
 };
-
-
