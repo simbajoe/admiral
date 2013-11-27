@@ -32,7 +32,7 @@ World.prototype.getHash = function() {
 
 World.prototype.addPlayer = function(homeland) {
     if (this.players.length > 1) {
-        return;
+        return null;
     }
     var player = new Player(this.uniqueId, homeland, this);
     this.objects.push(player);
@@ -95,15 +95,13 @@ World.prototype.removeUnit = function(unit) {
 };
 
 World.prototype.checkCanEndPlanningPhase = function() {
-    if (this.players.length < 2) {
-        return false;
-    }
     if (this.players[0].allUnitsPlaced
         && this.players[1].allUnitsPlaced) {
         this.phase = Config.MOVE_PHASE;
         this.currentTurn = Math.round(Math.random());
         return true;
     }
+    return false;
 };
 
 World.prototype.makeMove = function(unitLocation, newPoint) {
@@ -150,16 +148,9 @@ World.prototype.makeAttack = function(data) {
         this.phase = Config.MOVE_PHASE;
         return true;
     }
-    var battle = new Battle(offender, victim);
-    if (battle.winner || battle.draw) {
-        this.switchActivePlayer();
-        this.phase = Config.MOVE_PHASE;
-        return true;
-    }
-    this.battle = battle;
+    this.battle = new Battle(offender, victim);
     this.setSupportPhase();
-    this.switchActivePlayer();
-    this.phase = Config.MOVE_PHASE;
+    this.checkCanEndSupportPhase();
     return true;
 };
 
@@ -167,7 +158,23 @@ World.prototype.setSupportPhase = function() {
     this.phase = Config.SUPPORT_PHASE;
 };
 
+World.prototype.checkCanEndSupportPhase = function() {
+    if (this.battle.winner || this.battle.draw) {
+        this.battle = null;
+        this.switchActivePlayer();
+        this.phase = Config.MOVE_PHASE;
+        return true;
+    }
+    return false;
+};
 
-World.prototype.addBattle = function(offender, defender) {
-    this.battle = new Battle(offender, defender, this);
+World.prototype.makeSupport = function(unitLocation) {
+    var cell = this.cells.get(unitLocation);
+    if (!cell || !cell.getObject()) {
+        return false;
+    }
+    var unit = cell.getObject();
+    this.battle.addUnit(unit);
+    this.checkCanEndSupportPhase();
+    return true;
 };

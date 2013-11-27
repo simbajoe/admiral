@@ -43,6 +43,12 @@ io.sockets.on("connection", function (socket) {
                 updateGame();
             }
         }
+        if (command.type == 'support') {
+            isSuccess = world.makeSupport(command.params.target);
+            if (isSuccess) {
+                updateGame();
+            }
+        }
     });
     updateGame();
 });

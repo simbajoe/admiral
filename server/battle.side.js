@@ -69,12 +69,16 @@ BattleSide.prototype.loose = function() {
 
 BattleSide.prototype.getSupportCells = function() {
     var result = [];
+    var unitIds = [];
+    for (var i in this.units) {
+        unitIds.push(this.units[i])
+    }
     for (var i in this.units) {
         var unit =  this.units[i];
         var cells = unit.location.getStraightNeighborCells(1);
         for (var j in cells) {
             var cell = cells[j];
-            if (cell.getObject() && !cell.hasEnemyObject(unit.owner)) {
+            if (cell.getObject() && !cell.hasEnemyObject(unit.owner) && unitIds.indexOf(cell.getObject().id) == -1) {
                 var possibleGroups = this.getPossibleGroups(unit.type);
                 for (var k in possibleGroups) {
                     if (possibleGroups[k].indexOf(cell.getObject().type) > -1) {
