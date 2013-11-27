@@ -180,9 +180,8 @@ $(function() {
             var place = this.player.supportCells[v];
             $('.field[data-x="' + place[0] + '"][data-y="' + place[1] + '"]')
                 .addClass('can_move')
-                .data('whereCanMove', unit.whereCanMove)
                 .click(function () {
-                    me.send('support', { 'target': $(this).data('from') });
+                    me.send('support', { 'target': [$(this).data('x'), $(this).data('y')] });
                     $('.field').unbind('click');
                     $('body').unbind('keypress');
                 });

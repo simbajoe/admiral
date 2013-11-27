@@ -220,8 +220,22 @@ var map_template_02 = [
             + JSON.stringify(data.to) + '`'
         );
         world.makeAttack(data);
-        var fromUnit2 = fromCell.getObject();
-        var toUnit2 = toCell.getObject();
+    };
+
+    var supportAndCheck = exports.supportAndCheck = function(test, world, playerId, target) {
+        checkPhase(test, world, Config.SUPPORT_PHASE);
+        checkCurrnetTurn(test, world, playerId);
+        /*if (data.skip) {*/
+        /*world.makeSupport(target);*/
+        /*return;*/
+        /*}*/
+        var cell = world.cells.get(target);
+        var unit = cell.getObject();
+        test.ok(
+            unit !== null,
+            'Support error: place: `' + JSON.stringify(target)+ '`'
+        );
+        world.makeSupport(target);
     };
 
     var checkObject = exports.checkObject = function (test, world, place, expectedUnit, expectedPlayer) {
