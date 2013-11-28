@@ -88,8 +88,8 @@ Cell.prototype.getCellsBetween = function(cell) {
         }
         return result;
     }
-    for (var x = Math.min(this.x, cell.x) + 1; y <= Math.max(this.x, cell.x) - 1; y++) {
-        newCell = this.cells.get([this.x, y]);
+    for (var x = Math.min(this.x, cell.x) + 1; x <= Math.max(this.x, cell.x) - 1; x++) {
+        newCell = this.cells.get([x, this.y]);
         if (newCell) {
             result.push(newCell);
         }
@@ -113,3 +113,4 @@ Cell.prototype.areObjectsBetween = function(cell) {
 Cell.prototype.hasEnemyObject = function(player) {
     return this.getObject() && this.getObject().owner.id != player.id
 };
+
