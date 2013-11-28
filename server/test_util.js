@@ -257,5 +257,16 @@ var map_template_02 = [
         );
     };
 
+    var testWhereCanMove = exports.testWhereCanMove = function (test, world, place, expected) {
+        var cell = world.cells.get(place);
+        var unit = cell.getObject();
+        unit.setWhereCanMove();
+        var whereCanMove = unit.whereCanMove;
+        var s = function (x, y) { return x[0] * 1000 + x[1] > y[0] * 1000 + y[1]; };
+        whereCanMove.sort(s);
+        expected.sort(s);
+        test.deepEqual(whereCanMove, expected, "whereCanMove wrong");
+    };
+
 })(typeof exports === 'undefined'? this['Util']={}: exports);
 
