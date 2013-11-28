@@ -56,7 +56,7 @@ World.prototype.exportToHash = function() {
     result.phase = this.phase;
     result.winner = this.winner;
     if (this.phase != Config.PLANNING_PHASE) {
-        result.currentTurn = this.currentTurn + 1;
+        result.currentTurn = this.currentTurn;
     }
     return result;
 };
@@ -96,7 +96,7 @@ World.prototype.checkCanEndPlanningPhase = function() {
     if (this.players[0].allUnitsPlaced
         && this.players[1].allUnitsPlaced) {
         this.phase = Config.MOVE_PHASE;
-        this.currentTurn = Math.round(Math.random());
+        this.currentTurn = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
         return true;
     }
     return false;
