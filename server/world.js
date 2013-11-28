@@ -56,7 +56,7 @@ World.prototype.exportToHash = function() {
     result.phase = this.phase;
     result.winner = this.winner;
     if (this.phase != Config.PLANNING_PHASE) {
-        result.currentTurn = this.currentTurn;
+        result.currentTurn = this.currentTurn + 1;
     }
     return result;
 };
