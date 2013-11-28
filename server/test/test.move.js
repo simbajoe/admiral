@@ -2,7 +2,7 @@ var World = require('../world');
 var Config = require('../../shared/config.js');
 var Util = require('../test_util.js');
 
-exports.testMove01 = function(test) {
+exports.testMoveTorpedo01 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -30,6 +30,38 @@ exports.testMove01 = function(test) {
     Util.setupWorld(test, world, map, world.players[0].id, Config.MOVE_PHASE);
     Util.testWhereCanMove(test, world, [7, 6], [[7, 4], [7, 5], [7, 7], [7, 8], [8, 6], [5, 6], [6, 6]]);
     Util.testWhereCanMove(test, world, [9, 6], []);
+
+    test.done();
+};
+
+exports.testMoveTorpedo02 = function(test) {
+
+    var map = [
+        "+-----------------------------------------------+",
+        "|   | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 |",
+        "|---+-------------------------------------------|",
+        "|0  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|1  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|2  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|3  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|4  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|5  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|6  | .  .  .  .  .  .  .  1v 1t .  .  .  .  .  |",
+        "|7  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|8  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|9  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|10 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|11 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|12 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "+-----------------------------------------------+"
+    ];
+
+    var world = new World();
+
+    Util.setupWorld(test, world, map, world.players[0].id, Config.MOVE_PHASE);
+    Util.testWhereCanMove(test, world, [7, 6], [[7, 4], [7, 5], [7, 7], [7, 8], [5, 6], [6, 6]]);
+    Util.testWhereCanMove(test, world, [8, 6], [[9, 6], [8, 5], [8, 7]]);
 
     test.done();
 };

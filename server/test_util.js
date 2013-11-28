@@ -265,7 +265,11 @@ var map_template_02 = [
         var s = function (x, y) { return x[0] * 1000 + x[1] > y[0] * 1000 + y[1]; };
         whereCanMove.sort(s);
         expected.sort(s);
-        test.deepEqual(whereCanMove, expected, "whereCanMove wrong");
+        test.deepEqual(
+                whereCanMove,
+                expected,
+                'whereCanMove: from: `' + JSON.stringify(place) + '`, unit: `' + unit.type + '`'
+        );
     };
 
 })(typeof exports === 'undefined'? this['Util']={}: exports);
