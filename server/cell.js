@@ -24,9 +24,9 @@ Cell.prototype.getPoint = function() {
 };
 
 Cell.prototype.getStraightNeighborCells = function(distance) {
-    var points = [], cells = [];
+    var cells = [];
     for (var d = 1; d <= distance; d++) {
-        points = [
+        var points = [
             [this.x + d, this.y],
             [this.x - d, this.y],
             [this.x, this.y + d],

@@ -76,6 +76,7 @@ Unit.prototype.setWhereCanMove = function() {
 
 Unit.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
+    this.whereCouldAttack = [];
     var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
     for (var i in cells) {
         this.whereCouldAttack.push(cells[i].getPoint());
@@ -106,3 +107,4 @@ Unit.prototype.destroy = function() {
     this.location.removeObject(this);
     delete this;
 };
+
