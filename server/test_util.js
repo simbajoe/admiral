@@ -262,7 +262,7 @@ var map_template_02 = [
         var unit = cell.getObject();
         unit.setWhereCanMove();
         var whereCanMove = unit.whereCanMove;
-        var s = function (x, y) { return x[0] * 1000 + x[1] > y[0] * 1000 + y[1]; };
+        var s = function (x, y) { return x[0] * 1000 + x[1] - y[0] * 1000 - y[1]; };
         whereCanMove.sort(s);
         expected.sort(s);
         test.deepEqual(
@@ -278,9 +278,8 @@ var map_template_02 = [
         unit.setWhereAttack();
         var whereCanAttack = unit.whereCanAttack;
         var whereCouldAttack = unit.whereCouldAttack;
-        var s = function (x, y) { return x[0] * 1000 + x[1] > y[0] * 1000 + y[1]; };
+        var s = function (x, y) { return x[0] * 1000 + x[1] - y[0] * 1000 - y[1]; };
         whereCanAttack.sort(s);
-        whereCouldAttack.sort(s);
         expected.sort(s);
         test.deepEqual(
                 whereCanAttack,
@@ -290,6 +289,7 @@ var map_template_02 = [
         for (var i = 0; i < expected_could.length; i++) {
             expected.push(expected_could[i]);
         }
+        whereCouldAttack.sort(s);
         expected.sort(s);
         test.deepEqual(
                 whereCouldAttack,

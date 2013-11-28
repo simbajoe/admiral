@@ -120,7 +120,7 @@ exports.testAttackAirplain02 = function(test) {
         "|8  | .  .  .  .  .  .  2t .  .  .  .  .  .  .  |",
         "|9  | .  .  .  .  .  .  2b .  .  .  .  .  .  .  |",
         "|10 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
-        "|11 | .  .  .  .  .  .  1a 1aC.  .  .  .  .  .  |",
+        "|11 | .  2B .  .  .  .  1a 1aC.  .  .  2s .  .  |",
         "|12 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
@@ -129,8 +129,8 @@ exports.testAttackAirplain02 = function(test) {
     var world = new World();
 
     Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
-    Util.testWhereCanAttack(test, world, [6, 11], [],
-        [0, 11], [1, 11], [2, 11], [3, 11], [4, 11], [5, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [12, 11], [13, 11]]
+    Util.testWhereCanAttack(test, world, [6, 11], [[11, 11], [1, 11]],
+        [[0, 11], [2, 11], [3, 11], [4, 11], [5, 11], [7, 11], [8, 11], [9, 11], [10, 11], [12, 11], [13, 11]]
     );
 
     test.done();
@@ -155,7 +155,7 @@ exports.testAttackAirplain03 = function(test) {
         "|10 | .  .  .  .  .  .  1aC.  .  .  .  .  .  .  |",
         "|11 | .  .  .  .  .  .  1a .  .  .  .  .  .  .  |",
         "|12 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
-        "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|13 | .  .  .  .  .  .  2B .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
 
@@ -163,8 +163,8 @@ exports.testAttackAirplain03 = function(test) {
 
     Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
     Util.testWhereCanAttack(test, world, [6, 11],
-        [[6, 0], [6, 2], [6, 5], [6, 7], [6, 8], [6, 9]],
-        [[6, 1], [6, 3], [6, 4], [6, 6], [6, 10], [6, 12], [6, 13]]
+        [[6, 0], [6, 2], [6, 5], [6, 7], [6, 8], [6, 9], [6, 13]],
+        [[6, 1], [6, 3], [6, 4], [6, 6], [6, 10], [6, 12]]
     );
 
     test.done();
