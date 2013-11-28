@@ -45,7 +45,8 @@ $(function() {
 
     Game.prototype.update = function (snapshot) {
         $('.field_content').html('').removeClass().addClass('field_content');
-        $('.field').removeClass().addClass('field').removeData('whereCanMove').unbind('click').removeData('from');
+        $('.field').removeClass().addClass('field').unbind('click')
+                .removeData('from').removeData('whereCouldAttack').removeData('whereCanMove');
         $('body').unbind('keypress');
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
@@ -130,8 +131,15 @@ $(function() {
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
                     .addClass('can_move')
                     .data('whereCanMove', unit.whereCanAttack)
+                    .data('whereCouldAttack', unit.whereCouldAttack)
                     .click(function () {
-                        $('.field').removeClass('move_from').removeClass('move_to').removeData('from');
+                        $('.field').removeClass('move_from').removeClass('move_to').removeClass('could_attack').removeData('from');
+                        var whereCouldAttack = $(this).data('whereCouldAttack');
+                        for (var i = 0; i < whereCouldAttack.length; i++) {
+                            var place = whereCouldAttack[i];
+                            $('.field[data-x="' + place[0] + '"][data-y="' + place[1] + '"]')
+                                .addClass('could_attack');
+                        }
                         $(this).addClass('move_from');
                         var whereCanMove = $(this).data('whereCanMove');
                         for (var i = 0; i < whereCanMove.length; i++) {

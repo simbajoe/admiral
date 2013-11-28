@@ -41,6 +41,11 @@ body {
     opacity: 0.0;
 }
 
+.field.could_attack .field_holder {
+    background: red;
+    opacity: 0.2;
+}
+
 .field_holder.active, .field_holder:hover {
     opacity: 0.3;
 }
@@ -64,6 +69,10 @@ body {
     border: 2px dotted #fff;
     width: 54.4px;
     height: 54.4px;
+}
+
+.field.move_to.could_attack .field_content {
+    border: 2px dotted #f00;
 }
 
 .unit {
