@@ -272,5 +272,31 @@ var map_template_02 = [
         );
     };
 
+    var testWhereCanAttack = exports.testWhereCanAttack = function (test, world, place, expected, expected_could) {
+        var cell = world.cells.get(place);
+        var unit = cell.getObject();
+        unit.setWhereAttack();
+        var whereCanAttack = unit.whereCanAttack;
+        var whereCouldAttack = unit.whereCouldAttack;
+        var s = function (x, y) { return x[0] * 1000 + x[1] > y[0] * 1000 + y[1]; };
+        whereCanAttack.sort(s);
+        whereCouldAttack.sort(s);
+        expected.sort(s);
+        test.deepEqual(
+                whereCanAttack,
+                expected,
+                'whereCanAttack: from: `' + JSON.stringify(place) + '`, unit: `' + unit.type + '`'
+        );
+        for (var i = 0; i < expected_could.length; i++) {
+            expected.push(expected_could[i]);
+        }
+        expected.sort(s);
+        test.deepEqual(
+                whereCouldAttack,
+                expected,
+                'whereCouldAttack: from: `' + JSON.stringify(place) + '`, unit: `' + unit.type + '`'
+        );
+    };
+
 })(typeof exports === 'undefined'? this['Util']={}: exports);
 
