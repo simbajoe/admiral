@@ -33,6 +33,18 @@ Battle.prototype.getSupportCells = function() {
 Battle.prototype.update = function() {
     this.currentSupportPlayer = null;
     this.currentSupportSide = null;
+    if (this.defender.units[0].type == 'submarine' || this.defender.units[0].type == 'cruisingSubmarine') {
+        if (this.offender.units[0].type == 'battleship' || this.offender.units[0].type == 'aircraftCarrier') {
+            this.setWinner(this.defender);
+            return;
+        }
+    }
+    if (this.offender.units[0].type == 'submarine' || this.offender.units[0].type == 'cruisingSubmarine') {
+        if (this.defender.units[0].type == 'battleship' || this.defender.units[0].type == 'aircraftCarrier') {
+            this.setWinner(this.offender);
+            return;
+        }
+    }
     if (this.defender.fireValue > this.offender.fireValue) {
         if (this.offender.canHaveSupport()) {
             this.currentSupportPlayer = this.offender.owner;
