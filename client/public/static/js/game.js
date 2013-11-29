@@ -203,7 +203,7 @@ $(function() {
     };
 
     Game.prototype.battle_results_phase = function (snapshot) {
-        me.skip();
+        this.skip();
     };
 
     Game.prototype.placeUnit = function (unit, place) {
