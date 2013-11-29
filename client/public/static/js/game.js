@@ -202,6 +202,10 @@ $(function() {
         }
     };
 
+    Game.prototype.battle_results_phase = function (snapshot) {
+        me.skip();
+    };
+
     Game.prototype.placeUnit = function (unit, place) {
         this.send('place', { 'location': place, 'type': unit });
     };
