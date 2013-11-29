@@ -12,6 +12,7 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
     this.update();
 };
 
+
 Battle.prototype.setWinner = function(side) {
     this.winner = side.owner;
     if (side === this.defender) {
@@ -112,5 +113,4 @@ Battle.prototype.skipSupport = function(player) {
     if (this.defender.owner === player) {
         this.defender.skipSupport();
     }
-
 };

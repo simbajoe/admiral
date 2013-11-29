@@ -50,7 +50,7 @@ io.sockets.on("connection", function (socket) {
             }
         }
         if (command.type == 'skip') {
-            isSuccess = world.skipTurn();
+            isSuccess = world.skipTurn(socket.player);
             if (isSuccess) {
                 updateGame();
             }

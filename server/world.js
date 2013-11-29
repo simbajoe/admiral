@@ -195,7 +195,7 @@ World.prototype.makeSupport = function(unitLocation) {
     return true;
 };
 
-World.prototype.skipTurn = function() {
+World.prototype.skipTurn = function(player) {
     if (this.phase == Config.ATTACK_PHASE
         || this.phase == Config.BATTLE_RESULTS_PHASE) {
         this.phase = Config.MOVE_PHASE;
@@ -203,7 +203,7 @@ World.prototype.skipTurn = function() {
         return true;
     }
     if (this.phase == Config.SUPPORT_PHASE) {
-        //TODO: add code here
+        this.battle.skipSupport(player);
     }
     return false;
 };
