@@ -149,7 +149,7 @@ World.prototype.makeAttack = function(data) {
     var success = from.getObject().attack(victim);
     if (success) {
         this.nextTurn();
-        this.phase = Config.BATTLE_RESULTS_PHASE;
+        setBattleResultsPhase();
         return true;
     }
     this.battle = new Battle(offender, victim);
@@ -157,6 +157,11 @@ World.prototype.makeAttack = function(data) {
         this.setSupportPhase();
     }
     return true;
+};
+
+World.prototype.setBattleResultsPhase = function() {
+    this.phase = Config.BATTLE_RESULTS_PHASE;
+    this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
 };
 
 World.prototype.setSupportPhase = function() {
@@ -172,7 +177,7 @@ World.prototype.checkBattleFinished = function() {
             this.currentPlayerId = this.returnCurrentPlayerId;
             this.returnCurrentPlayerId = null;
         }
-        this.phase = Config.BATTLE_RESULTS_PHASE;
+        this.setBattleResultsPhase();
         return true;
     }
     return false;
@@ -194,14 +199,22 @@ World.prototype.makeSupport = function(unitLocation) {
 };
 
 World.prototype.skipTurn = function(player) {
-    if (this.phase == Config.ATTACK_PHASE
-        || this.phase == Config.BATTLE_RESULTS_PHASE) {
+    if (this.phase == Config.ATTACK_PHASE) {
         this.phase = Config.MOVE_PHASE;
         this.nextTurn();
         return true;
     }
+    if (this.phase == Config.BATTLE_RESULTS_PHASE) {
+        this.waitingForPlayerIds = Utils.deleteFromArrByValue(player.id, this.waitingForPlayerIds);
+        if (this.waitingForPlayerIds.length == 0) {
+            this.phase = Config.MOVE_PHASE;
+            this.nextTurn();
+        }
+        return true;
+    }
     if (this.phase == Config.SUPPORT_PHASE) {
         this.battle.skipSupport(player);
+        return true;
     }
     return false;
 };
