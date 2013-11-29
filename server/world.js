@@ -97,7 +97,7 @@ World.prototype.checkCanEndPlanningPhase = function() {
     if (this.players[0].allUnitsPlaced
         && this.players[1].allUnitsPlaced) {
         this.phase = Config.MOVE_PHASE;
-        this.currentTurn = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
+        this.currentPlayerId = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
         return true;
     }
     return false;
