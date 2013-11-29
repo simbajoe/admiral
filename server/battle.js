@@ -39,7 +39,6 @@ Battle.prototype.update = function() {
             this.currentSupportSide = this.offender;
             return;
         } else {
-
             this.setWinner(this.defender);
             return;
         }
@@ -54,18 +53,17 @@ Battle.prototype.update = function() {
             return;
         }
     }
-    if (this.offender.fireValue == this.defender.fireValue) {
-        if (this.offender.canHaveSupport()) {
-            this.currentSupportPlayer = this.offender.owner;
-            this.currentSupportSide = this.offender;
-            return;
-        }
-        if (this.defender.canHaveSupport()) {
-            this.currentSupportPlayer = this.defender.owner;
-            this.currentSupportSide = this.defender;
-        }
-        this.setDraw();
+    if (this.offender.canHaveSupport()) {
+        this.currentSupportPlayer = this.offender.owner;
+        this.currentSupportSide = this.offender;
+        return;
     }
+    if (this.defender.canHaveSupport()) {
+        this.currentSupportPlayer = this.defender.owner;
+        this.currentSupportSide = this.defender;
+        return;
+    }
+    this.setDraw();
 };
 
 Battle.prototype.addUnit = function(unit) {
@@ -90,6 +88,8 @@ Battle.prototype.setDraw = function() {
         defLocation.removeObject();
         offLocation.addObject(this.defender.units[i]);
         defLocation.addObject(this.offender.units[i]);
+        this.offender.units[i].location = defLocation;
+        this.defender.units[i].location = offLocation;
     }
 };
 

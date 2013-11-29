@@ -6,7 +6,6 @@ var Unit = module.exports = function() {};
 Unit.prototype.init = function(id, location, owner, type, world) {
     this.id = id;
     this.location = location;
-    location.addObject(this);
     this.owner = owner;
     this.type = type;
     this.world = world;

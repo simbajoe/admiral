@@ -62,6 +62,9 @@ BattleSide.prototype.getPossibleGroups = function(unitType) {
 };
 
 BattleSide.prototype.canHaveSupport = function() {
+    if (this.units.length == 3) {
+        return false;
+    }
     var cells = this.getSupportCells();
     return cells.length > 0 && !this.skipSupport;
 };
@@ -96,3 +99,4 @@ BattleSide.prototype.getSupportCells = function() {
     }
     return result;
 };
+
