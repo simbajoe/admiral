@@ -46,11 +46,13 @@ exports.testUnitsCreation = function(test) {
         }
     }
 
-    world.currentTurn = world.players[0].id;
+    world.currentPlayerId = world.players[0].id;
 
+    console.log('1 move');
     Util.moveAndCheck(test, world, world.players[0].id, [11, 4], [11, 5]);
-    Util.attackAndCheck(test, world, world.players[0].id, {skip: true});
-
+    console.log('1 attack');
+    Util.attackAndCheck(test, world, world.players[0].id, {skip: true}) ;
+    console.log('after attack');
     Util.moveAndCheck(test, world, world.players[1].id, [0, 9], [1, 9]);
     Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 

@@ -89,7 +89,7 @@ $(function() {
     };
 
     Game.prototype.move_phase = function (snapshot) {
-        if (snapshot.world.currentTurn != this.id) {
+        if (snapshot.world.currentPlayerId != this.id) {
             return;
         }
         var me = this;
@@ -118,7 +118,7 @@ $(function() {
     };
 
     Game.prototype.attack_phase = function (snapshot) {
-        if (snapshot.world.currentTurn != this.id) {
+        if (snapshot.world.currentPlayerId != this.id) {
             return;
         }
         var me = this;
@@ -164,7 +164,7 @@ $(function() {
     };
 
     Game.prototype.support_phase = function (snapshot) {
-        if (snapshot.world.currentTurn != this.id) {
+        if (snapshot.world.currentPlayerId != this.id) {
             return;
         }
         if (!this.player.supportCells || !this.player.supportCells.length) {

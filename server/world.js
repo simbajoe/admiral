@@ -10,8 +10,9 @@ var World = module.exports = function() {
     this.cells = new Cells();
     this.uniqueId = 1;
     this.phase = Config.PLANNING_PHASE;
-    this.currentTurn = null;
-    this.returnCurrentTurn = null;
+    this.currentPlayerId = null;
+    this.returnCurrentPlayerId = null;
+    this.currentTurn = 0;
     this.addPlayer(Config.homelandLocation[0]);
     this.addPlayer(Config.homelandLocation[1]);
     this.winner = false;
@@ -56,7 +57,7 @@ World.prototype.exportToHash = function() {
     result.phase = this.phase;
     result.winner = this.winner;
     if (this.phase != Config.PLANNING_PHASE) {
-        result.currentTurn = this.currentTurn;
+        result.currentPlayerId = this.currentPlayerId;
     }
     return result;
 };
@@ -96,7 +97,7 @@ World.prototype.checkCanEndPlanningPhase = function() {
     if (this.players[0].allUnitsPlaced
         && this.players[1].allUnitsPlaced) {
         this.phase = Config.MOVE_PHASE;
-        this.currentTurn = Math.round(Math.random());
+        this.currentPlayerId = this.players[Math.round(Math.random())].id;
         return true;
     }
     return false;
@@ -110,18 +111,24 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
     var toCell = this.cells.get(newPoint);
     if (fromCell && fromCell.getObject() && toCell) {
         fromCell.getObject().move(toCell);
-        this.phase = Config.ATTACK_PHASE;
+        if (this.getPlayerById(this.currentPlayerId).canAttack()) {
+            this.phase = Config.ATTACK_PHASE;
+        } else {
+            this.nextTurn();
+        }
         return true;
     }
     return false;
 };
 
-World.prototype.switchActivePlayer = function() {
-    if (this.currentTurn == this.players[0].id) {
-        this.currentTurn = this.players[1].id;
+World.prototype.nextTurn = function() {
+    this.getPlayerById(this.currentPlayerId).endTurn();
+    if (this.currentPlayerId == this.players[0].id) {
+        this.currentPlayerId = this.players[1].id;
+        this.currentTurn++;
         return;
     }
-    this.currentTurn = this.players[0].id;
+    this.currentPlayerId = this.players[0].id;
 };
 
 
@@ -130,7 +137,8 @@ World.prototype.makeAttack = function(data) {
     var offender = from.getObject();
     var to = this.cells.get(data.to);
     var victim = to.getObject();
-    if (!from
+    if (this.phase != Config.ATTACK_PHASE
+        || !from
         || !offender
         || !to
         || !victim) {
@@ -138,7 +146,7 @@ World.prototype.makeAttack = function(data) {
     }
     var success = from.getObject().attack(victim);
     if (success) {
-        this.switchActivePlayer();
+        this.nextTurn();
         this.phase = Config.MOVE_PHASE;
         return true;
     }
@@ -151,18 +159,18 @@ World.prototype.makeAttack = function(data) {
 
 World.prototype.setSupportPhase = function() {
     this.phase = Config.SUPPORT_PHASE;
-    this.returnCurrentTurn = this.currentTurn;
-    this.currentTurn = this.battle.currentSupportPlayer.id;
+    this.returnCurrentPlayerId = this.currentPlayerId;
+    this.currentPlayerId = this.battle.currentSupportPlayer.id;
 };
 
 World.prototype.checkBattleFinished = function() {
     if (this.battle.winner || this.battle.draw) {
         this.battle = null;
-        if (this.returnCurrentTurn) {
-            this.currentTurn = this.returnCurrentTurn;
-            this.returnCurrentTurn = null;
+        if (this.returnCurrentPlayerId) {
+            this.currentPlayerId = this.returnCurrentPlayerId;
+            this.returnCurrentPlayerId = null;
         }
-        this.switchActivePlayer();
+        this.nextTurn();
         this.phase = Config.MOVE_PHASE;
         return true;
     }
@@ -171,13 +179,15 @@ World.prototype.checkBattleFinished = function() {
 
 World.prototype.makeSupport = function(unitLocation) {
     var cell = this.cells.get(unitLocation);
-    if (!cell || !cell.getObject()) {
+    if (this.phase != Config.SUPPORT_PHASE
+        || !cell
+        || !cell.getObject()) {
         return false;
     }
     var unit = cell.getObject();
     this.battle.addUnit(unit);
     if (!this.checkBattleFinished()) {
-        this.currentTurn = this.battle.currentSupportPlayer.id;
+        this.currentPlayerId = this.battle.currentSupportPlayer.id;
     }
     return true;
 };
@@ -185,7 +195,7 @@ World.prototype.makeSupport = function(unitLocation) {
 World.prototype.skipTurn = function() {
     if (this.phase == Config.ATTACK_PHASE) {
         this.phase = Config.MOVE_PHASE;
-        this.switchActivePlayer();
+        this.nextTurn();
         return true;
     }
     if (this.phase == Config.SUPPORT_PHASE) {

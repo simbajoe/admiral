@@ -161,13 +161,13 @@ var map_template_02 = [
                 );
             }
         }
-        world.currentTurn = currentTurn;
+        world.currentPlayerId = currentTurn;
         world.phase = phase;
     };
 
     exports.checkWorld = function (test, world, map, currentTurn, phase) {
         test.deepEqual(exports.getMap(world), map, "checkWorld: wrong map");
-        test.equal(currentTurn, world.currentTurn, "checkWorld: wrong currentTurn");
+        test.equal(currentTurn, world.currentPlayerId, "checkWorld: wrong currentPlayerId");
         test.equal(phase, world.phase, "checkWorld: wrong phase");
     };
 
@@ -180,8 +180,8 @@ var map_template_02 = [
 
     var checkCurrnetTurn = exports.checkCurrnetTurn = function(test, world, playerId) {
         test.ok(
-            world.currentTurn == playerId,
-            'Wrong player: `' + world.currentTurn + '`. Expected: `' + (playerId) + '`'
+            world.currentPlayerId == playerId,
+            'Wrong player: `' + world.currentPlayerId + '`. Expected: `' + (playerId) + '`'
         );
     };
 

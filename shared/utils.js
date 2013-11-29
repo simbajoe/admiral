@@ -29,10 +29,10 @@
     exports.getDist = function(point1, point2) {
         return Math.sqrt(Math.pow((point1[0] - point2[0]),2) + Math.pow((point1[1] - point2[1]),2));
     };
-    exports.copyArray = function(arr) {
+    exports.cloneArray = function(arr) {
         return arr.slice(0);
     };
-    exports.copyOneStoryHash = function(obj) {
+    exports.cloneOneStoryHash = function(obj) {
         if (null == obj || "object" != typeof obj) return obj;
         var copy = obj.constructor();
         for (var attr in obj) {

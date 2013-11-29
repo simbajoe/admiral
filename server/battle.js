@@ -89,7 +89,9 @@ Battle.prototype.setDraw = function() {
         offLocation.removeObject();
         defLocation.removeObject();
         offLocation.addObject(this.defender.units[i]);
+        this.offender.units[i].location = offLocation;
         defLocation.addObject(this.offender.units[i]);
+        this.defender.units[i].location = defLocation;
     }
 };
 
@@ -100,5 +102,5 @@ Battle.prototype.skipSupport = function(player) {
     if (this.defender.owner === player) {
         this.defender.skipSupport();
     }
-    this.update();
+
 };

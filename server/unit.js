@@ -17,10 +17,12 @@ Unit.prototype.init = function(id, location, owner, type, world) {
     this.maxDistance = 1;
     this.maxFireDistance = 1;
     this.needBattle = true;
+    this.hasEndTurnFunc = false;
 };
 
 Unit.prototype.exportToHash = function() {
-     var result = {
+    this.setWhereAttack(); //used to update unit_ids in fireShip, other way it could be placed to ATTACK_PAHSE if
+    var result = {
         id: this.id,
         location: this.location.getPoint(),
         ownerId: this.owner.id,
@@ -31,7 +33,6 @@ Unit.prototype.exportToHash = function() {
         result.whereCanMove = this.whereCanMove;
     }
     if (this.world.phase == Config.ATTACK_PHASE) {
-        this.setWhereAttack();
         result.whereCanAttack = this.whereCanAttack;
         result.whereCouldAttack = this.whereCouldAttack;
     }
@@ -87,6 +88,7 @@ Unit.prototype.setWhereAttack = function() {
 
 Unit.prototype.attack = function(victim) { //all special units don't run this function
     if (!victim.needBattle) {
+        console.log('here');
         victim.harm(this);
         return true;
     }
@@ -94,10 +96,9 @@ Unit.prototype.attack = function(victim) { //all special units don't run this fu
 };
 
 Unit.prototype.harm = function(offender) { //all special units don't run this function
-    if (offender.type in Config.KILLERS) {
+    if (Config.KILLERS.indexOf(offender.type) > -1) {
         this.destroy();
     }
-    return true;
 };
 
 Unit.prototype.destroy = function() {

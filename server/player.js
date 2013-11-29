@@ -41,11 +41,30 @@ var units = {
 
 var Player = module.exports = function(id, homeland, world) {
     this.units = [];
-    this.homelandLocation = Utils.copyArray(homeland);
+    this.homelandLocation = Utils.cloneArray(homeland);
     this.id = id;
     this.world = world;
     this.allUnitsPlaced = false;
-    this.unitsToPlace = Utils.copyOneStoryHash(Config.unitsToPlace);
+    this.unitsToPlace = Utils.cloneOneStoryHash(Config.unitsToPlace);
+};
+
+Player.prototype.endTurn = function() {
+    for (var i in this.units) {
+        if (this.units[i].hasEndTurnFunc) {
+            this.units[i].endTurn();
+        }
+    }
+};
+
+
+Player.prototype.canAttack = function() {
+    for (var i in this.units) {
+        this.units[i].setWhereAttack();
+        if (this.units[i].whereCanAttack.length > 0) {
+            return true;
+        }
+    }
+    return false;
 };
 
 Player.prototype.exportToHash = function() {

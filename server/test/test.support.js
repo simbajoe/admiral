@@ -50,7 +50,6 @@ exports.testSupportGreen01 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
-
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.SUPPORT_PHASE);
 
     test.done();
