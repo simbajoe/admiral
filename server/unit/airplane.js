@@ -37,20 +37,20 @@ Airplane.prototype.setWhereAttack = function() {
         var unitLocation = shootingUnits[i].location;
         if (this.location.x == unitLocation.x) {
             for (var y = Config.minWorldY; y <= Config.maxWorldY; y++) {
-                cell = this.world.cells.get([unitLocation.x, y]);
-                if (cell) {
-                    this.whereCouldAttack.push(cell.getPoint());
-                    if (cell.hasEnemyObject(this.owner)) {
+                if (this.location.y != y) {
+                    cell = this.world.cells.get([unitLocation.x, y]);
+                    this.whereCouldAttack.push([unitLocation.x, y]);
+                    if (cell && cell.hasEnemyObject(this.owner)) {
                         this.whereCanAttack.push(cell.getPoint());
                     }
                 }
             }
         } else {
             for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
-                cell = this.world.cells.get([x, unitLocation.y]);
-                if (cell) {
-                    this.whereCouldAttack.push(cell.getPoint());
-                    if (cell.hasEnemyObject(this.owner)) {
+                if (this.location.x != x) {
+                    cell = this.world.cells.get([x, unitLocation.y]);
+                    this.whereCouldAttack.push([x, unitLocation.y]);
+                    if (cell && cell.hasEnemyObject(this.owner)) {
                         this.whereCanAttack.push(cell.getPoint());
                     }
                 }

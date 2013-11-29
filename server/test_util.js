@@ -257,5 +257,46 @@ var map_template_02 = [
         );
     };
 
+    var testWhereCanMove = exports.testWhereCanMove = function (test, world, place, expected) {
+        var cell = world.cells.get(place);
+        var unit = cell.getObject();
+        unit.setWhereCanMove();
+        var whereCanMove = unit.whereCanMove;
+        var s = function (x, y) { return x[0] * 1000 + x[1] - y[0] * 1000 - y[1]; };
+        whereCanMove.sort(s);
+        expected.sort(s);
+        test.deepEqual(
+                whereCanMove,
+                expected,
+                'whereCanMove: from: `' + JSON.stringify(place) + '`, unit: `' + unit.type + '`'
+        );
+    };
+
+    var testWhereCanAttack = exports.testWhereCanAttack = function (test, world, place, expected, expected_could) {
+        var cell = world.cells.get(place);
+        var unit = cell.getObject();
+        unit.setWhereAttack();
+        var whereCanAttack = unit.whereCanAttack;
+        var whereCouldAttack = unit.whereCouldAttack;
+        var s = function (x, y) { return x[0] * 1000 + x[1] - y[0] * 1000 - y[1]; };
+        whereCanAttack.sort(s);
+        expected.sort(s);
+        test.deepEqual(
+                whereCanAttack,
+                expected,
+                'whereCanAttack: from: `' + JSON.stringify(place) + '`, unit: `' + unit.type + '`'
+        );
+        for (var i = 0; i < expected_could.length; i++) {
+            expected.push(expected_could[i]);
+        }
+        whereCouldAttack.sort(s);
+        expected.sort(s);
+        test.deepEqual(
+                whereCouldAttack,
+                expected,
+                'whereCouldAttack: from: `' + JSON.stringify(place) + '`, unit: `' + unit.type + '`'
+        );
+    };
+
 })(typeof exports === 'undefined'? this['Util']={}: exports);
 

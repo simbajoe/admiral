@@ -6,7 +6,6 @@ var Unit = module.exports = function() {};
 Unit.prototype.init = function(id, location, owner, type, world) {
     this.id = id;
     this.location = location;
-    location.addObject(this);
     this.owner = owner;
     this.type = type;
     this.world = world;
@@ -77,6 +76,7 @@ Unit.prototype.setWhereCanMove = function() {
 
 Unit.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
+    this.whereCouldAttack = [];
     var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
     for (var i in cells) {
         this.whereCouldAttack.push(cells[i].getPoint());
@@ -107,3 +107,4 @@ Unit.prototype.destroy = function() {
     this.location.removeObject(this);
     delete this;
 };
+

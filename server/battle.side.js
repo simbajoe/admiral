@@ -62,12 +62,18 @@ BattleSide.prototype.getPossibleGroups = function(unitType) {
 };
 
 BattleSide.prototype.canHaveSupport = function() {
+    if (this.units.length == 3) {
+        return false;
+    }
     var cells = this.getSupportCells();
     return cells.length > 0 && !this.skipSupport;
 };
 
-BattleSide.prototype.loose = function() {
+BattleSide.prototype.loose = function(opponent_unit) {
     for (var i in this.units) {
+        if (this.units[i].type == 'cruisingSubmarine' && (opponent_unit.type == 'battleship' || opponent_unit.type == 'aircraftCarrier')) {
+            continue;
+        }
         this.units[i].destroy();
     }
 };
@@ -96,3 +102,4 @@ BattleSide.prototype.getSupportCells = function() {
     }
     return result;
 };
+

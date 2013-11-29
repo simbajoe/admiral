@@ -15,10 +15,10 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
 Battle.prototype.setWinner = function(side) {
     this.winner = side.owner;
     if (side === this.defender) {
-        this.offender.loose();
+        this.offender.loose(this.defender.units[0]);
         return;
     }
-    this.defender.loose();
+    this.defender.loose(this.offender.units[0]);
 };
 
 Battle.prototype.getSupportCells = function() {
@@ -33,13 +33,24 @@ Battle.prototype.getSupportCells = function() {
 Battle.prototype.update = function() {
     this.currentSupportPlayer = null;
     this.currentSupportSide = null;
+    if (this.defender.units[0].type == 'submarine' || this.defender.units[0].type == 'cruisingSubmarine') {
+        if (this.offender.units[0].type == 'battleship' || this.offender.units[0].type == 'aircraftCarrier') {
+            this.setWinner(this.defender);
+            return;
+        }
+    }
+    if (this.offender.units[0].type == 'submarine' || this.offender.units[0].type == 'cruisingSubmarine') {
+        if (this.defender.units[0].type == 'battleship' || this.defender.units[0].type == 'aircraftCarrier') {
+            this.setWinner(this.offender);
+            return;
+        }
+    }
     if (this.defender.fireValue > this.offender.fireValue) {
         if (this.offender.canHaveSupport()) {
             this.currentSupportPlayer = this.offender.owner;
             this.currentSupportSide = this.offender;
             return;
         } else {
-
             this.setWinner(this.defender);
             return;
         }
@@ -54,18 +65,17 @@ Battle.prototype.update = function() {
             return;
         }
     }
-    if (this.offender.fireValue == this.defender.fireValue) {
-        if (this.offender.canHaveSupport()) {
-            this.currentSupportPlayer = this.offender.owner;
-            this.currentSupportSide = this.offender;
-            return;
-        }
-        if (this.defender.canHaveSupport()) {
-            this.currentSupportPlayer = this.defender.owner;
-            this.currentSupportSide = this.defender;
-        }
-        this.setDraw();
+    if (this.offender.canHaveSupport()) {
+        this.currentSupportPlayer = this.offender.owner;
+        this.currentSupportSide = this.offender;
+        return;
     }
+    if (this.defender.canHaveSupport()) {
+        this.currentSupportPlayer = this.defender.owner;
+        this.currentSupportSide = this.defender;
+        return;
+    }
+    this.setDraw();
 };
 
 Battle.prototype.addUnit = function(unit) {
