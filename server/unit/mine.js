@@ -11,7 +11,6 @@ var Mine = module.exports = function(id, location, owner, world) {
 Mine.prototype = new UnitSatellite();
 
 Mine.prototype.harm = function(offender) {
-    console.log('HERE', offender.type, this.canBeKilledBy);
     if (offender.type == this.canBeKilledBy) {
         this.destroy();
         return;

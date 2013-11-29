@@ -69,8 +69,11 @@ BattleSide.prototype.canHaveSupport = function() {
     return cells.length > 0 && !this.skipSupport;
 };
 
-BattleSide.prototype.loose = function() {
+BattleSide.prototype.loose = function(opponent_unit) {
     for (var i in this.units) {
+        if (this.units[i].type == 'cruisingSubmarine' && (opponent_unit.type == 'battleship' || opponent_unit.type == 'aircraftCarrier')) {
+            continue;
+        }
         this.units[i].destroy();
     }
 };

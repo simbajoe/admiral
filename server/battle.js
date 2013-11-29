@@ -15,10 +15,10 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
 Battle.prototype.setWinner = function(side) {
     this.winner = side.owner;
     if (side === this.defender) {
-        this.offender.loose();
+        this.offender.loose(this.defender.units[0]);
         return;
     }
-    this.defender.loose();
+    this.defender.loose(this.offender.units[0]);
 };
 
 Battle.prototype.getSupportCells = function() {
