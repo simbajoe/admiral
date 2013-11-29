@@ -57,7 +57,10 @@ World.prototype.exportToHash = function() {
     var result = {};
     result.phase = this.phase;
     result.winner = this.winner;
-    if (this.phase != Config.PLANNING_PHASE) {
+    if (this.phase == Config.PLANNING_PHASE
+        || this.phase == Config.BATTLE_RESULTS_PHASE) {
+        result.waitingForPlayerIds = this.waitingForPlayerIds;
+    } else {
         result.currentPlayerId = this.currentPlayerId;
     }
     return result;
