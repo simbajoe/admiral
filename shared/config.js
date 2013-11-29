@@ -12,6 +12,7 @@
     exports.MOVE_PHASE = 'move_phase';
     exports.ATTACK_PHASE = 'attack_phase';
     exports.SUPPORT_PHASE = 'support_phase';
+    exports.BATTLE_RESULTS_PHASE = 'battle_results_phase';
     exports.unitsToPlace = {
         aircraftCarrier: 1, //A
         battleship: 2, //l

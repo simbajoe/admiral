@@ -109,6 +109,8 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
     }
     var fromCell = this.cells.get(unitLocation);
     var toCell = this.cells.get(newPoint);
+    var d = new Date();
+    console.log('start searching if can skip attack phase', d.getHours());
     if (fromCell && fromCell.getObject() && toCell) {
         fromCell.getObject().move(toCell);
         if (this.getPlayerById(this.currentPlayerId).canAttack()) {
@@ -116,8 +118,10 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
         } else {
             this.nextTurn();
         }
+        console.log('search end',d.getHours());
         return true;
     }
+    console.log('search end2',d.getHours());
     return false;
 };
 
@@ -147,7 +151,7 @@ World.prototype.makeAttack = function(data) {
     var success = from.getObject().attack(victim);
     if (success) {
         this.nextTurn();
-        this.phase = Config.MOVE_PHASE;
+        this.phase = Config.BATTLE_RESULTS_PHASE;
         return true;
     }
     this.battle = new Battle(offender, victim);
@@ -170,8 +174,7 @@ World.prototype.checkBattleFinished = function() {
             this.currentPlayerId = this.returnCurrentPlayerId;
             this.returnCurrentPlayerId = null;
         }
-        this.nextTurn();
-        this.phase = Config.MOVE_PHASE;
+        this.phase = Config.BATTLE_RESULTS_PHASE;
         return true;
     }
     return false;
@@ -193,7 +196,8 @@ World.prototype.makeSupport = function(unitLocation) {
 };
 
 World.prototype.skipTurn = function() {
-    if (this.phase == Config.ATTACK_PHASE) {
+    if (this.phase == Config.ATTACK_PHASE
+        || this.phase == Config.BATTLE_RESULTS_PHASE) {
         this.phase = Config.MOVE_PHASE;
         this.nextTurn();
         return true;
