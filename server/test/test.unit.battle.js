@@ -1,6 +1,7 @@
 var World = require('../world');
 var Battle = require('../battle');
 var Config = require('../../shared/config.js');
+var Util = require('../test_util.js');
 
 exports.testBattle = function(test) {
     var world = new World();
@@ -29,18 +30,6 @@ exports.testGetPossibleGroups = function(test) {
             test.ok(groups[i][j] == 'submarine', 'Incorrect unit type in groups with submarine');
         }
     }
-    test.done();
-};
-
-
-exports.testCanHaveSupport = function(test) {
-    var world = new World();
-    var unit1 = world.addUnit(world.players[0], 'patrol', [0,0]);
-    var unit2 = world.addUnit(world.players[1], 'patrol', [1,0]);
-    var b = new Battle(unit1, unit2);
-    test.ok(!b.defender.canHaveSupport([unit1]), 'Single unit can have support');
-    var unit3 = world.addUnit(world.players[0], 'cruisingSubmarine', [0,1]);
-    test.ok(b.defender.canHaveSupport(), 'Patrol can not have cruisingSubmarine support');
     test.done();
 };
 
