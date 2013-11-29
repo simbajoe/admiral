@@ -99,9 +99,9 @@ Battle.prototype.setDraw = function() {
         offLocation.removeObject();
         defLocation.removeObject();
         offLocation.addObject(this.defender.units[i]);
-        this.offender.units[i].location = offLocation;
+        this.offender.units[i].location = defLocation;
         defLocation.addObject(this.offender.units[i]);
-        this.defender.units[i].location = defLocation;
+        this.defender.units[i].location = offLocation;
     }
 };
 

@@ -240,20 +240,24 @@ var map_template_02 = [
 
     var checkObject = exports.checkObject = function (test, world, place, expectedUnit, expectedPlayer) {
         var cell = world.cells.get(place);
-        var obj = null;
+        var t = null;
         var player = null;
         if (cell) {
             obj = cell.getObject();
             if (obj) {
                 player = obj.owner.id;
-                obj = obj.type;
+                t = obj.type;
+                test.ok(
+                    obj.location.x == place[0] && obj.location.y == place[1],
+                    'Check object: worng location field in unit: have: `' + JSON.stringify([obj.location.x, obj.location.y])
+                    + '`, expected: `' + JSON.stringify(place)
+                );
             }
         }
-        expectedPlayer = expectedPlayer ? expectedPlayer - 1 : null;
         test.ok(
-            obj === expectedUnit && player === expectedPlayer,
+            t === expectedUnit && player === expectedPlayer,
             'Check object: place: `' + JSON.stringify(place) + '`, have: `'
-            + obj + '`: `' + player + '`, expected: `' + expectedUnit + '`: `' + expectedPlayer + '`'
+            + t + '`: `' + player + '`, expected: `' + expectedUnit + '`: `' + expectedPlayer + '`'
         );
     };
 
