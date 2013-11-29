@@ -15,6 +15,7 @@ var World = module.exports = function() {
     this.currentTurn = 0;
     this.addPlayer(Config.homelandLocation[0]);
     this.addPlayer(Config.homelandLocation[1]);
+    this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
     this.winner = false;
     this.battle = null;
 };
@@ -85,22 +86,19 @@ World.prototype.addUnit = function(owner, type, location) {
     var unit = owner.addUnit(this.uniqueId, location, type);
     this.objects.push(unit);
     this.uniqueId++;
+    if (owner.allUnitsPlaced) {
+        this.waitingForPlayerIds = Utils.deleteFromArrByValue(unit.id, this.waitingForPlayerIds);
+        if (this.waitingForPlayerIds.length == 0) {
+            this.phase = Config.MOVE_PHASE;
+            this.currentPlayerId = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
+        }
+    }
     this.checkCanEndPlanningPhase();
     return unit;
 };
 
 World.prototype.removeUnit = function(unit) {
     this.objects = Utils.deleteFromArrById(unit.id, this.objects);
-};
-
-World.prototype.checkCanEndPlanningPhase = function() {
-    if (this.players[0].allUnitsPlaced
-        && this.players[1].allUnitsPlaced) {
-        this.phase = Config.MOVE_PHASE;
-        this.currentPlayerId = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
-        return true;
-    }
-    return false;
 };
 
 World.prototype.makeMove = function(unitLocation, newPoint) {

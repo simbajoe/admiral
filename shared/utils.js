@@ -21,6 +21,9 @@
             return id != element.id;
         });
     };
+    exports.deleteFromArrByValue = function(value, arr) {
+        return arr.splice( arr.indexOf( value ), 1 );
+    };
     exports.deleteFromArrByIndex = function(index, arr) {
         delete arr[index];
         arr.splice(index, 1);
