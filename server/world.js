@@ -9,7 +9,7 @@ var World = module.exports = function() {
     this.players = [];
     this.cells = new Cells();
     this.uniqueId = 1;
-    this.phase = Config.PLANNING_PHASE;
+    this.setPhase(Config.PLANNING_PHASE);
     this.currentPlayerId = null;
     this.returnCurrentPlayerId = null;
     this.currentTurn = 0;
@@ -66,6 +66,10 @@ World.prototype.exportToHash = function() {
     return result;
 };
 
+World.prototype.setPhase = function (phase) {
+    this.phase = phase;
+};
+
 World.prototype.addUnit = function(owner, type, location) {
     // it's not very good, but we don't have prediction on client
     // so he doesn't really know if the unit was placed
@@ -91,7 +95,7 @@ World.prototype.addUnit = function(owner, type, location) {
     if (owner.allUnitsPlaced) {
         this.waitingForPlayerIds = Utils.deleteFromArrByValue(owner.id, this.waitingForPlayerIds);
         if (this.waitingForPlayerIds.length == 0) {
-            this.phase = Config.MOVE_PHASE;
+            this.setPhase(Config.MOVE_PHASE);
             this.currentPlayerId = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
         }
     }
@@ -112,7 +116,7 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
     if (fromCell && fromCell.getObject() && toCell) {
         fromCell.getObject().move(toCell);
         if (this.getPlayerById(this.currentPlayerId).canAttack()) {
-            this.phase = Config.ATTACK_PHASE;
+            this.setPhase(Config.ATTACK_PHASE);
         } else {
             this.nextTurn();
         }
@@ -157,12 +161,12 @@ World.prototype.makeAttack = function(data) {
 };
 
 World.prototype.setBattleResultsPhase = function() {
-    this.phase = Config.BATTLE_RESULTS_PHASE;
+    this.setPhase(Config.BATTLE_RESULTS_PHASE);
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
 };
 
 World.prototype.setSupportPhase = function() {
-    this.phase = Config.SUPPORT_PHASE;
+    this.setPhase(Config.SUPPORT_PHASE);
     this.returnCurrentPlayerId = this.currentPlayerId;
     this.currentPlayerId = this.battle.currentSupportPlayer.id;
 };
@@ -197,14 +201,14 @@ World.prototype.makeSupport = function(unitLocation) {
 
 World.prototype.skipTurn = function(player) {
     if (this.phase == Config.ATTACK_PHASE) {
-        this.phase = Config.MOVE_PHASE;
+        this.setPhase(Config.MOVE_PHASE);
         this.nextTurn();
         return true;
     }
     if (this.phase == Config.BATTLE_RESULTS_PHASE) {
         this.waitingForPlayerIds = Utils.deleteFromArrByValue(player.id, this.waitingForPlayerIds);
         if (this.waitingForPlayerIds.length == 0) {
-            this.phase = Config.MOVE_PHASE;
+            this.setPhase(Config.MOVE_PHASE);
             this.nextTurn();
         }
         return true;
