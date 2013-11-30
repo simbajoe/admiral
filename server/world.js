@@ -172,6 +172,7 @@ World.prototype.setBattleResultsPhase = function() {
 };
 
 World.prototype.setSupportPhase = function() {
+    this.unitIdsinBattle = this.battle.getAllUnitIds();
     this.setPhase(Config.SUPPORT_PHASE);
     this.returnCurrentPlayerId = this.currentPlayerId;
     this.currentPlayerId = this.battle.currentSupportPlayer.id;
@@ -194,6 +195,7 @@ World.prototype.makeSupport = function(unitLocation) {
     }
     var unit = cell.getObject();
     this.battle.addUnit(unit);
+    this.unitIdsinBattle = this.battle.getAllUnitIds();
     if (!this.checkBattleFinished()) {
         this.currentPlayerId = this.battle.currentSupportPlayer.id;
     }
