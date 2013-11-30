@@ -67,7 +67,7 @@ Player.prototype.canAttack = function() {
     return false;
 };
 
-Player.prototype.exportToHash = function(forPlayer) {
+Player.prototype.exportToSnapshot = function(forPlayer) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
@@ -77,7 +77,7 @@ Player.prototype.exportToHash = function(forPlayer) {
         result.unitsToPlace = this.unitsToPlace;
     }
     for (var i in this.units) {
-        result.units.push(this.units[i].exportToHash(forPlayer));
+        result.units.push(this.units[i].exportToSnapshot(forPlayer));
     }
     if (this.world.phase == Config.PLANNING_PHASE) {
         result.freeCells = [];

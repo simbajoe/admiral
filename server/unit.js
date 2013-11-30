@@ -22,7 +22,7 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.hasEndTurnFunc = false;
 };
 
-Unit.prototype.exportToHash = function(forPlayer) {
+Unit.prototype.exportToSnapshot = function(forPlayer) {
     var result = {
         location: this.location.getPoint(),
         ownerId: this.owner.id

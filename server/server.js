@@ -75,7 +75,7 @@ function updateGame() {
     }
     i = world.players.length;
     while (i--) {
-        var worldHash = world.getHash(world.players[i]);
+        var worldHash = world.getSnapshot(world.players[i]);
         world.players[i].broadcast(worldHash);
     }
 }

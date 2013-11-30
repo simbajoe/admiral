@@ -19,7 +19,7 @@ var World = module.exports = function() {
     this.battle = null;
 };
 
-World.prototype.getHash = function(player) {
+World.prototype.getSnapshot = function(player) {
     var id;
     var result = {
         myId: player.id,
@@ -27,9 +27,9 @@ World.prototype.getHash = function(player) {
         world: {}
     };
     for (var i in this.players) {
-        result.players[this.players[i].id] = this.players[i].exportToHash(player);
+        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player);
     }
-    result.world = this.exportToHash(player);
+    result.world = this.exportToSnapshot(player);
     return result;
 };
 
@@ -52,7 +52,7 @@ World.prototype.getPlayerWithoutSocket = function() {
     return null;
 };
 
-World.prototype.exportToHash = function(player) {
+World.prototype.exportToSnapshot = function(player) {
     var result = {};
     result.phase = this.phase;
     result.winner = this.winner;

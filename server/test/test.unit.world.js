@@ -11,7 +11,7 @@ exports.testSupportPhase = function(test) {
     world.phase = Config.ATTACK_PHASE;
     world.makeAttack({from:destroyer1.location.getPoint(), to: cruiser.location.getPoint()});
     test.ok(world.phase == Config.SUPPORT_PHASE, 'incorrect phase after attack');
-    var hash = world.getHash(world.players[0]);
+    var hash = world.getSnapshot(world.players[0]);
     test.ok(hash.world.currentPlayerId == world.players[0].id, 'Incorrect current turn in hash in support phase');
     test.ok(hash.players[world.players[0].id].supportCells.length == 1, 'Support cells length incrorrect');
     world.makeSupport(destroyer2.location.getPoint());
