@@ -26,7 +26,7 @@ World.prototype.getSnapshot = function(player) {
         world: {}
     };
     var visibleUnits = [];
-    if (this.phase == Config.SUPPORT_PHASE) {
+    if (this.battle) {
         visibleUnits = this.battle.getAllUnitIds();
     }
     for (var i in this.players) {

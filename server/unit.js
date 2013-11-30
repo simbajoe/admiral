@@ -28,7 +28,7 @@ Unit.prototype.exportToSnapshot = function(forPlayer, visibleType) {
         ownerId: this.owner.id,
         isAlive: this.isAlive
     };
-    if (visibleType || forPlayer.id == this.owner.id) {
+    if (visibleType || !this.isAlive || forPlayer.id == this.owner.id) {
         result.type = this.type;
     }
     if (forPlayer.id == this.owner.id) {
