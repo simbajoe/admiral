@@ -5,7 +5,6 @@ var Config = require('../shared/config.js');
 var Utils = require('../shared/utils.js');
 
 var World = module.exports = function() {
-    this.objects = [];
     this.players = [];
     this.cells = new Cells();
     this.uniqueId = 1;
@@ -39,7 +38,6 @@ World.prototype.addPlayer = function(homeland) {
         return null;
     }
     var player = new Player(this.uniqueId, homeland, this);
-    this.objects.push(player);
     this.players.push(player);
     this.uniqueId++;
     return player;
@@ -93,7 +91,6 @@ World.prototype.addUnit = function(owner, type, location) {
         throw "addUnit: wrong input: location=`" + JSON.stringify(location) + "`, type=`" + type + "`";
     }
     var unit = owner.addUnit(location, type);
-    this.objects.push(unit);
     if (owner.allUnitsPlaced) {
         this.waitingForPlayerIds = Utils.deleteFromArrByValue(owner.id, this.waitingForPlayerIds);
         if (this.waitingForPlayerIds.length == 0) {
@@ -102,10 +99,6 @@ World.prototype.addUnit = function(owner, type, location) {
         }
     }
     return unit;
-};
-
-World.prototype.removeUnit = function(unit) {
-    this.objects = Utils.deleteFromArrById(unit.id, this.objects);
 };
 
 World.prototype.makeMove = function(unitLocation, newPoint) {
