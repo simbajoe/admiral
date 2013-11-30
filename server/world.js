@@ -20,16 +20,17 @@ var World = module.exports = function() {
     this.battle = null;
 };
 
-World.prototype.getHash = function() {
+World.prototype.getHash = function(player) {
     var id;
     var result = {
+        myId: player.id,
         players: {},
         world: {}
     };
     for (var i in this.players) {
-        result.players[this.players[i].id] = this.players[i].exportToHash();
+        result.players[this.players[i].id] = this.players[i].exportToHash(player);
     }
-    result.world = this.exportToHash();
+    result.world = this.exportToHash(player);
     return result;
 };
 
@@ -53,7 +54,7 @@ World.prototype.getPlayerWithoutSocket = function() {
     return null;
 };
 
-World.prototype.exportToHash = function() {
+World.prototype.exportToHash = function(player) {
     var result = {};
     result.phase = this.phase;
     result.winner = this.winner;
@@ -68,6 +69,8 @@ World.prototype.exportToHash = function() {
 
 World.prototype.setPhase = function (phase) {
     this.phase = phase;
+    if (phase == Config.MOVE_PHASE) {
+    }
 };
 
 World.prototype.addUnit = function(owner, type, location) {
@@ -89,9 +92,8 @@ World.prototype.addUnit = function(owner, type, location) {
     if (!location || !type || !owner) {
         throw "addUnit: wrong input: location=`" + JSON.stringify(location) + "`, type=`" + type + "`";
     }
-    var unit = owner.addUnit(this.uniqueId, location, type);
+    var unit = owner.addUnit(location, type);
     this.objects.push(unit);
-    this.uniqueId++;
     if (owner.allUnitsPlaced) {
         this.waitingForPlayerIds = Utils.deleteFromArrByValue(owner.id, this.waitingForPlayerIds);
         if (this.waitingForPlayerIds.length == 0) {

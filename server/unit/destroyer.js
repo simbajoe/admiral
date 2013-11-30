@@ -1,7 +1,7 @@
 var Unit = require('../unit.js');
 
-var Destroyer = module.exports = function(id, location, owner, world) {
-    this.init(id, location, owner, 'destroyer', world);
+var Destroyer = module.exports = function(location, owner, world) {
+    this.init(location, owner, 'destroyer', world);
 };
 
 Destroyer.prototype = new Unit();

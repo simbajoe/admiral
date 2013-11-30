@@ -67,17 +67,17 @@ Player.prototype.canAttack = function() {
     return false;
 };
 
-Player.prototype.exportToHash = function() {
+Player.prototype.exportToHash = function(forPlayer) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
-        units: {}
+        units: []
     };
     if (this.world.phase == Config.PLANNING_PHASE) {
         result.unitsToPlace = this.unitsToPlace;
     }
     for (var i in this.units) {
-        result.units[this.units[i].id] = this.units[i].exportToHash();
+        result.units.push(this.units[i].exportToHash(forPlayer));
     }
     if (this.world.phase == Config.PLANNING_PHASE) {
         result.freeCells = [];
@@ -120,8 +120,8 @@ Player.prototype.checkAllUnitsPlaced = function() {
     return this.allUnitsPlaced = true;
 };
 
-Player.prototype.addUnit = function(id, location, type) {
-    var unit = new units[type](id, this.world.cells.get(location), this, this.world);
+Player.prototype.addUnit = function(location, type) {
+    var unit = new units[type](this.world.cells.get(location), this, this.world);
     this.unitsToPlace[type]--;
     this.units.push(unit);
     this.checkAllUnitsPlaced();

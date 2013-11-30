@@ -7,11 +7,9 @@ io.set('browser client minification', true); // send minified client
 io.set('browser client etag', true); // apply etag caching logic based on version number
 
 var world = null;
-var worldHash = {};
 var i = 0;
 
 world = new World();
-worldHash = world.getHash();
 
 io.sockets.on("connection", function (socket) {
     var player = world.getPlayerWithoutSocket();
@@ -73,13 +71,11 @@ function updateGame() {
         while (i--) {
             playerSockets[i].player = world.addPlayer(playerSockets[i]);
         }
-        worldHash = world.getHash();
         return;
     }
     i = world.players.length;
-    worldHash = world.getHash();
     while (i--) {
-        worldHash.myId = world.players[i].id;
+        var worldHash = world.getHash(world.players[i]);
         world.players[i].broadcast(worldHash);
     }
 }

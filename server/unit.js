@@ -3,8 +3,11 @@ var Utils = require('../shared/utils.js');
 
 var Unit = module.exports = function() {};
 
-Unit.prototype.init = function(id, location, owner, type, world) {
-    this.id = id;
+var uniqueId = 1;
+
+Unit.prototype.init = function(location, owner, type, world) {
+    this.id = uniqueId;
+    uniqueId++;
     this.location = location;
     this.owner = owner;
     this.type = type;
@@ -19,21 +22,22 @@ Unit.prototype.init = function(id, location, owner, type, world) {
     this.hasEndTurnFunc = false;
 };
 
-Unit.prototype.exportToHash = function() {
+Unit.prototype.exportToHash = function(forPlayer) {
     this.setWhereAttack(); //used to update unit_ids in fireShip, other way it could be placed to ATTACK_PAHSE if
     var result = {
-        id: this.id,
         location: this.location.getPoint(),
-        ownerId: this.owner.id,
-        type: this.type
+        ownerId: this.owner.id
     };
-    if (this.world.phase == Config.MOVE_PHASE) {
-        this.setWhereCanMove();
-        result.whereCanMove = this.whereCanMove;
-    }
-    if (this.world.phase == Config.ATTACK_PHASE) {
-        result.whereCanAttack = this.whereCanAttack;
-        result.whereCouldAttack = this.whereCouldAttack;
+    if (forPlayer.id == this.owner.id) {
+        result['type'] = this.type;
+        if (this.world.phase == Config.MOVE_PHASE) {
+            this.setWhereCanMove();
+            result.whereCanMove = this.whereCanMove;
+        }
+        if (this.world.phase == Config.ATTACK_PHASE) {
+            result.whereCanAttack = this.whereCanAttack;
+            result.whereCouldAttack = this.whereCouldAttack;
+        }
     }
     return result;
 };

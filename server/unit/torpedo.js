@@ -2,8 +2,8 @@ var Unit = require('../unit.js');
 var Config = require('../../shared/config.js');
 var Utils = require('../../shared/utils.js');
 
-var Torpedo = module.exports = function(id, location, owner, world) {
-    this.init(id, location, owner, 'torpedo', world);
+var Torpedo = module.exports = function(location, owner, world) {
+    this.init(location, owner, 'torpedo', world);
     this.specialUnit = Config.MOVE_TORPEDO_SHIP;
     this.maxDistance = 2;
     this.needBattle = false;

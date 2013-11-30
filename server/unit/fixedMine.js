@@ -1,7 +1,7 @@
 var Unit = require('../unit.js');
 
-var FixedMine = module.exports = function(id, location, owner, world) {
-    this.init(id, location, owner, 'fixedMine', world);
+var FixedMine = module.exports = function(location, owner, world) {
+    this.init(location, owner, 'fixedMine', world);
     this.maxDistance = 0;
     this.maxFireDistance = 0;
     this.needBattle = false;

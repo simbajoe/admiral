@@ -1,7 +1,7 @@
 var Unit = require('../unit.js');
 
-var Submarine = module.exports = function(id, location, owner, world) {
-    this.init(id, location, owner, 'submarine', world);
+var Submarine = module.exports = function(location, owner, world) {
+    this.init(location, owner, 'submarine', world);
     this.maxDistance = 1;
 };
 
