@@ -203,7 +203,23 @@ $(function() {
     };
 
     Game.prototype.battle_results_phase = function (snapshot) {
-        this.skip();
+        var me = this;
+        var needToSkip = true;
+        for (var i in snapshot.waitingForPlayerIds) {
+            if (snapshot.waitingForPlayerIds[i] == this.id) {
+                needToSkip = false;
+                break;
+            }
+        }
+        if (needToSkip) {
+            $("body").keypress(function(event) {
+                // w
+                if (event.charCode == 119) {
+                    me.skip();
+                    $('body').unbind('keypress');
+                }
+            });
+        }
     };
 
     Game.prototype.placeUnit = function (unit, place) {
