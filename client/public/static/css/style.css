@@ -21,19 +21,23 @@ body {
 
 .field, .field_holder, .field_content, .field_back {
     float: left;
-    width: 58.4px;
-    height: 58.4px;
+    width: 56px;
+    height: 56px;
 }
 
 .field {
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .field_holder, .field_content, .field_back {
     position: absolute;
     left: 0;
     top: 0;
+}
+
+.field {
+    border: 1px solid #fff;
 }
 
 .field_holder {
@@ -65,18 +69,25 @@ body {
     opacity: 0.6;
 }
 
-.field.move_to .field_content {
+.field.move_to {
     border: 2px dotted #fff;
-    width: 54.4px;
-    height: 54.4px;
+    width: 54px;
+    height: 54px;
 }
 
-.field.move_to.could_attack .field_content {
+.field.with_unit.move_to.could_attack {
     border: 2px dotted #f00;
+    width: 54px;
+    height: 54px;
+}
+
+.field.with_unit.move_to.could_attack div {
+    width: 54px;
+    height: 54px;
 }
 
 .unit {
-    background-size: 58.4px auto;
+    background-size: 56px auto;
     background-repeat: no-repeat;
     opacity: 0.5;
 }
@@ -84,12 +95,16 @@ body {
     opacity: 1;
 }
 
-.field.with_unit.move_from .unit {
-    opacity: 1;
+.field.with_unit.move_from {
     border: 2px solid #ff0;
-    width: 54.4px;
-    height: 54.4px;
-    background-size: 54.4px auto;
+    width: 54px;
+    height: 54px;
+}
+
+.field.with_unit.move_from div {
+    background-size: 54px;
+    height: 54px;
+    width: 54px;
 }
 
 .aircraftCarrier {
