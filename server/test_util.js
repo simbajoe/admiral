@@ -242,7 +242,6 @@ var map_template_02 = [
             'Support error: place: `' + JSON.stringify(target)+ '`'
         );
         world.makeSupport(target);
-        skipBattleResultsPhase(test, world);
     };
 
     var checkObject = exports.checkObject = function (test, world, place, expectedUnit, expectedPlayer) {

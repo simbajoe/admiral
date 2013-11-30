@@ -121,7 +121,7 @@ exports.testFireShipAttackAfterOneTurn = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();

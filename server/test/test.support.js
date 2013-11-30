@@ -127,6 +127,7 @@ exports.testSupportGreen02 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -252,7 +253,7 @@ exports.testSupportGreen03 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
@@ -385,7 +386,7 @@ exports.testSupportGreen05 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -440,7 +441,7 @@ exports.testBattleDraw = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -518,7 +519,7 @@ exports.testSupportGreen06 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();

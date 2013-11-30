@@ -50,7 +50,7 @@ exports.testEqualForces01 = function(test) {
     "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
     "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
     Util.checkObject(test, world, [7, 5], 'vedette', world.players[0].id);
     Util.checkObject(test, world, [7, 6], 'vedette', world.players[1].id);

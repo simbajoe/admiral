@@ -50,7 +50,7 @@ exports.testAttackAirplainBomb = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -104,7 +104,7 @@ exports.testAttackAirplainBomb2 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -158,7 +158,7 @@ exports.testAttackAirplainBomb3 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -212,7 +212,7 @@ exports.testAttackSubmorine01 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -266,7 +266,7 @@ exports.testAttackSubmorine02 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -320,7 +320,7 @@ exports.testAttackSubmorine03 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -374,7 +374,7 @@ exports.testAttackSubmorine04 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -428,7 +428,7 @@ exports.testAttackSubmorine05 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
@@ -482,7 +482,7 @@ exports.testAttackSubmorine06 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
@@ -536,7 +536,7 @@ exports.testAttackSubmorine07 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
@@ -590,7 +590,7 @@ exports.testAttackSubmorine08 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
@@ -692,7 +692,7 @@ exports.testAttackSubmorine09 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.MOVE_PHASE);
 
     test.done();
@@ -794,7 +794,7 @@ exports.testAttackSubmorine10 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -848,7 +848,7 @@ exports.testAttackFixedMine = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -902,7 +902,7 @@ exports.testAttackMine01 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -956,7 +956,7 @@ exports.testAttackMine02 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1010,7 +1010,7 @@ exports.testAttackTorpedo01 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1064,7 +1064,7 @@ exports.testAttackTorpedo02 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1118,7 +1118,7 @@ exports.testAttackTorpedo03 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1172,7 +1172,7 @@ exports.testAttackTorpedo04 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1226,7 +1226,7 @@ exports.testAttackTorpedo05 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1280,7 +1280,7 @@ exports.testAttackAirplain01 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();
@@ -1334,7 +1334,7 @@ exports.testAttackAirplain02 = function(test) {
         "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "+-----------------------------------------------+"
     ];
-
+    Util.skipBattleResultsPhase(test, world);
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
 
     test.done();

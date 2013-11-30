@@ -88,7 +88,6 @@ Unit.prototype.setWhereAttack = function() {
 
 Unit.prototype.attack = function(victim) { //all special units don't run this function
     if (!victim.needBattle) {
-        console.log('here');
         victim.harm(this);
         return true;
     }

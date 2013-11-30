@@ -15,6 +15,13 @@ exports.testSupportPhase = function(test) {
     test.ok(hash.world.currentPlayerId == world.players[0].id, 'Incorrect current turn in hash in support phase');
     test.ok(hash.players[world.players[0].id].supportCells.length == 1, 'Support cells length incrorrect');
     world.makeSupport(destroyer2.location.getPoint());
-    test.ok(world.phase == Config.MOVE_PHASE, 'incorrect phase after adding unit to battle');
+    test.ok(world.phase == Config.BATTLE_RESULTS_PHASE, 'incorrect phase after adding unit to battle, ' +
+        'battle results expected; ' + world.phase + ' discovered');
+    world.skipTurn(world.players[0]);
+    test.ok(world.phase == Config.BATTLE_RESULTS_PHASE, 'incorrect phase after one player skipped ' +
+        'battle results phase; move phase expected; ' + world.phase + ' discovered');
+    world.skipTurn(world.players[1]);
+    test.ok(world.phase == Config.MOVE_PHASE, 'incorrect phase after skipping battle results phase; move phase ' +
+        'expected; ' + world.phase + ' discovered');
     test.done();
 };
