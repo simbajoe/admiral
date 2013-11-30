@@ -13,6 +13,10 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
     this.update();
 };
 
+Battle.prototype.getAllUnitIds = function() {
+    return this.defender.getAllUnitIds().concat(this.offender.getAllUnitIds());
+};
+
 
 Battle.prototype.setWinner = function(side) {
     this.winner = side.owner;

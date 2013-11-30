@@ -67,21 +67,21 @@ Player.prototype.canAttack = function() {
     return false;
 };
 
-Player.prototype.exportToSnapshot = function(forPlayer) {
+Player.prototype.exportToSnapshot = function(forPlayer, phase, visibleUnits) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
         units: []
     };
     if (forPlayer.id == this.id
-        && this.world.phase == Config.PLANNING_PHASE) {
+        && phase== Config.PLANNING_PHASE) {
         result.unitsToPlace = this.unitsToPlace;
     }
     for (var i in this.units) {
-        result.units.push(this.units[i].exportToSnapshot(forPlayer));
+        result.units.push(this.units[i].exportToSnapshot(forPlayer, visibleUnits.indexOf(this.units[i].id) > -1));
     }
     if (forPlayer.id == this.id
-        && this.world.phase == Config.PLANNING_PHASE) {
+        && phase == Config.PLANNING_PHASE) {
         result.freeCells = [];
         for (var i in this.homelandLocation) {
             var y = parseInt(this.homelandLocation[i]);

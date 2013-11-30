@@ -10,6 +10,14 @@ var BattleSide = module.exports = function(unit) {
     this.addUnit(unit);
 };
 
+BattleSide.prototype.getAllUnitIds = function() {
+    var result = [];
+    for (var i in this.units) {
+        result.push(this.units[i].id);
+    }
+    return result;
+};
+
 BattleSide.prototype.skipSupport = function() {
     this.supportSkipped = true;
 };

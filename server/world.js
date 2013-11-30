@@ -25,8 +25,12 @@ World.prototype.getSnapshot = function(player) {
         players: {},
         world: {}
     };
+    var visibleUnits = [];
+    if (this.phase == Config.SUPPORT_PHASE) {
+        visibleUnits = this.battle.getAllUnitIds();
+    }
     for (var i in this.players) {
-        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player);
+        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, visibleUnits);
     }
     result.world = this.exportToSnapshot(player);
     return result;

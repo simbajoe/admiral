@@ -22,14 +22,16 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.isAlive = true;
 };
 
-Unit.prototype.exportToSnapshot = function(forPlayer) {
+Unit.prototype.exportToSnapshot = function(forPlayer, visibleType) {
     var result = {
         location: this.location.getPoint(),
         ownerId: this.owner.id,
         isAlive: this.isAlive
     };
+    if (visibleType || forPlayer.id == this.owner.id) {
+        result.type = this.type;
+    }
     if (forPlayer.id == this.owner.id) {
-        result['type'] = this.type;
         if (this.world.phase == Config.MOVE_PHASE) {
             this.setWhereCanMove();
             result.whereCanMove = this.whereCanMove;
