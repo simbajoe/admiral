@@ -9,7 +9,6 @@ var MNB = module.exports = function(location, owner, world) {
 MNB.prototype = new Unit();
 
 MNB.prototype.harm = function(offender) {
-    //todo: add game over
     this.kill();
     return true;
 };

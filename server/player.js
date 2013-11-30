@@ -45,6 +45,7 @@ var Player = module.exports = function(id, homeland, world) {
     this.id = id;
     this.world = world;
     this.allUnitsPlaced = false;
+    this.lost = false;
     this.unitsToPlace = Utils.cloneOneStoryHash(Config.unitsToPlace);
 };
 
@@ -144,10 +145,15 @@ Player.prototype.removeUnit = function(unit) {
 };
 
 Player.prototype.destroyUnits = function() {
+    var numOfBases = 0;
     i = this.units.length;
     while (i--) {
         if (!this.units[i].isAlive) {
             this.units[i].destroy();
+            continue;
+        } else if (this.units[i].type == Config.BASE) {
+            numOfBases++;
         }
     }
+    this.lost = numOfBases <= 0;
 };

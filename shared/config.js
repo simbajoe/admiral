@@ -39,6 +39,7 @@
     exports.KILL_BATTLESHIP = ['submarine', 'cruisingSubmarine'];
     exports.KILL_AIRCRAFT_CARRIER = ['submarine', 'cruisingSubmarine'];
     exports.KILLERS = ['airplane', 'torpedo', 'fireShip'];
+    exports.BASE = 'MNB';
     exports.possibleGroups = [
         {
             units: ['submarine'],

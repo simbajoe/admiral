@@ -58,7 +58,9 @@ World.prototype.getPlayerWithoutSocket = function() {
 World.prototype.exportToSnapshot = function(player) {
     var result = {};
     result.phase = this.phase;
-    result.winner = this.winner;
+    if (this.winner) {
+        result.winner = this.winner.id;
+    }
     if (this.phase == Config.PLANNING_PHASE
         || this.phase == Config.BATTLE_RESULTS_PHASE) {
         result.waitingForPlayerIds = this.waitingForPlayerIds;
@@ -128,13 +130,10 @@ World.prototype.makeMove = function(unitLocation, newPoint) {
 };
 
 World.prototype.nextTurn = function() {
-    this.getPlayerById(this.currentPlayerId).endTurn();
-    if (this.currentPlayerId == this.players[0].id) {
-        this.currentPlayerId = this.players[1].id;
-        this.currentTurn++;
-        return;
-    }
-    this.currentPlayerId = this.players[0].id;
+    var player = this.getPlayerById(this.currentPlayerId);
+    player.endTurn();
+    this.currentPlayerId = this.getEnemy(player).id;
+    this.currentTurn++;
 };
 
 
@@ -200,13 +199,26 @@ World.prototype.endBattleResultsPhase = function() {
     this.setPhase(Config.MOVE_PHASE);
     for (var i in this.players) {
         this.players[i].destroyUnits();
+        if (this.players[i].lost) {
+            this.winner = this.getEnemy(this.players[i]);
+        }
     }
     this.battle = null;
+    if (this.winner) {
+        return;
+    }
     if (this.returnCurrentPlayerId) {
         this.currentPlayerId = this.returnCurrentPlayerId;
         this.returnCurrentPlayerId = null;
     }
     this.nextTurn();
+};
+
+World.prototype.getEnemy = function(player) {
+    if (player.id == this.players[0].id) {
+        return this.players[1];
+    }
+    return this.players[0];
 };
 
 World.prototype.skipTurn = function(player) {
