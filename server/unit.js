@@ -22,16 +22,18 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.isAlive = true;
 };
 
-Unit.prototype.exportToSnapshot = function(forPlayer, visibleType) {
+Unit.prototype.exportToSnapshot = function(forPlayer, inBattle) {
     var result = {
         location: this.location.getPoint(),
         ownerId: this.owner.id,
         isAlive: this.isAlive
     };
-    if (visibleType || !this.isAlive || forPlayer.id == this.owner.id) {
+    if (inBattle || !this.isAlive) {
         result.type = this.type;
+        result.wasInBattle = true;
     }
     if (forPlayer.id == this.owner.id) {
+        result.type = this.type;
         if (this.world.phase == Config.MOVE_PHASE) {
             this.setWhereCanMove();
             result.whereCanMove = this.whereCanMove;

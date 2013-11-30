@@ -14,6 +14,7 @@ var World = module.exports = function() {
     this.currentTurn = 0;
     this.addPlayer(Config.homelandLocation[0]);
     this.addPlayer(Config.homelandLocation[1]);
+    this.unitIdsinBattle = [];
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
     this.winner = false;
     this.battle = null;
@@ -30,7 +31,7 @@ World.prototype.getSnapshot = function(player) {
         visibleUnits = this.battle.getAllUnitIds();
     }
     for (var i in this.players) {
-        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, visibleUnits);
+        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, this.unitIdsinBattle);
     }
     result.world = this.exportToSnapshot(player);
     return result;
@@ -136,7 +137,6 @@ World.prototype.nextTurn = function() {
     this.currentTurn++;
 };
 
-
 World.prototype.makeAttack = function(data) {
     var from = this.cells.get(data.from);
     var offender = from.getObject();
@@ -149,8 +149,10 @@ World.prototype.makeAttack = function(data) {
         || !victim) {
         return false;
     }
-    var success = from.getObject().attack(victim);
+    var success = offender.attack(victim);
     if (success) {
+        this.unitIdsinBattle.push(victim.id);
+        this.unitIdsinBattle.push(offender.id);
         this.setBattleResultsPhase();
         return true;
     }
@@ -162,6 +164,9 @@ World.prototype.makeAttack = function(data) {
 };
 
 World.prototype.setBattleResultsPhase = function() {
+    if (this.unitIdsinBattle.length == 0) {
+        this.unitIdsinBattle = this.battle.getAllUnitIds();
+    }
     this.setPhase(Config.BATTLE_RESULTS_PHASE);
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
 };
@@ -211,6 +216,7 @@ World.prototype.endBattleResultsPhase = function() {
         this.currentPlayerId = this.returnCurrentPlayerId;
         this.returnCurrentPlayerId = null;
     }
+    this.unitIdsinBattle = [];
     this.nextTurn();
 };
 
