@@ -108,7 +108,7 @@ body {
 }
 
 .field.with_unit.dead {
-    border: 2px solid #f00;
+    border: 2px dotted #f00;
     width: 54px;
     height: 54px;
 }
