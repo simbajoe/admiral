@@ -23,7 +23,6 @@ Unit.prototype.init = function(location, owner, type, world) {
 };
 
 Unit.prototype.exportToHash = function(forPlayer) {
-    this.setWhereAttack(); //used to update unit_ids in fireShip, other way it could be placed to ATTACK_PAHSE if
     var result = {
         location: this.location.getPoint(),
         ownerId: this.owner.id
@@ -35,6 +34,7 @@ Unit.prototype.exportToHash = function(forPlayer) {
             result.whereCanMove = this.whereCanMove;
         }
         if (this.world.phase == Config.ATTACK_PHASE) {
+            this.setWhereAttack();
             result.whereCanAttack = this.whereCanAttack;
             result.whereCouldAttack = this.whereCouldAttack;
         }
