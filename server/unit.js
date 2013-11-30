@@ -20,12 +20,14 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.maxFireDistance = 1;
     this.needBattle = true;
     this.hasEndTurnFunc = false;
+    this.isAlive = true;
 };
 
 Unit.prototype.exportToSnapshot = function(forPlayer) {
     var result = {
         location: this.location.getPoint(),
-        ownerId: this.owner.id
+        ownerId: this.owner.id,
+        isAlive: this.isAlive
     };
     if (forPlayer.id == this.owner.id) {
         result['type'] = this.type;
@@ -100,7 +102,7 @@ Unit.prototype.attack = function(victim) { //all special units don't run this fu
 
 Unit.prototype.harm = function(offender) { //all special units don't run this function
     if (Config.KILLERS.indexOf(offender.type) > -1) {
-        this.destroy();
+        this.kill();
     }
 };
 
@@ -108,5 +110,9 @@ Unit.prototype.destroy = function() {
     this.owner.removeUnit(this);
     this.location.removeObject(this);
     delete this;
+};
+
+Unit.prototype.kill = function() {
+    this.isAlive = false;
 };
 

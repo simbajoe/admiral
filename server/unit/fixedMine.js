@@ -10,8 +10,8 @@ var FixedMine = module.exports = function(location, owner, world) {
 FixedMine.prototype = new Unit();
 
 FixedMine.prototype.harm = function(offender) {
-    offender.destroy();
-    this.destroy();
+    offender.kill();
+    this.kill();
 };
 
 FixedMine.prototype.attack = function(victim) {

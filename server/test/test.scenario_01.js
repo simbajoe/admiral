@@ -83,6 +83,7 @@ exports.testUnitsCreation = function(test) {
 
     Util.moveAndCheck(test, world, world.players[1].id, [7, 10], [7, 9]);
     Util.attackAndCheck(test, world, world.players[1].id, {from: [1, 8], to: [1, 2]});
+    Util.skipBattleResultsPhase(test, world);
     Util.checkObject(test, world, [1, 8], null, null);
     Util.checkObject(test, world, [1, 2], null, null);
 

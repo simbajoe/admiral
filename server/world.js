@@ -14,6 +14,7 @@ var World = module.exports = function() {
     this.currentTurn = 0;
     this.addPlayer(Config.homelandLocation[0]);
     this.addPlayer(Config.homelandLocation[1]);
+    this.battleResults = {};
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
     this.winner = false;
     this.battle = null;
@@ -167,11 +168,6 @@ World.prototype.setSupportPhase = function() {
 
 World.prototype.checkBattleFinished = function() {
     if (this.battle.winner || this.battle.draw) {
-        this.battle = null;
-        if (this.returnCurrentPlayerId) {
-            this.currentPlayerId = this.returnCurrentPlayerId;
-            this.returnCurrentPlayerId = null;
-        }
         this.setBattleResultsPhase();
         return true;
     }
@@ -193,6 +189,19 @@ World.prototype.makeSupport = function(unitLocation) {
     return true;
 };
 
+World.prototype.endBattleResultsPhase = function() {
+    this.setPhase(Config.MOVE_PHASE);
+    for (var i in this.players) {
+        this.players[i].destroyUnits();
+    }
+    this.battle = null;
+    if (this.returnCurrentPlayerId) {
+        this.currentPlayerId = this.returnCurrentPlayerId;
+        this.returnCurrentPlayerId = null;
+    }
+    this.nextTurn();
+};
+
 World.prototype.skipTurn = function(player) {
     if (this.phase == Config.ATTACK_PHASE) {
         this.setPhase(Config.MOVE_PHASE);
@@ -202,8 +211,7 @@ World.prototype.skipTurn = function(player) {
     if (this.phase == Config.BATTLE_RESULTS_PHASE) {
         this.waitingForPlayerIds = Utils.deleteFromArrByValue(player.id, this.waitingForPlayerIds);
         if (this.waitingForPlayerIds.length == 0) {
-            this.setPhase(Config.MOVE_PHASE);
-            this.nextTurn();
+            this.endBattleResultsPhase();
         }
         return true;
     }

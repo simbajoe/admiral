@@ -12,11 +12,11 @@ Mine.prototype = new UnitSatellite();
 
 Mine.prototype.harm = function(offender) {
     if (offender.type == this.canBeKilledBy) {
-        this.destroy();
+        this.kill();
         return;
     }
-    offender.destroy();
-    this.destroy();
+    offender.kill();
+    this.kill();
 };
 
 Mine.prototype.attack = function(victim) {

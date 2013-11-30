@@ -19,7 +19,7 @@ var Vedette = require('./unit/vedette.js');
 var Minesweeper = require('./unit/minesweeper.js');
 var Submarine = require('./unit/submarine.js');
 
-var units = {
+var unitsClasses = {
     aircraftCarrier: AircraftCarrier,
     battleship: Battleship,
     cruiser: Cruiser,
@@ -124,7 +124,7 @@ Player.prototype.checkAllUnitsPlaced = function() {
 };
 
 Player.prototype.addUnit = function(location, type) {
-    var unit = new units[type](this.world.cells.get(location), this, this.world);
+    var unit = new unitsClasses[type](this.world.cells.get(location), this, this.world);
     this.unitsToPlace[type]--;
     this.units.push(unit);
     this.checkAllUnitsPlaced();
@@ -141,4 +141,13 @@ Player.prototype.removeSocket = function(socket) {
 
 Player.prototype.removeUnit = function(unit) {
     this.units = Utils.deleteFromArrById(unit.id, this.units);
+};
+
+Player.prototype.destroyUnits = function() {
+    i = this.units.length;
+    while (i--) {
+        if (!this.units[i].isAlive) {
+            this.units[i].destroy();
+        }
+    }
 };

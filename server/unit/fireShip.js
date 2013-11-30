@@ -16,17 +16,17 @@ FireShip.prototype.attack = function(victim) {
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
         if (victim.location.isEq(cell)) {
-            victim.destroy();
+            victim.kill();
             break;
         }
     }
-    this.destroy();
+    this.kill();
     return true;
 };
 
 FireShip.prototype.harm = function(offender) {
-    offender.destroy();
-    this.destroy();
+    offender.kill();
+    this.kill();
     return true;
 };
 

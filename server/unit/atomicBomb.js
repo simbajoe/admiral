@@ -22,7 +22,7 @@ AtomicBomb.prototype.setWhereAttack = function() {
 };
 
 AtomicBomb.prototype.attack = function(victim) {
-    this.destroy();
+    this.kill();
     return true;
 };
 
@@ -30,12 +30,12 @@ AtomicBomb.prototype.harm = function(offender) {
     this.attack(this.location);
 };
 
-AtomicBomb.prototype.destroy = function() {
+AtomicBomb.prototype.kill = function() {
     this.setWhereAttack();
     for (var i in this.whereCouldAttack) {
         var cell = this.world.cells.get(this.whereCouldAttack[i]);
         if (cell && cell.getObject() && cell.getObject().id != this.id) {
-            cell.getObject().destroy();
+            cell.getObject().kill();
         }
     }
     this.owner.removeUnit(this);

@@ -98,10 +98,12 @@ exports.testUnitsCreation = function(test) {
 
     Util.moveAndCheck(test, world, world.players[0].id, [6, 2], [6, 3]);
     Util.attackAndCheck(test, world, world.players[0].id, {from: [8, 5], to: [8, 8]});
+    Util.skipBattleResultsPhase(test, world);
+
     Util.checkObject(test, world, [8, 5], null, null);
     Util.checkObject(test, world, [8, 8], null, null);
 
-    Util.skipBattleResultsPhase(test, world);
+
     Util.moveAndCheck(test, world, world.players[1].id, [10, 10], [8, 10]);
     Util.attackAndCheck(test, world, world.players[1].id, {skip: true});
 

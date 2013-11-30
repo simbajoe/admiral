@@ -65,17 +65,17 @@ Airplane.prototype.attack = function(victim) {
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
         if (victim.location.isEq(cell)) {
-            victim.destroy();
+            victim.kill();
             break;
         }
     }
-    this.destroy();
+    this.kill();
     return true;
 };
 
 Airplane.prototype.harm = function(offender) {
     if (this.canAttack()) {
-        offender.destroy();
+        offender.kill();
     }
-    this.destroy();
+    this.kill();
 };

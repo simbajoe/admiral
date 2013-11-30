@@ -11,7 +11,7 @@ MNB.prototype = new Unit();
 
 MNB.prototype.harm = function(offender) {
     //todo: add game over
-    this.destroy();
+    this.kill();
     return true;
 };
 

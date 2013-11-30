@@ -119,17 +119,17 @@ Torpedo.prototype.attack = function(victim) {
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
         if (victim.location.isEq(cell)) {
-            cell.getObject().destroy();
+            cell.getObject().kill();
             break;
         }
     }
-    this.destroy();
+    this.kill();
     return true;
 };
 
 Torpedo.prototype.harm = function(offender) {
     if (this.canAttack()) {
-        offender.destroy();
+        offender.kill();
     }
-    this.destroy();
+    this.kill();
 };

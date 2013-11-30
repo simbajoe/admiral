@@ -74,7 +74,7 @@ BattleSide.prototype.loose = function(opponent_unit) {
         if (this.units[i].type == 'cruisingSubmarine' && (opponent_unit.type == 'battleship' || opponent_unit.type == 'aircraftCarrier')) {
             continue;
         }
-        this.units[i].destroy();
+        this.units[i].kill();
     }
 };
 
