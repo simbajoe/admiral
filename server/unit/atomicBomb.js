@@ -38,7 +38,6 @@ AtomicBomb.prototype.destroy = function() {
             cell.getObject().destroy();
         }
     }
-    this.world.removeUnit(this);
     this.owner.removeUnit(this);
     this.location.removeObject(this);
     delete this;

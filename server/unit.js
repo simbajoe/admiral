@@ -105,7 +105,6 @@ Unit.prototype.harm = function(offender) { //all special units don't run this fu
 };
 
 Unit.prototype.destroy = function() {
-    this.world.removeUnit(this);
     this.owner.removeUnit(this);
     this.location.removeObject(this);
     delete this;
