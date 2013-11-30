@@ -69,7 +69,7 @@ exports.testAttackTorpedo02 = function(test) {
     test.done();
 };
 
-exports.testAttackAirplain01 = function(test) {
+exports.testAttackAirplane01 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -103,7 +103,7 @@ exports.testAttackAirplain01 = function(test) {
     test.done();
 };
 
-exports.testAttackAirplain02 = function(test) {
+exports.testAttackAirplane02 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -136,7 +136,7 @@ exports.testAttackAirplain02 = function(test) {
     test.done();
 };
 
-exports.testAttackAirplain03 = function(test) {
+exports.testAttackAirplane03 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",

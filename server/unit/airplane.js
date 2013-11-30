@@ -24,6 +24,28 @@ Airplane.prototype.canAttack = function() {
     return shootingUnits.length > 0;
 };
 
+Airplane.prototype.getAllCellsOx = function(y) {
+    var result = [];
+    for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
+        var cell = this.world.cells.get([x,y]);
+        if (cell) {
+            result.push(cell);
+        }
+    }
+    return result;
+};
+
+Airplane.prototype.getAllCellsOy = function(x) {
+    var result = [];
+    for (var y = Config.minWorldY; y <= Config.maxWorldY; y++) {
+        var cell = this.world.cells.get([x,y]);
+        if (cell) {
+            result.push(cell);
+        }
+    }
+    return result;
+};
+
 Airplane.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
     this.whereCouldAttack = [];
@@ -31,28 +53,33 @@ Airplane.prototype.setWhereAttack = function() {
         return false;
     }
     var shootingUnits = this.getUnitsCanShoot();
-    var points = [], cell = null;
+    var cells = [], cell = null;
     for (var i in shootingUnits) {
         var unitLocation = shootingUnits[i].location;
         if (this.location.x == unitLocation.x) {
-            for (var y = Config.minWorldY; y <= Config.maxWorldY; y++) {
-                if (this.location.y != y) {
-                    cell = this.world.cells.get([unitLocation.x, y]);
-                    this.whereCouldAttack.push([unitLocation.x, y]);
-                    if (cell && cell.hasEnemyObject(this.owner)) {
-                        this.whereCanAttack.push(cell.getPoint());
-                    }
-                }
+            cells = this.getAllCellsOy(unitLocation.x);
+            //checking border existance
+            if (!this.world.cells.get([unitLocation.x - 1, unitLocation.y])
+                || !this.world.cells.get([unitLocation.x + 1, unitLocation.y])) {
+                cells = cells.concat(this.getAllCellsOx(unitLocation.y));
+                cells = cells.concat(this.getAllCellsOx(this.location.y));
             }
         } else {
-            for (var x = Config.minWorldX; x <= Config.maxWorldX; x++) {
-                if (this.location.x != x) {
-                    cell = this.world.cells.get([x, unitLocation.y]);
-                    this.whereCouldAttack.push([x, unitLocation.y]);
-                    if (cell && cell.hasEnemyObject(this.owner)) {
-                        this.whereCanAttack.push(cell.getPoint());
-                    }
-                }
+            cells = this.getAllCellsOx(unitLocation.y);
+            //checking border existance
+            if (!this.world.cells.get([unitLocation.x, unitLocation.y - 1])
+                || !this.world.cells.get([unitLocation.x, unitLocation.y + 1])) {
+                cells = cells.concat(this.getAllCellsOy(unitLocation.x));
+                cells = cells.concat(this.getAllCellsOy(this.location.x));
+            }
+        }
+    }
+    for (var j in cells) {
+        if (!this.location.isEq(cells[j])) {
+            cell = cells[j];
+            this.whereCouldAttack.push(cell.getPoint());
+            if (cell && cell.hasEnemyObject(this.owner)) {
+                this.whereCanAttack.push(cell.getPoint());
             }
         }
     }

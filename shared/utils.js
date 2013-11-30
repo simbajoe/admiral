@@ -14,7 +14,7 @@
                 return i;
             }
         }
-        return null;
+        return -1;
     };
     exports.deleteFromArrById = function(id, arr) {
         return arr.filter(function(element){

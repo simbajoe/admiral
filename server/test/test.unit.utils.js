@@ -66,7 +66,7 @@ exports.testDeleteFromArrByIndex= function(test) {
     index = Utils.findPointIndexInArr([1,0], arr);
     test.ok(index == 1, 'incorrect index found 2');
     index = Utils.findPointIndexInArr([10,11], arr);
-    test.ok(!index, 'Not existing element found');
+    test.ok(index == -1, 'Not existing element found');
     test.done();
 };
 
