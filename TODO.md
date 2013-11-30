@@ -1,4 +1,4 @@
 TODO
 =======
 - Airplane near border
-- Support phase: show units
+- Add winner if both MNBs are destroyed
