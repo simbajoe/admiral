@@ -22,7 +22,9 @@
         });
     };
     exports.deleteFromArrByValue = function(value, arr) {
-        return arr.splice( arr.indexOf( value ), 1 );
+        return arr.filter(function(element){
+            return value != element;
+        });
     };
     exports.deleteFromArrByIndex = function(index, arr) {
         delete arr[index];

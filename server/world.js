@@ -96,7 +96,6 @@ World.prototype.addUnit = function(owner, type, location) {
             this.currentPlayerId = Math.random() > 0.5 ? this.players[0].id : this.players[1].id;
         }
     }
-    this.checkCanEndPlanningPhase();
     return unit;
 };
 
@@ -152,7 +151,7 @@ World.prototype.makeAttack = function(data) {
     var success = from.getObject().attack(victim);
     if (success) {
         this.nextTurn();
-        setBattleResultsPhase();
+        this.setBattleResultsPhase();
         return true;
     }
     this.battle = new Battle(offender, victim);

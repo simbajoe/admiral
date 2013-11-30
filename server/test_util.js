@@ -185,11 +185,10 @@ var map_template_02 = [
         );
     };
 
-    var skipBattleResultsPhase = function (world) {
-        if (world.phase == Config.BATTLE_RESULTS_PHASE) {
-            world.skipTurn();
-            world.skipTurn();
-        }
+    var skipBattleResultsPhase = exports.skipBattleResultsPhase = function (test, world) {
+        test.ok(world.phase == Config.BATTLE_RESULTS_PHASE, 'Cannot make skipBattleResultsPhase on phase ' + world.phase);
+        world.skipTurn(world.players[0]);
+        world.skipTurn(world.players[1]);
     };
 
     var moveAndCheck = exports.moveAndCheck = function(test, world, playerId, from, to) {
@@ -208,7 +207,6 @@ var map_template_02 = [
             'Move error: from: `' + JSON.stringify(from) + '`, to: `'
             + JSON.stringify(to) + '`'
         );
-        skipBattleResultsPhase(world);
     };
 
     var attackAndCheck = exports.attackAndCheck = function(test, world, playerId, data) {
@@ -228,7 +226,6 @@ var map_template_02 = [
             + JSON.stringify(data.to) + '`'
         );
         world.makeAttack(data);
-        skipBattleResultsPhase(world);
     };
 
     var supportAndCheck = exports.supportAndCheck = function(test, world, playerId, target) {
@@ -245,7 +242,7 @@ var map_template_02 = [
             'Support error: place: `' + JSON.stringify(target)+ '`'
         );
         world.makeSupport(target);
-        skipBattleResultsPhase(world);
+        skipBattleResultsPhase(test, world);
     };
 
     var checkObject = exports.checkObject = function (test, world, place, expectedUnit, expectedPlayer) {
