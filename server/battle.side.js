@@ -79,7 +79,8 @@ BattleSide.prototype.canHaveSupport = function() {
 
 BattleSide.prototype.loose = function(opponent_unit) {
     for (var i in this.units) {
-        if (this.units[i].type == 'cruisingSubmarine' && (opponent_unit.type == 'battleship' || opponent_unit.type == 'aircraftCarrier')) {
+        if (this.units[i].type == 'cruisingSubmarine'
+            && (opponent_unit.type == 'battleship' || opponent_unit.type == 'aircraftCarrier')) {
             continue;
         }
         this.units[i].kill();
