@@ -61,6 +61,10 @@ World.prototype.exportToSnapshot = function(player) {
     } else {
         result.currentPlayerId = this.currentPlayerId;
     }
+    if (this.phase == Config.BATTLE_RESULTS_PHASE
+        && this.battle.draw) {
+        result.unitsReplaced = this.battle.unitsReplaced;
+    }
     return result;
 };
 

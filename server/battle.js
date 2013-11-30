@@ -9,6 +9,7 @@ var Battle = module.exports = function(defenderUnit, offenderUnit) {
     this.currentSupportPlayer = null;
     this.currentSupportSide = null;
     this.draw = false;
+    this.unitsReplaced = {};
     this.update();
 };
 
@@ -81,7 +82,12 @@ Battle.prototype.addUnit = function(unit) {
 Battle.prototype.setDraw = function() {
     this.draw = true;
     var numOfUnitsToReplace = Math.min(this.offender.units.length, this.defender.units.length);
+    this.unitsReplaced = [];
     for (var i = 0; i < numOfUnitsToReplace; i++) {
+        this.unitsReplaced.push([
+            this.offender.units[i].location.getPoint(),
+            this.defender.units[i].location.getPoint(),
+        ]);
         var offLocation = this.offender.units[i].location;
         var defLocation = this.defender.units[i].location;
         offLocation.removeObject();
