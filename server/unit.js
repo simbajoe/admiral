@@ -18,7 +18,6 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.whereCouldAttack = [];
     this.maxDistance = 1;
     this.maxFireDistance = 1;
-    this.needBattle = true;
     this.hasEndTurnFunc = false;
     this.isAlive = true;
 };
@@ -93,17 +92,15 @@ Unit.prototype.setWhereAttack = function() {
 };
 
 Unit.prototype.attack = function(victim) { //all special units don't run this function
-    if (!victim.needBattle) {
-        victim.harm(this);
-        return true;
-    }
-    return false;
+    return victim.harm(this);
 };
 
 Unit.prototype.harm = function(offender) { //all special units don't run this function
     if (Config.KILLERS.indexOf(offender.type) > -1) {
         this.kill();
+        return true;
     }
+    return false;
 };
 
 Unit.prototype.destroy = function() {

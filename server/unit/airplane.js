@@ -4,7 +4,6 @@ var Config = require('../../shared/config.js');
 var Airplane = module.exports = function(location, owner, world) {
     this.init(location, owner, 'airplane', world);
     this.specialUnit = Config.MOVE_AIRPLANE_SHIP;
-    this.needBattle = false;
 };
 
 Airplane.prototype = new UnitSatellite();
@@ -78,4 +77,5 @@ Airplane.prototype.harm = function(offender) {
         offender.kill();
     }
     this.kill();
+    return true;
 };

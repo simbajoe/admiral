@@ -164,7 +164,7 @@ exports.testAttackAirplainBomb3 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine01 = function(test) {
+exports.testAttackSubmarine01 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -218,7 +218,7 @@ exports.testAttackSubmorine01 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine02 = function(test) {
+exports.testAttackSubmarine02 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -272,7 +272,7 @@ exports.testAttackSubmorine02 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine03 = function(test) {
+exports.testAttackSubmarine03 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -326,7 +326,7 @@ exports.testAttackSubmorine03 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine04 = function(test) {
+exports.testAttackSubmarine04 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -380,7 +380,7 @@ exports.testAttackSubmorine04 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine05 = function(test) {
+exports.testAttackSubmarine05 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -434,7 +434,7 @@ exports.testAttackSubmorine05 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine06 = function(test) {
+exports.testAttackSubmarine06 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -488,7 +488,7 @@ exports.testAttackSubmorine06 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine07 = function(test) {
+exports.testAttackSubmarine07 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -542,7 +542,7 @@ exports.testAttackSubmorine07 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine08 = function(test) {
+exports.testAttackSubmarine08 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -596,7 +596,7 @@ exports.testAttackSubmorine08 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine09 = function(test) {
+exports.testAttackSubmarine09 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",
@@ -698,7 +698,7 @@ exports.testAttackSubmorine09 = function(test) {
     test.done();
 };
 
-exports.testAttackSubmorine10 = function(test) {
+exports.testAttackSubmarine10 = function(test) {
 
     var map = [
         "+-----------------------------------------------+",

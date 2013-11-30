@@ -36,6 +36,8 @@
     exports.MOVE_AIRPLANE_SHIP = 'aircraftCarrier';
     exports.MOVE_TORPEDO_SHIP = 'vedette';
     exports.KILL_MINE = 'minesweeper';
+    exports.KILL_BATTLESHIP = ['submarine', 'cruisingSubmarine'];
+    exports.KILL_AIRCRAFT_CARRIER = ['submarine', 'cruisingSubmarine'];
     exports.KILLERS = ['airplane', 'torpedo', 'fireShip'];
     exports.possibleGroups = [
         {

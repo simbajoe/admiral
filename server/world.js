@@ -14,7 +14,6 @@ var World = module.exports = function() {
     this.currentTurn = 0;
     this.addPlayer(Config.homelandLocation[0]);
     this.addPlayer(Config.homelandLocation[1]);
-    this.battleResults = {};
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
     this.winner = false;
     this.battle = null;

@@ -2,7 +2,6 @@ var Unit = require('../unit.js');
 
 var AtomicBomb = module.exports = function(location, owner, world) {
     this.init(location, owner, 'atomicBomb', world);
-    this.needBattle = false;
 };
 
 AtomicBomb.prototype = new Unit();
@@ -27,7 +26,7 @@ AtomicBomb.prototype.attack = function(victim) {
 };
 
 AtomicBomb.prototype.harm = function(offender) {
-    this.attack(this.location);
+    return this.attack(this.location);
 };
 
 AtomicBomb.prototype.kill = function() {

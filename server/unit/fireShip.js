@@ -3,7 +3,6 @@ var Utils = require('../../shared/utils.js');
 
 var FireShip = module.exports = function(location, owner, world) {
     this.init(location, owner, 'fireShip', world);
-    this.needBattle = false;
     this.unitIdsWereNear = [];
     this.hasEndTurnFunc = true;
 };

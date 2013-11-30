@@ -6,7 +6,6 @@ var Torpedo = module.exports = function(location, owner, world) {
     this.init(location, owner, 'torpedo', world);
     this.specialUnit = Config.MOVE_TORPEDO_SHIP;
     this.maxDistance = 2;
-    this.needBattle = false;
 };
 Torpedo.prototype = new Unit();
 
@@ -132,4 +131,5 @@ Torpedo.prototype.harm = function(offender) {
         offender.kill();
     }
     this.kill();
+    return true;
 };

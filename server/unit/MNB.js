@@ -4,7 +4,6 @@ var MNB = module.exports = function(location, owner, world) {
     this.init(location, owner, 'MNB', world);
     this.maxDistance = 0;
     this.maxFireDistance = 0;
-    this.needBattle = false;
 };
 
 MNB.prototype = new Unit();
