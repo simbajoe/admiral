@@ -20,7 +20,6 @@ var World = module.exports = function() {
 };
 
 World.prototype.getSnapshot = function(player) {
-    var id;
     var result = {
         myId: player.id,
         players: {},

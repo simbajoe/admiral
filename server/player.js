@@ -73,13 +73,15 @@ Player.prototype.exportToSnapshot = function(forPlayer) {
         homelandLocation: this.homelandLocation,
         units: []
     };
-    if (this.world.phase == Config.PLANNING_PHASE) {
+    if (forPlayer.id == this.id
+        && this.world.phase == Config.PLANNING_PHASE) {
         result.unitsToPlace = this.unitsToPlace;
     }
     for (var i in this.units) {
         result.units.push(this.units[i].exportToSnapshot(forPlayer));
     }
-    if (this.world.phase == Config.PLANNING_PHASE) {
+    if (forPlayer.id == this.id
+        && this.world.phase == Config.PLANNING_PHASE) {
         result.freeCells = [];
         for (var i in this.homelandLocation) {
             var y = parseInt(this.homelandLocation[i]);
@@ -90,7 +92,8 @@ Player.prototype.exportToSnapshot = function(forPlayer) {
             }
         }
     }
-    if (this.world.phase == Config.SUPPORT_PHASE
+    if (forPlayer.id == this.id
+        && this.world.phase == Config.SUPPORT_PHASE
         && this.world.battle.currentSupportPlayer.id == this.id) {
         result.supportCells = [];
         var supportCells = this.world.battle.getSupportCells();
