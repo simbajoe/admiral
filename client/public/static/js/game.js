@@ -54,9 +54,11 @@ $(function() {
         for (var i in snapshot.players) {
             for (var v in snapshot.players[i].units) {
                 var unit = snapshot.players[i].units[v];
+                $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
+                    .addClass(unit.isAlive ? 'alive' : 'dead');
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
                     .addClass('unit')
-                    .addClass(i == this.id ? unit.type : 'unknownUnit')
+                    .addClass(unit.type ? unit.type : 'unknownUnit')
                     .parents('.field').addClass('with_unit');
             }
         }

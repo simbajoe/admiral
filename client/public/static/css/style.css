@@ -107,6 +107,31 @@ body {
     width: 54px;
 }
 
+.field.with_unit.dead {
+    border: 2px solid #f00;
+    width: 54px;
+    height: 54px;
+}
+
+.field.with_unit.dead .field_holder {
+    background-image: url('/static/img/dead.png');
+    background-size: 54px;
+    background-color: transparent;
+    opacity: 0.3;
+}
+
+.field.with_unit.dead .unit {
+    opacity: 1;
+}
+
+.field.with_unit.dead div {
+    width: 54px;
+    height: 54px;
+}
+
+.field.with_unit.dead .field_holder {
+}
+
 .aircraftCarrier {
     background-image: url('/static/img/icons/aircraftCarrier.png');
 }
