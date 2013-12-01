@@ -110,4 +110,5 @@ Battle.prototype.skipSupport = function(player) {
     if (this.defender.owner === player) {
         this.defender.skipSupport();
     }
+    this.update();
 };

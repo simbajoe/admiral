@@ -195,11 +195,15 @@ World.prototype.makeSupport = function(unitLocation) {
     }
     var unit = cell.getObject();
     this.battle.addUnit(unit);
+    this.updateSupportPhase();
+    return true;
+};
+
+World.prototype.updateSupportPhase = function() {
     this.unitIdsinBattle = this.battle.getAllUnitIds();
     if (!this.checkBattleFinished()) {
         this.currentPlayerId = this.battle.currentSupportPlayer.id;
     }
-    return true;
 };
 
 World.prototype.endBattleResultsPhase = function() {
@@ -244,6 +248,7 @@ World.prototype.skipTurn = function(player) {
     }
     if (this.phase == Config.SUPPORT_PHASE) {
         this.battle.skipSupport(player);
+        this.updateSupportPhase();
         return true;
     }
     return false;
