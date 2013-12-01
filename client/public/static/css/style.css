@@ -13,6 +13,25 @@ body {
     padding-top: 12px;
 }
 
+.hud {
+    position: absolute;
+    width: 70px;
+    margin-left: 10px;
+    margin-top: 60px;
+}
+
+.hud_unit {
+    background-size: 54px;
+    background-repeat: no-repeat;
+    background-position-x: 20px;
+    width: 72px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    color: #006666;
+    margin: 6px 0;
+    padding-left: 2px;
+}
+
 .row {
     float: left;
     clear: both;
@@ -28,6 +47,16 @@ body {
 .field {
     position: relative;
     /*overflow: hidden;*/
+}
+
+.field.planning {
+    background-color: black;
+    opacity: 0.3;
+}
+
+.field.planning.place, .field.planning.with_unit {
+    background-color: transparent;
+    opacity: 1;
 }
 
 .field_holder, .field_content, .field_back {
