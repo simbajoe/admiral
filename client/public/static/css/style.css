@@ -129,7 +129,27 @@ body {
     height: 54px;
 }
 
-.field.with_unit.dead .field_holder {
+.field.with_unit.in_battle .unit {
+    opacity: 1;
+}
+
+.field.with_unit.in_battle {
+    width: 54px;
+    height: 54px;
+}
+
+.field.with_unit.in_battle div {
+    width: 54px;
+    height: 54px;
+    background-size: 54px;
+}
+
+.field.with_unit.in_battle.my {
+    border: 2px solid #0d7004;
+}
+
+.field.with_unit.in_battle.opponent {
+    border: 2px solid #990808;
 }
 
 .aircraftCarrier {

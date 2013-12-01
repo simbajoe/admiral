@@ -55,7 +55,9 @@ $(function() {
             for (var v in snapshot.players[i].units) {
                 var unit = snapshot.players[i].units[v];
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
-                    .addClass(unit.isAlive ? 'alive' : 'dead');
+                    .addClass(unit.isAlive ? 'alive' : 'dead')
+                    .addClass(unit.wasInBattle ? 'in_battle' : 'not_in_battle')
+                    .addClass(snapshot.players[i].id == this.id ? 'my' : 'opponent');
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
                     .addClass('unit')
                     .addClass(unit.type ? unit.type : 'unknownUnit')
