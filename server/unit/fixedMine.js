@@ -9,6 +9,7 @@ var FixedMine = module.exports = function(location, owner, world) {
 FixedMine.prototype = new Unit();
 
 FixedMine.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     offender.kill();
     this.kill();
     return true;

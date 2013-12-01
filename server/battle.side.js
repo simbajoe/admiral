@@ -53,6 +53,7 @@ BattleSide.prototype.addUnit = function(unit) {
         console.log('Adding unit', unit.type, 'to group', this.unitTypes);
         throw new Error('Cannot add unit to group, no such group or group already has unit or side owner is not the same');
     }
+    unit.joinBattle();
     this.units.push(unit);
     this.unitTypes.push(unit.type);
     this.updateFireValue();

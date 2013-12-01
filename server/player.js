@@ -68,7 +68,7 @@ Player.prototype.canAttack = function() {
     return false;
 };
 
-Player.prototype.exportToSnapshot = function(forPlayer, phase, visibleUnits, gameOver) {
+Player.prototype.exportToSnapshot = function(forPlayer, phase, gameOver) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
@@ -78,10 +78,8 @@ Player.prototype.exportToSnapshot = function(forPlayer, phase, visibleUnits, gam
         && phase== Config.PLANNING_PHASE) {
         result.unitsToPlace = this.unitsToPlace;
     }
-    var visibleUnit = false;
     for (var i in this.units) {
-        visibleUnit = visibleUnits.indexOf(this.units[i].id) > -1 || gameOver;
-        result.units.push(this.units[i].exportToSnapshot(forPlayer, visibleUnit));
+        result.units.push(this.units[i].exportToSnapshot(forPlayer, gameOver));
     }
     if (forPlayer.id == this.id
         && phase == Config.PLANNING_PHASE) {
@@ -146,11 +144,12 @@ Player.prototype.removeUnit = function(unit) {
     this.units = Utils.deleteFromArrById(unit.id, this.units);
 };
 
-Player.prototype.destroyUnits = function() {
+Player.prototype.updateUnitsAfterBattle = function() {
     var numOfBases = 0;
     var numOfMovableUnits = 0;
     i = this.units.length;
     while (i--) {
+        this.units[i].freeFromBattle();
         if (!this.units[i].isAlive) {
             this.units[i].destroy();
             continue;

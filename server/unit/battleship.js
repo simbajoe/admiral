@@ -8,16 +8,19 @@ var Battleship = module.exports = function(location, owner, world) {
 
 Battleship.prototype = new Unit();
 
-Battleship.prototype.attack = function(victim) {
-    if (this.canBeKilledBy.indexOf(victim.type) > -1) {
+Battleship.prototype.attack = function(defender) {
+    this.wasInBattle = true;
+    if (this.canBeKilledBy.indexOf(defender.type) > -1) {
         this.kill();
+        defender.joinBattle();
         return true;
     }
-    return victim.harm(this);
+    return defender.harm(this);
 };
 
 
 Battleship.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     if (this.canBeKilledBy.indexOf(offender.type) > -1) {
         this.kill();
         return true;

@@ -10,6 +10,7 @@ var Mine = module.exports = function(location, owner, world) {
 Mine.prototype = new UnitSatellite();
 
 Mine.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     if (offender.type != this.canBeKilledBy) {
         offender.kill();
     }

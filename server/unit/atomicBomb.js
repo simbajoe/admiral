@@ -21,11 +21,13 @@ AtomicBomb.prototype.setWhereAttack = function() {
 };
 
 AtomicBomb.prototype.attack = function(victim) {
+    this.wasInBattle = true;
     this.kill();
     return true;
 };
 
 AtomicBomb.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     return this.attack(this.location);
 };
 

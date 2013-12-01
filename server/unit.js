@@ -20,16 +20,17 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.maxFireDistance = 1;
     this.hasEndTurnFunc = false;
     this.isAlive = true;
+    this.wasInBattle = false;
 };
 
-Unit.prototype.exportToSnapshot = function(forPlayer, inBattle) {
+Unit.prototype.exportToSnapshot = function(forPlayer, gameEnded) {
     var result = {
         id: this.id,
         location: this.location.getPoint(),
         ownerId: this.owner.id,
         isAlive: this.isAlive
     };
-    if (inBattle || !this.isAlive) {
+    if (this.wasInBattle || !this.isAlive || gameEnded) {
         result.type = this.type;
         result.wasInBattle = true;
     }
@@ -96,16 +97,26 @@ Unit.prototype.setWhereAttack = function() {
     }
 };
 
-Unit.prototype.attack = function(victim) { //all special units don't run this function
-    return victim.harm(this);
+Unit.prototype.attack = function(defender) { //all special units don't run this function
+    this.wasInBattle = true;
+    return defender.harm(this);
 };
 
 Unit.prototype.harm = function(offender) { //all special units don't run this function
+    this.wasInBattle = true;
     if (Config.KILLERS.indexOf(offender.type) > -1) {
         this.kill();
         return true;
     }
     return false;
+};
+
+Unit.prototype.freeFromBattle = function() {
+    this.wasInBattle = false;
+};
+
+Unit.prototype.joinBattle = function() {
+    this.wasInBattle = true;
 };
 
 Unit.prototype.destroy = function() {

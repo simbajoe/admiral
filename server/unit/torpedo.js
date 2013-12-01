@@ -114,6 +114,7 @@ Torpedo.prototype.setWhereAttack = function() {
 };
 
 Torpedo.prototype.attack = function(victim) {
+    this.wasInBattle = true;
     this.setWhereAttack();
     var cell = null;
     for (var i in this.whereCouldAttack) {
@@ -128,6 +129,7 @@ Torpedo.prototype.attack = function(victim) {
 };
 
 Torpedo.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     if (this.canAttack()) {
         offender.kill();
     }

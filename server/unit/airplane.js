@@ -86,8 +86,9 @@ Airplane.prototype.setWhereAttack = function() {
 };
 
 Airplane.prototype.attack = function(victim) {
+    this.wasInBattle = true;
     this.setWhereAttack();
-    var cell = null;
+    var cell;
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
         if (victim.location.isEq(cell)) {
@@ -100,6 +101,7 @@ Airplane.prototype.attack = function(victim) {
 };
 
 Airplane.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     if (this.canAttack()) {
         offender.kill();
     }

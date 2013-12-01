@@ -14,7 +14,6 @@ var World = module.exports = function() {
     this.currentTurn = 0;
     this.addPlayer(Config.homelandLocation[0]);
     this.addPlayer(Config.homelandLocation[1]);
-    this.unitIdsInBattle = [];
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
     this.winner = false;
     this.battle = null;
@@ -26,11 +25,8 @@ World.prototype.getSnapshot = function(player) {
         players: {},
         world: {}
     };
-    if (this.battle) {
-        this.unitIdsInBattle = this.battle.getAllUnitIds();
-    }
     for (var i in this.players) {
-        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, this.unitIdsInBattle, this.winner);
+        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, this.winner);
     }
     result.world = this.exportToSnapshot(player);
     return result;
@@ -150,8 +146,6 @@ World.prototype.makeAttack = function(data) {
     }
     var success = offender.attack(defender);
     if (success) {
-        this.unitIdsInBattle.push(defender.id);
-        this.unitIdsInBattle.push(offender.id);
         this.setBattleResultsPhase();
         return true;
     }
@@ -163,15 +157,11 @@ World.prototype.makeAttack = function(data) {
 };
 
 World.prototype.setBattleResultsPhase = function() {
-    if (this.unitIdsInBattle.length == 0) {
-        this.unitIdsInBattle = this.battle.getAllUnitIds();
-    }
     this.setPhase(Config.BATTLE_RESULTS_PHASE);
     this.waitingForPlayerIds = [this.players[0].id, this.players[1].id];
 };
 
 World.prototype.setSupportPhase = function() {
-    this.unitIdsInBattle = this.battle.getAllUnitIds();
     this.setPhase(Config.SUPPORT_PHASE);
     this.returnCurrentPlayerId = this.currentPlayerId;
     this.currentPlayerId = this.battle.currentSupportPlayer.id;
@@ -208,7 +198,7 @@ World.prototype.updateSupportPhase = function() {
 World.prototype.endBattleResultsPhase = function() {
     this.setPhase(Config.MOVE_PHASE);
     for (var i in this.players) {
-        this.players[i].destroyUnits();
+        this.players[i].updateUnitsAfterBattle();
         if (this.players[i].lost) {
             this.winner = this.getEnemy(this.players[i]);
         }
@@ -221,7 +211,6 @@ World.prototype.endBattleResultsPhase = function() {
         this.currentPlayerId = this.returnCurrentPlayerId;
         this.returnCurrentPlayerId = null;
     }
-    this.unitIdsInBattle = [];
     this.nextTurn();
 };
 

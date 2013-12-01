@@ -39,5 +39,21 @@ exports.testVisibleUnits01 = function(test) {
         }
     }
     test.ok(typeWannaCheck == 'submarine', 'Not correct visible unit type');
+
+    var world = new World();
+
+    Util.setupWorld(test, world, map, world.players[1].id, Config.ATTACK_PHASE);
+    Util.attackAndCheck(test, world, world.players[1].id, {from: [6,5], to: [6,4]});
+    var snapshot = world.getSnapshot(world.players[1].id);
+    var typeWannaCheck = '';
+    for (var i in snapshot.players[world.players[0].id].units) {
+        var unit = snapshot.players[world.players[0].id].units[i];
+        if (unit.type) {
+            typeWannaCheck = unit.type;
+            break;
+        }
+    }
+    test.ok(typeWannaCheck == 'submarine', 'Not correct visible unit type expected submarine, appeared ' + unit.type);
+
     test.done();
 };

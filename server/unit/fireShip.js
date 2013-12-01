@@ -10,6 +10,7 @@ var FireShip = module.exports = function(location, owner, world) {
 FireShip.prototype = new Unit();
 
 FireShip.prototype.attack = function(victim) {
+    this.wasInBattle = true;
     this.setWhereAttack();
     var cell = null;
     for (var i in this.whereCouldAttack) {
@@ -24,6 +25,7 @@ FireShip.prototype.attack = function(victim) {
 };
 
 FireShip.prototype.harm = function(offender) {
+    this.wasInBattle = true;
     offender.kill();
     this.kill();
     return true;
