@@ -8,6 +8,4 @@ Features
 Bugs
 =======
 - show unitSatelites (airplanes, torpedos) in battle
-- all moving units destroyed -> set winner
-- atomic bomb dissapears on attack
 - show all units on world.winner

@@ -40,7 +40,5 @@ AtomicBomb.prototype.kill = function() {
             cell.getObject().kill();
         }
     }
-    this.owner.removeUnit(this);
-    this.location.removeObject(this);
     delete this;
 };
