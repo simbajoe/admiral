@@ -98,7 +98,7 @@ Torpedo.prototype.setWhereAttack = function() {
                 [unitLocation.x + 3*dx, unitLocation.y + 1]
             ];
         }
-        if (!moveCell || this.location.areObjectsBetween(moveCell)) {
+        if (!moveCell || this.location.areObjectsBetween(moveCell) || moveCell.getObject()) {
             continue;
         }
         for (var j in points) {

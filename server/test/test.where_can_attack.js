@@ -63,7 +63,7 @@ exports.testAttackTorpedo02 = function(test) {
     Util.testWhereCanAttack(test, world, [7, 6], [], [[7, 5], [7, 7], [6, 6], [8, 6]]);
     Util.testWhereCanAttack(test, world, [8, 6], [[10, 7], [11, 6]], [[10, 5]]);
     Util.testWhereCanAttack(test, world, [6, 6], [[3, 6]], [[4, 5], [4, 7]]);
-    Util.testWhereCanAttack(test, world, [7, 5], [], [[7, 2], [6, 3], [8, 3]]);
+    Util.testWhereCanAttack(test, world, [7, 5], [], []);
     Util.testWhereCanAttack(test, world, [7, 7], [[6, 9]], [[7, 10], [8, 9]]);
 
     test.done();
@@ -98,8 +98,8 @@ exports.testAttackTorpedo03 = function(test) {
     Util.testWhereCanAttack(test, world, [7, 6], [], [[7, 5], [7, 7], [6, 6], [8, 6]]);
     Util.testWhereCanAttack(test, world, [8, 6], [[10, 7], [11, 6]], [[10, 5]]);
     Util.testWhereCanAttack(test, world, [6, 6], [[3, 6]], [[4, 5], [4, 7]]);
-    Util.testWhereCanAttack(test, world, [7, 5], [], [[7, 2], [6, 3], [8, 3]]);
-    Util.testWhereCanAttack(test, world, [7, 7], [], [[6, 9], [7, 10], [8, 9]]);
+    Util.testWhereCanAttack(test, world, [7, 5], [], []);
+    Util.testWhereCanAttack(test, world, [7, 7], [], []);
 
     test.done();
 };
