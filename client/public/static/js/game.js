@@ -181,9 +181,11 @@ $(function() {
         }
         if (!this.player.supportCells || !this.player.supportCells.length) {
             me.skip();
+            console.log('if');
             $('.field').unbind('click');
             $('body').unbind('keypress');
         } else {
+            console.log('else');
             $("body").keypress(function(event) {
                 // w
                 if (event.charCode == 119) {
