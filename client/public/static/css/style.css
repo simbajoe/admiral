@@ -30,6 +30,7 @@ body {
     color: #006666;
     margin: 6px 0;
     padding-left: 2px;
+    cursor: pointer;
 }
 
 .row {
@@ -44,6 +45,10 @@ body {
     height: 56px;
 }
 
+.field.place, .field.displace {
+    cursor: pointer;
+}
+
 .field {
     position: relative;
     /*overflow: hidden;*/
@@ -51,7 +56,7 @@ body {
 
 .field.planning {
     background-color: black;
-    opacity: 0.3;
+    opacity: 0.2;
 }
 
 .field.planning.place, .field.planning.with_unit {

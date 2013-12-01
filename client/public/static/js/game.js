@@ -28,6 +28,8 @@ $(function() {
         this.player = null;
         this.phase = null;
         this.units = null;
+
+        this.unit_to_place = null;
     };
 
     Game.prototype.send = function (t, params) {
@@ -84,13 +86,14 @@ $(function() {
         $('.field.with_unit').addClass('can_move');
         var me = this;
         for (var v in this.player.unitsToPlace) {
-            var unit = $('<div/>');
-            unit.addClass('hud_unit')
-                .addClass(v)
-                .data('unit', v)
-                .html(this.player.unitsToPlace[v] + 'x');
             if (this.player.unitsToPlace[v] > 0) {
+                var unit = $('<div/>');
+                unit.addClass('hud_unit')
+                    .addClass(v)
+                    .data('unit', v)
+                    .html(this.player.unitsToPlace[v] + 'x');
                 unit.click(function () {
+                    me.unit_to_place = $(this).data('unit');
                     $('hud_unit').removeClass('active');
                     $(this).addClass('active');
                     $('.field').unbind('click').removeClass('place');
@@ -104,12 +107,16 @@ $(function() {
                             });
                     }
                 });
+                $('.hud').append(unit);
+                if (v == this.unit_to_place) {
+                    unit.click();
+                }
             }
-            $('.hud').append(unit);
         }
         for (var v in snapshot.players[this.id].units) {
             var unit = snapshot.players[this.id].units[v];
             $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
+                .addClass('displace')
                 .click(function () {
                     me.send('displaceUnit', { 'target': [$(this).data('x'), $(this).data('y')] });
                 });
