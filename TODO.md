@@ -8,4 +8,3 @@ Features
 Bugs
 =======
 - show unitSatelites (airplanes, torpedos) in battle
-- show all units on world.winner

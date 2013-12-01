@@ -30,7 +30,7 @@ World.prototype.getSnapshot = function(player) {
         this.unitIdsInBattle = this.battle.getAllUnitIds();
     }
     for (var i in this.players) {
-        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, this.unitIdsInBattle);
+        result.players[this.players[i].id] = this.players[i].exportToSnapshot(player, this.phase, this.unitIdsInBattle, this.winner);
     }
     result.world = this.exportToSnapshot(player);
     return result;

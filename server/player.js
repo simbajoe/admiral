@@ -68,7 +68,7 @@ Player.prototype.canAttack = function() {
     return false;
 };
 
-Player.prototype.exportToSnapshot = function(forPlayer, phase, visibleUnits) {
+Player.prototype.exportToSnapshot = function(forPlayer, phase, visibleUnits, gameOver) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
@@ -78,8 +78,10 @@ Player.prototype.exportToSnapshot = function(forPlayer, phase, visibleUnits) {
         && phase== Config.PLANNING_PHASE) {
         result.unitsToPlace = this.unitsToPlace;
     }
+    var visibleUnit = false;
     for (var i in this.units) {
-        result.units.push(this.units[i].exportToSnapshot(forPlayer, visibleUnits.indexOf(this.units[i].id) > -1));
+        visibleUnit = visibleUnits.indexOf(this.units[i].id) > -1 || gameOver;
+        result.units.push(this.units[i].exportToSnapshot(forPlayer, visibleUnit));
     }
     if (forPlayer.id == this.id
         && phase == Config.PLANNING_PHASE) {
