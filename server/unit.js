@@ -21,6 +21,7 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.hasEndTurnFunc = false;
     this.isAlive = true;
     this.wasInBattle = false;
+    this.previousLocation = null;
 };
 
 Unit.prototype.exportToSnapshot = function(forPlayer, gameEnded) {
@@ -28,7 +29,8 @@ Unit.prototype.exportToSnapshot = function(forPlayer, gameEnded) {
         id: this.id,
         location: this.location.getPoint(),
         ownerId: this.owner.id,
-        isAlive: this.isAlive
+        isAlive: this.isAlive,
+        previousLocation: this.previousLocation
     };
     if (this.wasInBattle || !this.isAlive || gameEnded) {
         result.type = this.type;
@@ -65,6 +67,7 @@ Unit.prototype.move = function(cell) {
     for (var j in this.whereCanMove) {
         var tmpCell = this.world.cells.get(this.whereCanMove[j]);
         if (tmpCell && tmpCell.isEq(cell)) {
+            this.previousLocation = this.location.getPoint();
             this.location.removeObject();
             this.location = tmpCell;
             tmpCell.addObject(this);
@@ -111,8 +114,9 @@ Unit.prototype.harm = function(offender) { //all special units don't run this fu
     return false;
 };
 
-Unit.prototype.freeFromBattle = function() {
+Unit.prototype.clear = function() {
     this.wasInBattle = false;
+    this.previousLocation = null;
 };
 
 Unit.prototype.joinBattle = function() {

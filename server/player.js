@@ -154,7 +154,7 @@ Player.prototype.updateUnitsAfterBattle = function() {
     var numOfMovableUnits = 0;
     i = this.units.length;
     while (i--) {
-        this.units[i].freeFromBattle();
+        this.units[i].clear();
         if (!this.units[i].isAlive) {
             this.units[i].destroy();
             continue;
