@@ -249,3 +249,14 @@ World.prototype.getPlayerById = function(id) {
         }
     }
 };
+
+World.prototype.displaceUnit = function(player, command) {
+    var cell = this.cells.get(command.params.target);
+    if (this.phase != Config.PLANNING_PHASE
+        || !cell.getObject()
+        || cell.getObject().owner.id != player.id) {
+        return false;
+    }
+    player.displaceUnit(cell.getObject());
+    return true;
+};

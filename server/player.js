@@ -132,6 +132,11 @@ Player.prototype.addUnit = function(location, type) {
     return unit;
 };
 
+Player.prototype.displaceUnit = function(unit) {
+    this.unitsToPlace[unit.type]++;
+    unit.destroy();
+};
+
 Player.prototype.addSocket = function(socket) {
     this.socket = socket;
 };

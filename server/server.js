@@ -29,6 +29,12 @@ io.sockets.on("connection", function (socket) {
                 updateGame();
             }
         }
+        if (command.type == 'displaceUnit') {
+            isSuccess = world.displaceUnit(socket.player, command);
+            if (isSuccess) {
+                updateGame();
+            }
+        }
         if (command.type == 'move') {
             isSuccess = world.makeMove(command.params.from, command.params.to);
             if (isSuccess) {
