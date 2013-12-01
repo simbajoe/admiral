@@ -11,3 +11,4 @@ Bugs
 - skip support bug
 - support from remote ship
 - unit destroys unit whithout battle, offender not in battle list
+
