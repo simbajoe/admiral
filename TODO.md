@@ -2,11 +2,12 @@ Features
 =======
 - show where_could_move
 - show last turn
-- show unitSatelites (airplanes, torpedos) in battle
 - show whereGroupUnits
+- place units not randomly
 
 Bugs
 =======
+- show unitSatelites (airplanes, torpedos) in battle
 - all moving units destroyed -> set winner
-- support from remote ship
-- unit destroys unit whithout battle, offender not in battle list
+- atomic bomb dissapears on attack
+- show all units on world.winner
