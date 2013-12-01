@@ -146,14 +146,20 @@ Player.prototype.removeUnit = function(unit) {
 
 Player.prototype.destroyUnits = function() {
     var numOfBases = 0;
+    var numOfMovableUnits = 0;
     i = this.units.length;
     while (i--) {
         if (!this.units[i].isAlive) {
             this.units[i].destroy();
             continue;
-        } else if (this.units[i].type == Config.BASE) {
-            numOfBases++;
+        } else {
+            if (this.units[i].type == Config.BASE) {
+                numOfBases++;
+            }
+            if (this.units[i].maxDistance > 0) {
+                numOfMovableUnits++;
+            }
         }
     }
-    this.lost = numOfBases <= 0;
+    this.lost = numOfBases <= 0 || numOfMovableUnits <= 0;
 };
