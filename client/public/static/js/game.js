@@ -30,6 +30,7 @@ $(function() {
         this.units = null;
 
         this.unit_to_place = null;
+        this.auto_planning = null;
     };
 
     Game.prototype.send = function (t, params) {
@@ -82,9 +83,20 @@ $(function() {
     };
 
     Game.prototype.planning_phase = function (snapshot) {
+        if (this.auto_planning) {
+            this.planning_phase_auto(snapshot);
+            return;
+        }
+        var me = this;
+        $('.hud').append($('<div/>').addClass('hud_unit').addClass('auto').html('АВТО').click(
+            function () {
+                me.auto_planning = true;
+                me.planning_phase_auto(snapshot);
+                return;
+            }
+        ));
         $('.field').addClass('planning');
         $('.field.with_unit').addClass('can_move');
-        var me = this;
         for (var v in this.player.unitsToPlace) {
             if (this.player.unitsToPlace[v] > 0) {
                 var unit = $('<div/>');
