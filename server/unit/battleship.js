@@ -13,7 +13,7 @@ Battleship.prototype.attack = function(victim) {
         this.kill();
         return true;
     }
-    return false;
+    return victim.harm(this);
 };
 
 
