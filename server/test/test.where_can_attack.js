@@ -69,6 +69,41 @@ exports.testAttackTorpedo02 = function(test) {
     test.done();
 };
 
+exports.testAttackTorpedo03 = function(test) {
+
+    var map = [
+        "+-----------------------------------------------+",
+        "|   | 0  1  2  3  4  5  6  7  8  9  10 11 12 13 |",
+        "|---+-------------------------------------------|",
+        "|0  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|1  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|2  | .  .  .  .  .  .  .  2s .  .  .  .  .  .  |",
+        "|3  | .  .  .  .  .  .  2b .  2p .  .  .  .  .  |",
+        "|4  | .  .  .  .  .  .  .  2s .  .  .  .  .  .  |",
+        "|5  | .  .  .  .  .  .  .  1t .  .  .  .  .  .  |",
+        "|6  | .  .  .  2fM.  .  1t 1v 1t .  .  2p .  .  |",
+        "|7  | .  .  .  .  .  .  .  1t .  .  2p .  .  .  |",
+        "|8  | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|9  | .  .  .  .  .  .  2B 2p 2m .  .  .  .  .  |",
+        "|10 | .  .  .  .  .  .  .  2d .  .  .  .  .  .  |",
+        "|11 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|12 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "|13 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
+        "+-----------------------------------------------+"
+    ];
+
+    var world = new World();
+
+    Util.setupWorld(test, world, map, world.players[0].id, Config.ATTACK_PHASE);
+    Util.testWhereCanAttack(test, world, [7, 6], [], [[7, 5], [7, 7], [6, 6], [8, 6]]);
+    Util.testWhereCanAttack(test, world, [8, 6], [[10, 7], [11, 6]], [[10, 5]]);
+    Util.testWhereCanAttack(test, world, [6, 6], [[3, 6]], [[4, 5], [4, 7]]);
+    Util.testWhereCanAttack(test, world, [7, 5], [], [[7, 2], [6, 3], [8, 3]]);
+    Util.testWhereCanAttack(test, world, [7, 7], [], [[6, 9], [7, 10], [8, 9]]);
+
+    test.done();
+};
+
 exports.testAttackAirplane01 = function(test) {
 
     var map = [
