@@ -57,7 +57,7 @@ $(function() {
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
                     .addClass(unit.isAlive ? 'alive' : 'dead')
                     .addClass(unit.wasInBattle ? 'in_battle' : 'not_in_battle')
-                    .addClass(snapshot.players[i].id == this.id ? 'my' : 'opponent');
+                    .addClass(snapshot.players[i].id == this.id ? 'my' : 'opponent')
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
                     .addClass('unit')
                     .addClass(unit.type ? unit.type : 'unknownUnit')

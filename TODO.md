@@ -10,4 +10,3 @@ Bugs
 - all moving units destroyed -> set winner
 - support from remote ship
 - unit destroys unit whithout battle, offender not in battle list
-

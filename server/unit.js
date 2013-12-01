@@ -24,6 +24,7 @@ Unit.prototype.init = function(location, owner, type, world) {
 
 Unit.prototype.exportToSnapshot = function(forPlayer, inBattle) {
     var result = {
+        id: this.id,
         location: this.location.getPoint(),
         ownerId: this.owner.id,
         isAlive: this.isAlive
