@@ -15,7 +15,7 @@ Torpedo.prototype.getSpecialUnitsNearPoint = function(cell) {
     var aroundCells = cell.getAllNeighbors(this.maxDistance);
     for (var i in aroundCells) {
         var cell = aroundCells[i];
-        if (cell.getObject() && cell.getObject().type == this.specialUnit) {
+        if (cell.getObject() && cell.getObject().type == this.specialUnit && this.owner.id == cell.getObject().owner.id) {
             specialUnits.push(cell.getObject());
         }
     }
@@ -71,6 +71,7 @@ Torpedo.prototype.canAttack = function() {
 
 Torpedo.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
+    this.whereCouldAttack = [];
     if (!this.canAttack()) {
         return false;
     }

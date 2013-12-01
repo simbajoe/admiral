@@ -31,6 +31,7 @@ FireShip.prototype.harm = function(offender) {
 
 FireShip.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
+    this.whereCouldAttack = [];
     var cells = this.location.getStraightNeighborCells(this.maxFireDistance);
     for (var i in cells) {
         this.whereCouldAttack.push(cells[i].getPoint());

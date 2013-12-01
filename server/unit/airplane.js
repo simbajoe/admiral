@@ -12,7 +12,7 @@ Airplane.prototype.getUnitsCanShoot = function() {
     var neighbors = this.location.getStraightNeighborCells(1);
     var specUnits = [];
     for (var i in neighbors) {
-        if (neighbors[i].getObject() && neighbors[i].getObject().type == this.specialUnit) {
+        if (neighbors[i].getObject() && neighbors[i].getObject().type == this.specialUnit && neighbors[i].getObject().owner.id == this.owner.id) {
             specUnits.push(neighbors[i].getObject());
         }
     }

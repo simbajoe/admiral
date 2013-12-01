@@ -52,6 +52,7 @@ exports.testFireShipAttackAfterOneTurn = function(test) {
     ];
     Util.checkWorld(test, world, map_expected, world.players[1].id, Config.MOVE_PHASE);
     Util.moveAndCheck(test, world, world.players[1].id, [7,11], [7,10]);
+    Util.testWhereCanAttack(test, world, [6, 4], [[6, 3]], [[6, 5], [5, 4], [7, 4]]);
     Util.attackAndCheck(test, world, world.players[1].id, {skip:true});
 
     map_expected = [
@@ -100,6 +101,7 @@ exports.testFireShipAttackAfterOneTurn = function(test) {
     ];
 
     Util.checkWorld(test, world, map_expected, world.players[0].id, Config.ATTACK_PHASE);
+    Util.testWhereCanAttack(test, world, [6, 3], [[6, 4]], [[6, 2], [5, 3], [7, 3]]);
     Util.attackAndCheck(test, world, world.players[0].id, {from: [6, 3], to: [6, 4]});
     map_expected = [
         "+-----------------------------------------------+",

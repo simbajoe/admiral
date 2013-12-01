@@ -7,7 +7,7 @@ UnitSatellite.prototype.isSpecialUnitNearPoint = function(cell) {
     var aroundCells = cell.getAllNeighbors(this.maxDistance);
     for (var i in aroundCells) {
         var cell = aroundCells[i];
-        if (cell.getObject() && cell.getObject().type == this.specialUnit) {
+        if (cell.getObject() && cell.getObject().type == this.specialUnit && this.owner.id == cell.getObject().owner.id) {
             return true;
         }
     }
