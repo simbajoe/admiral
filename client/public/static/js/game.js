@@ -39,7 +39,7 @@ $(function() {
 
     Game.prototype.skip = function () {
         socket.emit("command", {
-            type: 'skip'
+            type: 'skipTurn'
         });
     };
 
@@ -113,7 +113,7 @@ $(function() {
                             $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to')
                                 .data('from', [$(this).data('x'), $(this).data('y')])
                                 .click(function () {
-                                    me.send('move', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
+                                    me.send('moveUnit', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
                                     $('.field').unbind('click');
                                 });
                         }
@@ -151,7 +151,7 @@ $(function() {
                             $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to')
                                 .data('from', [$(this).data('x'), $(this).data('y')])
                                 .click(function () {
-                                    me.send('attack', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
+                                    me.send('attackUnit', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
                                     $('.field').unbind('click');
                                     $('body').unbind('keypress');
                                 });
@@ -201,7 +201,7 @@ $(function() {
             $('.field[data-x="' + place[0] + '"][data-y="' + place[1] + '"]')
                 .addClass('can_move')
                 .click(function () {
-                    me.send('support', { 'target': [$(this).data('x'), $(this).data('y')] });
+                    me.send('supportUnit', { 'target': [$(this).data('x'), $(this).data('y')] });
                     $('.field').unbind('click');
                     $('body').unbind('keypress');
                 });
@@ -229,7 +229,7 @@ $(function() {
     };
 
     Game.prototype.placeUnit = function (unit, place) {
-        this.send('place', { 'location': place, 'type': unit });
+        this.send('addUnit', { 'location': place, 'type': unit });
     };
 
     var socket = io.connect(":" + LocalConfig.port);

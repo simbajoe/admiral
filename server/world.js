@@ -76,7 +76,9 @@ World.prototype.setPhase = function (phase) {
     }
 };
 
-World.prototype.addUnit = function(owner, type, location) {
+World.prototype.addUnit = function(owner, command) {
+    var type = command.params.type;
+    var location = command.params.location;
     // it's not very good, but we don't have prediction on client
     // so he doesn't really know if the unit was placed
     if (this.phase != Config.PLANNING_PHASE) {
@@ -106,23 +108,25 @@ World.prototype.addUnit = function(owner, type, location) {
     return unit;
 };
 
-World.prototype.makeMove = function(unitLocation, newPoint) {
-    if (this.phase != Config.MOVE_PHASE) {
-        return false;
-    }
+World.prototype.moveUnit = function(player, command) {
+    var unitLocation = command.params.from;
+    var newPoint = command.params.to;
     var fromCell = this.cells.get(unitLocation);
     var toCell = this.cells.get(newPoint);
-    var d = new Date();
-    if (fromCell && fromCell.getObject() && toCell) {
-        fromCell.getObject().move(toCell);
-        if (this.getPlayerById(this.currentPlayerId).canAttack()) {
-            this.setPhase(Config.ATTACK_PHASE);
-        } else {
-            this.nextTurn();
-        }
-        return true;
+    if (this.phase != Config.MOVE_PHASE
+        || !fromCell
+        || !fromCell.getObject()
+        || fromCell.getObject().owner.id != player.id
+        || !toCell) {
+        return false;
     }
-    return false;
+    fromCell.getObject().move(toCell);
+    if (this.getPlayerById(this.currentPlayerId).canAttack()) {
+        this.setPhase(Config.ATTACK_PHASE);
+    } else {
+        this.nextTurn();
+    }
+    return true;
 };
 
 World.prototype.nextTurn = function() {
@@ -132,14 +136,15 @@ World.prototype.nextTurn = function() {
     this.currentTurn++;
 };
 
-World.prototype.makeAttack = function(data) {
-    var from = this.cells.get(data.from);
+World.prototype.attackUnit = function(player, command) {
+    var from = this.cells.get(command.params.from);
     var offender = from.getObject();
-    var to = this.cells.get(data.to);
+    var to = this.cells.get(command.params.to);
     var defender = to.getObject();
     if (this.phase != Config.ATTACK_PHASE
         || !from
         || !offender
+        || offender.owner.id != player.id
         || !to
         || !defender) {
         return false;
@@ -175,11 +180,13 @@ World.prototype.checkBattleFinished = function() {
     return false;
 };
 
-World.prototype.makeSupport = function(unitLocation) {
-    var cell = this.cells.get(unitLocation);
+World.prototype.supportUnit = function(player, command) {
+    var unitPoint = command.params.target;
+    var cell = this.cells.get(unitPoint);
     if (this.phase != Config.SUPPORT_PHASE
         || !cell
-        || !cell.getObject()) {
+        || !cell.getObject()
+        || cell.getObject().owner.id != player.id) {
         return false;
     }
     var unit = cell.getObject();
@@ -221,7 +228,7 @@ World.prototype.getEnemy = function(player) {
     return this.players[0];
 };
 
-World.prototype.skipTurn = function(player) {
+World.prototype.skipTurn = function(player, command) {
     if (this.phase == Config.ATTACK_PHASE) {
         this.setPhase(Config.MOVE_PHASE);
         this.nextTurn();

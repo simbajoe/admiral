@@ -23,41 +23,9 @@ io.sockets.on("connection", function (socket) {
     });
     socket.on("command", function (command) {
         var isSuccess = null;
-        if (command.type == 'place') {
-            isSuccess = world.addUnit(socket.player, command.params.type, command.params.location);
-            if (isSuccess) {
-                updateGame();
-            }
-        }
-        if (command.type == 'displaceUnit') {
-            isSuccess = world.displaceUnit(socket.player, command);
-            if (isSuccess) {
-                updateGame();
-            }
-        }
-        if (command.type == 'move') {
-            isSuccess = world.makeMove(command.params.from, command.params.to);
-            if (isSuccess) {
-                updateGame();
-            }
-        }
-        if (command.type == 'attack') {
-            isSuccess = world.makeAttack(command.params);
-            if (isSuccess) {
-                updateGame();
-            }
-        }
-        if (command.type == 'support') {
-            isSuccess = world.makeSupport(command.params.target);
-            if (isSuccess) {
-                updateGame();
-            }
-        }
-        if (command.type == 'skip') {
-            isSuccess = world.skipTurn(socket.player);
-            if (isSuccess) {
-                updateGame();
-            }
+        isSuccess = world[command.type](socket.player, command);
+        if (isSuccess) {
+            updateGame();
         }
     });
     updateGame();

@@ -34,7 +34,14 @@ exports.testUnitsCreation = function(test) {
         var i = 0;
         for (var u in units[p]) {
             var unit = units[p][u];
-            world.addUnit(world.getPlayerById(p), unit[0], unit[1]);
+            var command = {
+                type: 'addUnit',
+                params: {
+                    type: unit[0],
+                    location: unit[1]
+                }
+            };
+            world[command.type](world.getPlayerById(p), command);
             i++;
             test.ok(
                 world.getPlayerById(p).units.length == i,

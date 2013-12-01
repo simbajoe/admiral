@@ -144,13 +144,24 @@ var map_template_02 = [
         return units;
     };
 
+    exports.addUnit = function(test, world, player, type, location) {
+        var command = {
+            type: 'addUnit',
+            params: {
+                type: type,
+                location: location
+            }
+        };
+        return world[command.type](player, command);
+    };
+
     exports.setupWorld = function (test, world, map, currentTurn, phase) {
         var units = exports.loadUnits(map, world.players[0].id, world.players[1].id);
         for (var p in units) {
             var i = 0;
             for (var u in units[p]) {
                 var unit = units[p][u];
-                world.addUnit(world.players[p - 1], unit[0], unit[1]);
+                this.addUnit(test, world, world.players[p - 1], unit[0], unit[1]);
                 i++;
                 test.ok(
                     world.players[p - 1].units.length == i,
@@ -187,8 +198,11 @@ var map_template_02 = [
 
     var skipBattleResultsPhase = exports.skipBattleResultsPhase = function (test, world) {
         test.ok(world.phase == Config.BATTLE_RESULTS_PHASE, 'Cannot make skipBattleResultsPhase on phase ' + world.phase);
-        world.skipTurn(world.players[0]);
-        world.skipTurn(world.players[1]);
+        var command = {
+            type: 'skipTurn'
+        };
+        world[command.type](world.players[0], command);
+        world[command.type](world.players[1], command);
     };
 
     var moveAndCheck = exports.moveAndCheck = function(test, world, playerId, from, to) {
@@ -198,7 +212,14 @@ var map_template_02 = [
         var toCell = world.cells.get(to);
         var fromUnit = fromCell.getObject();
         var toUnit = toCell.getObject();
-        world.makeMove(from, to);
+        var command = {
+            type: 'moveUnit',
+            params: {
+                from: from,
+                to: to
+            }
+        };
+        world.moveUnit(world.getPlayerById(playerId), command);
         var fromUnit2 = fromCell.getObject();
         var toUnit2 = toCell.getObject();
         test.ok(
@@ -225,7 +246,11 @@ var map_template_02 = [
             'Attack error: from: `' + JSON.stringify(data.from) + '`, to: `'
             + JSON.stringify(data.to) + '`'
         );
-        world.makeAttack(data);
+        var command = {
+            type: 'attackUnit',
+            params: data
+        }
+        world[command.type](world.getPlayerById(playerId), command);
     };
 
     var supportAndCheck = exports.supportAndCheck = function(test, world, playerId, target) {
@@ -241,7 +266,13 @@ var map_template_02 = [
             unit !== null,
             'Support error: place: `' + JSON.stringify(target)+ '`'
         );
-        world.makeSupport(target);
+        var command = {
+            type: 'supportUnit',
+            params: {
+                target: target
+            }
+        };
+        world[command.type](world.getPlayerById(playerId), command);
     };
 
     var checkObject = exports.checkObject = function (test, world, place, expectedUnit, expectedPlayer) {
