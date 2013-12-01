@@ -31,9 +31,12 @@ AtomicBomb.prototype.harm = function(offender) {
 
 AtomicBomb.prototype.kill = function() {
     this.setWhereAttack();
+    this.isAlive = false;
     for (var i in this.whereCouldAttack) {
         var cell = this.world.cells.get(this.whereCouldAttack[i]);
-        if (cell && cell.getObject() && cell.getObject().id != this.id) {
+        if (cell
+            && cell.getObject()
+            && cell.getObject().isAlive) {
             cell.getObject().kill();
         }
     }
