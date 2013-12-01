@@ -115,7 +115,7 @@ $(function() {
                             .addClass('place')
                             .data('unit', $(this).data('unit'))
                             .click(function () {
-                                me.send('place', { 'location': [$(this).data('x'), $(this).data('y')], 'type': $(this).data('unit') });
+                                me.send('addUnit', { 'location': [$(this).data('x'), $(this).data('y')], 'type': $(this).data('unit') });
                             });
                     }
                 });
