@@ -33,21 +33,24 @@ Torpedo.prototype.setWhereCanMove = function() {
             diagCells = specialUnits[i].location.getDiagonalFirstNeighborCells();
             for (j in diagCells) {
                 cell = diagCells[j];
-                if (!cell.getObject()
-                    && (cell.x == this.location.x
+                if ((cell.x == this.location.x
                         || cell.y == this.location.y)
-                    && !this.location.isEq(cell)
-                    && !this.location.areObjectsBetween(cell)) {
-                    this.whereCanMove.push(diagCells[j].getPoint());
+                    && !this.location.isEq(cell)) {
+                    this.whereCouldMove.push(diagCells[j].getPoint());
+                    if (!cell.getObject() && !this.location.areObjectsBetween(cell)) {
+                        this.whereCanMove.push(diagCells[j].getPoint());
+                    }
                 }
             }
         }
         allNeighborCells = specialUnits[i].location.getAllNeighbors(2); //get all other points
         for (j in allNeighborCells) {
             cell = allNeighborCells[j];
-            if (!cell.getObject()
-                && cell.getDist(this.location) == 1) {
-                this.whereCanMove.push(cell.getPoint());
+            if (cell.getDist(this.location) == 1) {
+                this.whereCouldMove.push(cell.getPoint());
+                if (!cell.getObject()) {
+                    this.whereCanMove.push(cell.getPoint());
+                }
             }
         }
     }

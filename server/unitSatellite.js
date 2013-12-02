@@ -19,11 +19,11 @@ UnitSatellite.prototype.setWhereCanMove = function() {
     var cells = this.location.getStraightNeighborCells(this.maxDistance);
     for (var i in cells) {
         var cell = cells[i];
-        if (!cell.getObject()
-            && this.isSpecialUnitNearPoint(this.location)
-            && this.isSpecialUnitNearPoint(cell)
-            && !this.location.areObjectsBetween(cell)) {
-            this.whereCanMove.push(cell.getPoint());
+        if (this.isSpecialUnitNearPoint(this.location) && this.isSpecialUnitNearPoint(cell)) {
+            this.whereCouldMove.push(cell.getPoint());
+            if (!cell.getObject() && !this.location.areObjectsBetween(cell)) {
+                this.whereCanMove.push(cell.getPoint());
+            }
         }
     }
 };

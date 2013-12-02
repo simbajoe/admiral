@@ -14,6 +14,7 @@ Unit.prototype.init = function(location, owner, type, world) {
     this.world = world;
     this.location.addObject(this);
     this.whereCanMove = [];
+    this.whereCouldMove = [];
     this.whereCanAttack = [];
     this.whereCouldAttack = [];
     this.maxDistance = 1;
@@ -41,6 +42,7 @@ Unit.prototype.exportToSnapshot = function(forPlayer, gameEnded) {
         if (this.world.phase == Config.MOVE_PHASE) {
             this.setWhereCanMove();
             result.whereCanMove = this.whereCanMove;
+            result.whereCouldMove = this.whereCouldMove;
         }
         if (this.world.phase == Config.ATTACK_PHASE) {
             this.setWhereAttack();
@@ -82,6 +84,7 @@ Unit.prototype.setWhereCanMove = function() {
     var cells = this.location.getStraightNeighborCells(this.maxDistance);
     for (var i in cells) {
         var cell = cells[i];
+        this.whereCouldMove.push(cell.getPoint());
         if (!cell.getObject() && !this.location.areObjectsBetween(cell)) {
             this.whereCanMove.push(cell.getPoint());
         }
