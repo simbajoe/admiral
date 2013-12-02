@@ -1,7 +1,7 @@
 Features
 =======
-- show where_could_move
-- show last turn
+- show where_could_move (client side)
+- show last turn (client side)
 - show whereGroupUnits
 
 Bugs

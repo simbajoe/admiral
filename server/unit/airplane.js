@@ -4,6 +4,7 @@ var Config = require('../../shared/config.js');
 var Airplane = module.exports = function(location, owner, world) {
     this.init(location, owner, 'airplane', world);
     this.specialUnit = Config.MOVE_AIRPLANE_SHIP;
+    this.whereCanAttackPerUnit = [];
 };
 
 Airplane.prototype = new UnitSatellite();
@@ -12,7 +13,9 @@ Airplane.prototype.getUnitsCanShoot = function() {
     var neighbors = this.location.getStraightNeighborCells(1);
     var specUnits = [];
     for (var i in neighbors) {
-        if (neighbors[i].getObject() && neighbors[i].getObject().type == this.specialUnit && neighbors[i].getObject().owner.id == this.owner.id) {
+        if (neighbors[i].getObject()
+            && neighbors[i].getObject().type == this.specialUnit
+            && neighbors[i].getObject().owner.id == this.owner.id) {
             specUnits.push(neighbors[i].getObject());
         }
     }
@@ -49,12 +52,14 @@ Airplane.prototype.getAllCellsOy = function(x) {
 Airplane.prototype.setWhereAttack = function() {
     this.whereCanAttack = [];
     this.whereCouldAttack = [];
+    this.whereCanAttackPerUnit = [];
     if (!this.canAttack()) {
         return false;
     }
     var shootingUnits = this.getUnitsCanShoot();
     var cells = [], cell = null;
     for (var i in shootingUnits) {
+        cells = [];
         var unitLocation = shootingUnits[i].location;
         if (this.location.x == unitLocation.x) {
             cells = this.getAllCellsOy(unitLocation.x);
@@ -73,26 +78,32 @@ Airplane.prototype.setWhereAttack = function() {
                 cells = cells.concat(this.getAllCellsOy(this.location.x));
             }
         }
-    }
-    for (var j in cells) {
-        if (!this.location.isEq(cells[j])) {
-            cell = cells[j];
-            this.whereCouldAttack.push(cell.getPoint());
-            if (cell && cell.hasEnemyObject(this.owner)) {
-                this.whereCanAttack.push(cell.getPoint());
+        var struct = {};
+        struct.unit = shootingUnits[i];
+        struct.targets = [];
+        for (var j in cells) {
+            if (!this.location.isEq(cells[j])) {
+                cell = cells[j];
+                this.whereCouldAttack.push(cell.getPoint());
+                if (cell && cell.hasEnemyObject(this.owner)) {
+                    this.whereCanAttack.push(cell.getPoint());
+                    struct.targets.push(cell);
+                }
             }
         }
+        this.whereCanAttackPerUnit.push(struct);
     }
 };
 
-Airplane.prototype.attack = function(victim) {
-    this.wasInBattle = true;
+Airplane.prototype.attack = function(defender) {
     this.setWhereAttack();
     var cell;
     for (var i in this.whereCouldAttack) {
         cell = this.world.cells.get(this.whereCouldAttack[i]);
-        if (victim.location.isEq(cell)) {
-            victim.kill();
+        if (defender.location.isEq(cell)) {
+            this.wasInBattle = true;
+            this.getCurrentShootingUnit(defender.location).joinBattle();
+            defender.kill();
             break;
         }
     }
@@ -102,9 +113,23 @@ Airplane.prototype.attack = function(victim) {
 
 Airplane.prototype.harm = function(offender) {
     this.wasInBattle = true;
-    if (this.canAttack()) {
+    var unitsCanShoot = this.getUnitsCanShoot();
+    if (unitsCanShoot.length > 0) {
+        unitsCanShoot[0].joinBattle();
         offender.kill();
     }
     this.kill();
     return true;
+};
+
+Airplane.prototype.getCurrentShootingUnit = function(target) {
+    for (var i in this.whereCanAttackPerUnit) {
+        var struct = this.whereCanAttackPerUnit[i];
+        for (var j in struct.targets) {
+            if (struct.targets[j].isEq(target)) {
+                return struct.unit;
+            }
+        }
+    }
+    return null;
 };
