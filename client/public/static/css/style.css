@@ -41,10 +41,15 @@ body {
     float: left;
     clear: both;
     margin-left: 91px;
+    margin-bottom: 2px;
 }
 
-.field, .field_holder, .field_content, .field_back {
+.field {
     float: left;
+    margin-right: 2px;
+}
+
+.field, .field_back {
     width: 56px;
     height: 56px;
 }
@@ -55,17 +60,6 @@ body {
 
 .field {
     position: relative;
-    /*overflow: hidden;*/
-}
-
-.field.planning {
-    background-color: black;
-    opacity: 0.2;
-}
-
-.field.planning.place, .field.planning.with_unit {
-    background-color: transparent;
-    opacity: 1;
 }
 
 .field_holder, .field_content, .field_back {
@@ -74,9 +68,14 @@ body {
     top: 0;
 }
 
-.field .field_back {
-    border: 1px solid #fff;
-    opacity: 0.5;
+.field_content,
+.field_holder {
+    width: 56px;
+    height: 56px;
+    background-size: 56px;
+    background-repeat: no-repeat;
+    left: 1px;
+    top: 1px;
 }
 
 .field_holder {
@@ -84,13 +83,36 @@ body {
     opacity: 0.0;
 }
 
+.field_holder:hover {
+    opacity: 0.3;
+}
+
+.field.planning .field_holder {
+    background-color: black;
+    opacity: 0.3;
+}
+
 .field.could_attack .field_holder {
     background: red;
     opacity: 0.2;
 }
 
-.field_holder.active, .field_holder:hover {
+.field.planning.place .field_holder, .field.planning.with_unit .field_holder {
+    background-color: transparent;
+    opacity: 1;
+}
+
+.field .field_back {
+    border: 1px solid #fff;
+    background-color: #ccc;
     opacity: 0.3;
+}
+
+.field.border .field_content {
+    border-width: 2px;
+    width: 52px;
+    height: 52px;
+    background-size: 52px;
 }
 
 .field.with_unit .field_back {
@@ -99,96 +121,52 @@ body {
 }
 
 .field.with_unit.can_move .field_back {
-    background-color: #fff;
+    background-color: #999;
     opacity: 0.3;
 }
 
 .field.with_unit.move_from .field_back {
-    /*background-color: #ff0;*/
-    opacity: 0.6;
-}
-
-.field.move_to {
-    border: 2px dotted #fff;
-    width: 54px;
-    height: 54px;
-}
-
-.field.with_unit.move_to.could_attack {
-    border: 2px dotted #f00;
-    width: 54px;
-    height: 54px;
-}
-
-.field.with_unit.move_to.could_attack div {
-    width: 54px;
-    height: 54px;
-}
-
-.unit {
-    background-size: 56px auto;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-}
-.field.with_unit.can_move .unit {
-    opacity: 1;
-}
-
-.field.with_unit.move_from {
-    border: 2px solid #ff0;
-    width: 54px;
-    height: 54px;
-}
-
-.field.with_unit.move_from div {
-    background-size: 54px;
-    height: 54px;
-    width: 54px;
-}
-
-.field.with_unit.dead {
-    border: 2px dotted #f00;
-    width: 54px;
-    height: 54px;
-}
-
-.field.with_unit.dead .field_holder {
-    background-image: url('/static/img/dead.png');
-    background-size: 54px;
-    background-color: transparent;
     opacity: 0.3;
+}
+
+.field.move_to .field_content {
+    border-style: dotted;
+    border-color: #fff;
+}
+
+.field.with_unit.in_battle.opponent .unit,
+.field.with_unit.move_to.could_attack .field_content {
+    border-style: dotted;
+    border-color: #f00;
+}
+
+.field.with_unit.in_battle.my .unit,
+.field.with_unit.move_from .unit {
+    border-style: solid;
+    border-color: #ff0;
 }
 
 .field.with_unit.dead .unit {
     opacity: 1;
 }
 
-.field.with_unit.dead div {
-    width: 54px;
-    height: 54px;
+.unit {
+    opacity: 0.5;
+}
+
+.field.with_unit.can_move .unit {
+    opacity: 1;
+}
+
+.field.with_unit.dead .field_holder {
+    background-image: url('/static/img/dead.png');
+    background-color: transparent;
+    background-size: 56px;
+    opacity: 0.3;
 }
 
 .field.with_unit.in_battle .unit {
     opacity: 1;
-}
-
-.field.with_unit.in_battle {
-    width: 54px;
-    height: 54px;
-}
-
-.field.with_unit.in_battle div {
-    width: 54px;
-    height: 54px;
-    background-size: 54px;
-}
-
-.field.with_unit.in_battle.my {
-    border: 2px solid #0d7004;
-}
-
-.field.with_unit.in_battle.opponent {
-    border: 2px solid #990808;
 }
 
 .aircraftCarrier {
@@ -245,5 +223,4 @@ body {
 .unknownUnit {
     background-image: url('/static/img/icons/unknownUnit.png');
 }
-
 

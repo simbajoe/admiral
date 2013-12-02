@@ -48,7 +48,7 @@ $(function() {
 
     Game.prototype.update = function (snapshot) {
         $('.field_content').html('').removeClass().addClass('field_content');
-        $('.field').removeClass().addClass('field').unbind('click')
+        $('.field').removeClass().addClass('field').unbind('click').removeClass('border')
                 .removeData('from').removeData('whereCouldAttack').removeData('whereCanMove')
                 .removeData('unit');
         $('body').unbind('keypress');
@@ -61,7 +61,7 @@ $(function() {
                 var unit = snapshot.players[i].units[v];
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
                     .addClass(unit.isAlive ? 'alive' : 'dead')
-                    .addClass(unit.wasInBattle ? 'in_battle' : 'not_in_battle')
+                    .addClass(unit.wasInBattle ? 'in_battle border' : 'not_in_battle')
                     .addClass(snapshot.players[i].id == this.id ? 'my' : 'opponent')
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"] .field_content')
                     .addClass('unit')
@@ -163,12 +163,12 @@ $(function() {
                     .addClass('can_move')
                     .data('whereCanMove', unit.whereCanMove)
                     .click(function () {
-                        $('.field').removeClass('move_from').removeClass('move_to').removeData('from');
-                        $(this).addClass('move_from');
+                        $('.field').removeClass('move_from').removeClass('border').removeClass('move_to').removeData('from');
+                        $(this).addClass('move_from').addClass('border');
                         var whereCanMove = $(this).data('whereCanMove');
                         for (var i = 0; i < whereCanMove.length; i++) {
                             var p = whereCanMove[i];
-                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to')
+                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to').addClass('border')
                                 .data('from', [$(this).data('x'), $(this).data('y')])
                                 .click(function () {
                                     me.send('moveUnit', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
@@ -195,18 +195,18 @@ $(function() {
                     .data('whereCanMove', unit.whereCanAttack)
                     .data('whereCouldAttack', unit.whereCouldAttack)
                     .click(function () {
-                        $('.field').removeClass('move_from').removeClass('move_to').removeClass('could_attack').removeData('from');
+                        $('.field').removeClass('move_from').removeClass('move_to').removeClass('could_attack').removeClass('border').removeData('from');
                         var whereCouldAttack = $(this).data('whereCouldAttack');
                         for (var i = 0; i < whereCouldAttack.length; i++) {
                             var place = whereCouldAttack[i];
                             $('.field[data-x="' + place[0] + '"][data-y="' + place[1] + '"]')
                                 .addClass('could_attack');
                         }
-                        $(this).addClass('move_from');
+                        $(this).addClass('move_from').addClass('border');
                         var whereCanMove = $(this).data('whereCanMove');
                         for (var i = 0; i < whereCanMove.length; i++) {
                             var p = whereCanMove[i];
-                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to')
+                            $('.field[data-x="' + p[0] + '"][data-y="' + p[1] + '"]').addClass('move_to').addClass('border')
                                 .data('from', [$(this).data('x'), $(this).data('y')])
                                 .click(function () {
                                     me.send('attackUnit', { 'from': $(this).data('from'), 'to': [$(this).data('x'), $(this).data('y')] });
