@@ -249,6 +249,11 @@ World.prototype.skipTurn = function(player, command) {
     return false;
 };
 
+World.prototype.notifyHover = function(player, command) {
+    player.setHoverLocation(command.params.target);
+    return true;
+};
+
 World.prototype.getPlayerById = function(id) {
     for (var i in this.players) {
         if (this.players[i].id == id) {

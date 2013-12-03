@@ -57,6 +57,11 @@ $(function() {
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
         for (var i in snapshot.players) {
+            var player = snapshot.players[i];
+            if (player.id != this.id && player.lastHoverLocation) {
+                $('.field[data-x="' + player.lastHoverLocation[0] + '"][data-y="' + player.lastHoverLocation[1] + '"]')
+                    .addClass('enemy_hovered');
+            }
             for (var v in snapshot.players[i].units) {
                 var unit = snapshot.players[i].units[v];
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
@@ -239,11 +244,9 @@ $(function() {
         }
         if (!this.player.supportCells || !this.player.supportCells.length) {
             me.skip();
-            console.log('if');
             $('.field').unbind('click');
             $('body').unbind('keypress');
         } else {
-            console.log('else');
             $("body").keypress(function(event) {
                 // w
                 if (event.charCode == 119) {
@@ -293,8 +296,12 @@ $(function() {
     var socket = io.connect(":" + LocalConfig.port);
     var game = new Game(socket);
 
+    $(".field").hover(function() {
+        game.send('notifyHover', {target: [$(this).data('x'), $(this).data('y')]});
+    });
+
     socket.on("update", function (snapshot) {
-        console.log(snapshot);
+        //console.log(snapshot);
         game.update(snapshot);
     });
 });

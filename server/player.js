@@ -46,6 +46,7 @@ var Player = module.exports = function(id, homeland, world) {
     this.world = world;
     this.allUnitsPlaced = false;
     this.lost = false;
+    this.lastHoverLocation = null;
     this.unitsToPlace = Utils.cloneOneStoryHash(Config.unitsToPlace);
 };
 
@@ -55,6 +56,10 @@ Player.prototype.endTurn = function() {
             this.units[i].endTurn();
         }
     }
+};
+
+Player.prototype.setHoverLocation = function(point) {
+    this.lastHoverLocation = point;
 };
 
 
@@ -72,6 +77,7 @@ Player.prototype.exportToSnapshot = function(forPlayer, phase, gameOver) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
+        lastHoverLocation: this.lastHoverLocation,
         units: []
     };
     if (forPlayer.id == this.id

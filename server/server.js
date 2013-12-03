@@ -20,6 +20,7 @@ io.sockets.on("connection", function (socket) {
     player.addSocket(socket);
     socket.on("disconnect", function () {
         socket.player.removeSocket();
+        console.log('player disconnected');
     });
     socket.on("command", function (command) {
         var isSuccess = null;

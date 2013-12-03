@@ -87,6 +87,11 @@ body {
     opacity: 0.3;
 }
 
+.field.enemy_hovered {
+    background: red;
+    opacity: 0.5;
+}
+
 .field.planning .field_holder {
     background-color: black;
     opacity: 0.3;
