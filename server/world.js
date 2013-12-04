@@ -118,13 +118,6 @@ World.prototype.moveUnit = function(player, command) {
         || !toCell) {
         return false;
     }
-    if (this.phase == Config.MOVE_PHASE) {
-        for (var p in this.players) {
-            for (var u in this.players[p].units) {
-                this.players[p].units[u].previousLocation = null;
-            }
-        }
-    }
     fromCell.getObject().move(toCell);
     if (this.getPlayerById(this.currentPlayerId).canAttack()) {
         this.setPhase(Config.ATTACK_PHASE);
@@ -255,11 +248,7 @@ World.prototype.skipTurn = function(player, command) {
 };
 
 World.prototype.notifyHover = function(player, command) {
-    for (var i in this.players) {
-        if (this.players[i].id != player.id) {
-            this.players[i].send({type: 'hover', player_id: player.id, field: command.params.target});
-        }
-    }
+    this.getEnemy(player).send({type: 'hover', player_id: player.id, field: command.params.target});
     return false;
 };
 

@@ -51,9 +51,7 @@ var Player = module.exports = function(id, homeland, world) {
 
 Player.prototype.endTurn = function() {
     for (var i in this.units) {
-        if (this.units[i].hasEndTurnFunc) {
-            this.units[i].endTurn();
-        }
+        this.units[i].endTurn();
     }
 };
 
@@ -153,7 +151,6 @@ Player.prototype.updateUnitsAfterBattle = function() {
     var numOfMovableUnits = 0;
     i = this.units.length;
     while (i--) {
-        this.units[i].clear();
         if (!this.units[i].isAlive) {
             this.units[i].destroy();
             continue;

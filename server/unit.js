@@ -117,7 +117,7 @@ Unit.prototype.harm = function(offender) { //all special units don't run this fu
     return false;
 };
 
-Unit.prototype.clear = function() {
+Unit.prototype.endTurn = function() {
     this.wasInBattle = false;
     this.previousLocation = null;
 };
@@ -135,4 +135,3 @@ Unit.prototype.destroy = function() {
 Unit.prototype.kill = function() {
     this.isAlive = false;
 };
-
