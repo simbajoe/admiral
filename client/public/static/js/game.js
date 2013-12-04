@@ -63,9 +63,11 @@ $(function() {
         if (snapshot.type && snapshot.type == 'hover') {
             var field = snapshot.field;
             this.hovers[snapshot.player_id] = field;
+            $('.field').removeClass('hovered');
             $('.field[data-x="' + field[0] + '"][data-y="' + field[1] + '"]').addClass('hovered');
             return;
         }
+        console.log(snapshot);
         $('.field_content').html('').removeClass().addClass('field_content');
         $('.field').removeClass().addClass('field').unbind('click').removeClass('border')
                 .removeData('from').removeData('whereCouldAttack').removeData('whereCanMove')
@@ -349,9 +351,9 @@ $(function() {
     var socket = io.connect(":" + LocalConfig.port);
     var game = new Game(socket);
 
-    /*$(".field").hover(function() {*/
-    /*game.send('notifyHover', {target: [$(this).data('x'), $(this).data('y')]});*/
-    /*});*/
+    $(".field").hover(function() {
+        game.send('notifyHover', {target: [$(this).data('x'), $(this).data('y')]});
+    });
 
     socket.on("update", function (snapshot) {
         //console.log(snapshot);

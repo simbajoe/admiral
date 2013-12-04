@@ -260,7 +260,7 @@ World.prototype.notifyHover = function(player, command) {
             this.players[i].send({type: 'hover', player_id: player.id, field: command.params.target});
         }
     }
-    return true;
+    return false;
 };
 
 World.prototype.getPlayerById = function(id) {

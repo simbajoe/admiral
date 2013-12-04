@@ -104,9 +104,9 @@ Player.prototype.exportToSnapshot = function(forPlayer, phase, gameOver) {
     return result;
 };
 
-Player.prototype.send = function(hash) {
+Player.prototype.send = function(message) {
     if (this.socket) {
-        this.socket.emit("update", hash);
+        this.socket.emit("update", message);
     }
 };
 

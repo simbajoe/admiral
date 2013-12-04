@@ -23,9 +23,8 @@ io.sockets.on("connection", function (socket) {
         console.log('player disconnected');
     });
     socket.on("command", function (command) {
-        var isSuccess = null;
-        isSuccess = world[command.type](socket.player, command);
-        if (isSuccess) {
+        var needSendSnapshot  = world[command.type](socket.player, command);
+        if (needSendSnapshot) {
             updateGame();
         }
     });
