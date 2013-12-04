@@ -67,7 +67,6 @@ $(function() {
             $('.field[data-x="' + field[0] + '"][data-y="' + field[1] + '"]').addClass('hovered');
             return;
         }
-        console.log(snapshot);
         $('.field_content').html('').removeClass().addClass('field_content');
         $('.field').removeClass().addClass('field').unbind('click').removeClass('border')
                 .removeData('from').removeData('whereCouldAttack').removeData('whereCanMove')
@@ -352,11 +351,11 @@ $(function() {
     var game = new Game(socket);
 
     $(".field").hover(function() {
+        $(this).removeClass('hovered');
         game.send('notifyHover', {target: [$(this).data('x'), $(this).data('y')]});
     });
 
     socket.on("update", function (snapshot) {
-        //console.log(snapshot);
         game.update(snapshot);
     });
 });
