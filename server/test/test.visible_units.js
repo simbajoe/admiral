@@ -21,7 +21,7 @@ exports.testVisibleUnits01 = function(test) {
         "|10 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "|11 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
         "|12 | .  .  .  .  .  .  .  .  .  .  .  .  .  .  |",
-        "|13 | .  .  .  .  .  .  .  .  .  .  .  .  1B 2B |",
+        "|13 | .  .  .  .  .  2c .  .  .  .  .  .  1B 2B |",
         "+-----------------------------------------------+"
     ];
 
@@ -54,6 +54,16 @@ exports.testVisibleUnits01 = function(test) {
         }
     }
     test.ok(typeWannaCheck == 'submarine', 'Not correct visible unit type expected submarine, appeared ' + unit.type);
+    Util.skipBattleResultsPhase(test,world);
+    var snapshot = world.getSnapshot(world.players[1].id);
+    test.ok(snapshot.world.phase == Config.MOVE_PHASE, 'Not correct phase after skip battle');
+    for (var i in snapshot.players[world.players[0].id].units) {
+        var unit = snapshot.players[world.players[0].id].units[i];
+        if (unit.type || unit.wasInBattle) {
+            test.ok(false, 'Unit visible on move phase');
+            break;
+        }
+    }
 
     test.done();
 };

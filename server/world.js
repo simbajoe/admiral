@@ -129,8 +129,10 @@ World.prototype.moveUnit = function(player, command) {
 };
 
 World.prototype.nextTurn = function() {
+    for (var i in this.players) {
+        this.players[i].endTurn();
+    }
     var player = this.getPlayerById(this.currentPlayerId);
-    player.endTurn();
     this.currentPlayerId = this.getEnemy(player).id;
     this.currentTurn++;
 };
@@ -195,7 +197,6 @@ World.prototype.supportUnit = function(player, command) {
 };
 
 World.prototype.updateSupportPhase = function() {
-    this.unitIdsInBattle = this.battle.getAllUnitIds();
     if (!this.checkBattleFinished()) {
         this.currentPlayerId = this.battle.currentSupportPlayer.id;
     }

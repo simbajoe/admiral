@@ -356,6 +356,7 @@ $(function() {
     });
 
     socket.on("update", function (snapshot) {
+        console.log(snapshot);
         game.update(snapshot);
     });
 });

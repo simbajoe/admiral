@@ -13,7 +13,7 @@ var Cells = module.exports = function() {
 };
 
 Cells.prototype.get = function(location) {
-    if (this.cells[location[0]] === undefined
+    if (!location || this.cells[location[0]] === undefined
         || this.cells[location[0]][location[1]] === undefined) {
         return null;
     }
