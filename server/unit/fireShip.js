@@ -46,6 +46,8 @@ FireShip.prototype.setWhereAttack = function() {
 };
 
 FireShip.prototype.endTurn = function() {
+    this.wasInBattle = false;
+    this.previousLocation = null;
     this.unitIdsWereNear =[];
     this.setWhereAttack();
     for (var i in this.whereCouldAttack) {
