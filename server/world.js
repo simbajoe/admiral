@@ -118,6 +118,7 @@ World.prototype.moveUnit = function(player, command) {
         || !toCell) {
         return false;
     }
+    this.getEnemy(player).clearPreviousLocation();
     fromCell.getObject().move(toCell);
     if (this.getPlayerById(this.currentPlayerId).canAttack()) {
         this.setPhase(Config.ATTACK_PHASE);

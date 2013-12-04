@@ -119,6 +119,9 @@ Unit.prototype.harm = function(offender) { //all special units don't run this fu
 
 Unit.prototype.endTurn = function() {
     this.wasInBattle = false;
+};
+
+Unit.prototype.clearPreviousLocation = function() {
     this.previousLocation = null;
 };
 

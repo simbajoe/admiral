@@ -55,6 +55,12 @@ Player.prototype.endTurn = function() {
     }
 };
 
+Player.prototype.clearPreviousLocation = function() {
+    for (var i in this.units) {
+        this.units[i].clearPreviousLocation();
+    }
+};
+
 Player.prototype.canAttack = function() {
     for (var i in this.units) {
         this.units[i].setWhereAttack();
@@ -151,6 +157,7 @@ Player.prototype.updateUnitsAfterBattle = function() {
     var numOfMovableUnits = 0;
     i = this.units.length;
     while (i--) {
+        this.units[i].clearPreviousLocation();
         if (!this.units[i].isAlive) {
             this.units[i].destroy();
             continue;

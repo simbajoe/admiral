@@ -14,6 +14,3 @@ Bugs
   try attack strong unit by week unit and lose
   on the next move phase strong unit will be with golden border
   because it was in the last battle, but it's not view results phase
-- previousLocation:
-  try to move and skip attack
-  moving steps should stay but it is wrong
