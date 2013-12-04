@@ -50,7 +50,7 @@ function updateGame() {
     }
     i = world.players.length;
     while (i--) {
-        var worldHash = world.getSnapshot(world.players[i]);
-        world.players[i].broadcast(worldHash);
+        var snapshot = world.getSnapshot(world.players[i]);
+        world.players[i].send(snapshot);
     }
 }

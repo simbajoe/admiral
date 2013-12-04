@@ -87,22 +87,22 @@ body {
     opacity: 0.3;
 }
 
-.field.enemy_hovered {
-    background: red;
-    opacity: 0.5;
-}
-
-.field.planning .field_holder {
+.field.planning .field_content {
     background-color: black;
     opacity: 0.3;
 }
 
 .field.could_attack .field_holder {
-    background: red;
+    background: #f00;
     opacity: 0.2;
 }
 
-.field.planning.place .field_holder, .field.planning.with_unit .field_holder {
+.field.hovered .field_holder {
+    background: #f00;
+    opacity: 0.2;
+}
+
+.field.planning.place .field_content, .field.planning.with_unit .field_content {
     background-color: transparent;
     opacity: 1;
 }
@@ -172,6 +172,43 @@ body {
 
 .field.with_unit.in_battle .unit {
     opacity: 1;
+}
+
+.arrow {
+    background-size: 20px;
+    width: 20px;
+    height: 20px;
+    display: none;
+    position: absolute;
+    z-index: 100;
+}
+
+.arrow.visible {
+    display: block;
+}
+
+.arrow_left {
+    background-image: url('/static/img/arrow_left.png');
+    left: -11px;
+    top: 18px;
+}
+
+.arrow_right {
+    background-image: url('/static/img/arrow_right.png');
+    right: -12px;
+    top: 18px;
+}
+
+.arrow_up {
+    background-image: url('/static/img/arrow_up.png');
+    top: -12px;
+    left: 18px
+}
+
+.arrow_down {
+    background-image: url('/static/img/arrow_down.png');
+    bottom: -13px;
+    left: 18px
 }
 
 .aircraftCarrier {

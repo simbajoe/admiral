@@ -17,6 +17,18 @@ $(function() {
                 'class': 'field_content'
             }).appendTo(field);
             $('<div/>', {
+                'class': 'arrow arrow_left'
+            }).appendTo(field);
+            $('<div/>', {
+                'class': 'arrow arrow_right'
+            }).appendTo(field);
+            $('<div/>', {
+                'class': 'arrow arrow_up'
+            }).appendTo(field);
+            $('<div/>', {
+                'class': 'arrow arrow_down'
+            }).appendTo(field);
+            $('<div/>', {
                 'class': 'field_holder'
             }).appendTo(field);
         }
@@ -31,6 +43,7 @@ $(function() {
 
         this.unit_to_place = null;
         this.auto_planning = null;
+        this.hovers = {};
     };
 
     Game.prototype.send = function (t, params) {
@@ -47,23 +60,33 @@ $(function() {
     };
 
     Game.prototype.update = function (snapshot) {
+        if (snapshot.type && snapshot.type == 'hover') {
+            var field = snapshot.field;
+            this.hovers[snapshot.player_id] = field;
+            $('.field[data-x="' + field[0] + '"][data-y="' + field[1] + '"]').addClass('hovered');
+            return;
+        }
         $('.field_content').html('').removeClass().addClass('field_content');
         $('.field').removeClass().addClass('field').unbind('click').removeClass('border')
                 .removeData('from').removeData('whereCouldAttack').removeData('whereCanMove')
                 .removeData('unit');
+        for (var player_id in this.hovers) {
+            var field = this.hovers[player_id];
+            $('.field[data-x="' + field[0] + '"][data-y="' + field[1] + '"]').addClass('hovered');
+        }
         $('body').unbind('keypress');
         $('.hud').html('');
+        $('.arrow').removeClass('visible');
         this.id = snapshot.myId;
         this.player = snapshot.players[this.id];
         this.phase = snapshot.world.phase;
         for (var i in snapshot.players) {
             var player = snapshot.players[i];
-            if (player.id != this.id && player.lastHoverLocation) {
-                $('.field[data-x="' + player.lastHoverLocation[0] + '"][data-y="' + player.lastHoverLocation[1] + '"]')
-                    .addClass('enemy_hovered');
-            }
             for (var v in snapshot.players[i].units) {
                 var unit = snapshot.players[i].units[v];
+                if (unit.previousLocation) {
+                    this.addArrow(unit.previousLocation, unit.location);
+                }
                 $('.field[data-x="' + unit.location[0] + '"][data-y="' + unit.location[1] + '"]')
                     .addClass(unit.isAlive ? 'alive' : 'dead')
                     .addClass(unit.wasInBattle ? 'in_battle border' : 'not_in_battle')
@@ -75,6 +98,36 @@ $(function() {
             }
         }
         this[this.phase](snapshot);
+    };
+
+    Game.prototype.addArrow = function (from, to) {
+        var dx = to[0] - from[0];
+        if (dx) {
+            dx /= Math.abs(dx);
+        }
+        var dy = to[1] - from[1];
+        if (dy) {
+            dy /= Math.abs(dy);
+        }
+        while (from[0] != to[0] || from[1] != to[1]) {
+            var el = null;
+            if (dx) {
+                if (dx > 0) {
+                    el = $('.field[data-x="' + from[0] + '"][data-y="' + from[1] + '"] .arrow_right');
+                } else {
+                    el = $('.field[data-x="' + from[0] + '"][data-y="' + from[1] + '"] .arrow_left');
+                }
+            } else if (dy) {
+                if (dy > 0) {
+                    el = $('.field[data-x="' + from[0] + '"][data-y="' + from[1] + '"] .arrow_down');
+                } else {
+                    el = $('.field[data-x="' + from[0] + '"][data-y="' + from[1] + '"] .arrow_up');
+                }
+            }
+            el.addClass('visible');
+            from[0] += dx;
+            from[1] += dy;
+        }
     };
 
     Game.prototype.hasUnitHere = function (x, y) {
@@ -296,9 +349,9 @@ $(function() {
     var socket = io.connect(":" + LocalConfig.port);
     var game = new Game(socket);
 
-    $(".field").hover(function() {
-        game.send('notifyHover', {target: [$(this).data('x'), $(this).data('y')]});
-    });
+    /*$(".field").hover(function() {*/
+    /*game.send('notifyHover', {target: [$(this).data('x'), $(this).data('y')]});*/
+    /*});*/
 
     socket.on("update", function (snapshot) {
         //console.log(snapshot);

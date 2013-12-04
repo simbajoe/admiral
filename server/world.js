@@ -72,8 +72,6 @@ World.prototype.exportToSnapshot = function(player) {
 
 World.prototype.setPhase = function (phase) {
     this.phase = phase;
-    if (phase == Config.MOVE_PHASE) {
-    }
 };
 
 World.prototype.addUnit = function(owner, command) {
@@ -119,6 +117,13 @@ World.prototype.moveUnit = function(player, command) {
         || fromCell.getObject().owner.id != player.id
         || !toCell) {
         return false;
+    }
+    if (this.phase == Config.MOVE_PHASE) {
+        for (var p in this.players) {
+            for (var u in this.players[p].units) {
+                this.players[p].units[u].previousLocation = null;
+            }
+        }
     }
     fromCell.getObject().move(toCell);
     if (this.getPlayerById(this.currentPlayerId).canAttack()) {
@@ -250,7 +255,11 @@ World.prototype.skipTurn = function(player, command) {
 };
 
 World.prototype.notifyHover = function(player, command) {
-    player.setHoverLocation(command.params.target);
+    for (var i in this.players) {
+        if (this.players[i].id != player.id) {
+            this.players[i].send({type: 'hover', player_id: player.id, field: command.params.target});
+        }
+    }
     return true;
 };
 

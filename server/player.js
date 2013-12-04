@@ -46,7 +46,6 @@ var Player = module.exports = function(id, homeland, world) {
     this.world = world;
     this.allUnitsPlaced = false;
     this.lost = false;
-    this.lastHoverLocation = null;
     this.unitsToPlace = Utils.cloneOneStoryHash(Config.unitsToPlace);
 };
 
@@ -57,11 +56,6 @@ Player.prototype.endTurn = function() {
         }
     }
 };
-
-Player.prototype.setHoverLocation = function(point) {
-    this.lastHoverLocation = point;
-};
-
 
 Player.prototype.canAttack = function() {
     for (var i in this.units) {
@@ -77,7 +71,6 @@ Player.prototype.exportToSnapshot = function(forPlayer, phase, gameOver) {
     var result = {
         id: this.id,
         homelandLocation: this.homelandLocation,
-        lastHoverLocation: this.lastHoverLocation,
         units: []
     };
     if (forPlayer.id == this.id
@@ -111,7 +104,7 @@ Player.prototype.exportToSnapshot = function(forPlayer, phase, gameOver) {
     return result;
 };
 
-Player.prototype.broadcast = function(hash) {
+Player.prototype.send = function(hash) {
     if (this.socket) {
         this.socket.emit("update", hash);
     }
