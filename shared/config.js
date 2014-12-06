@@ -19,7 +19,7 @@
         cruiser: 6, //kr
         fireShip: 1, //special attack&harm
         airplane: 1, //C; special attack&harm
-        MNB: 2, //vmb; special attack&harm
+        MNB: 2, //vmb; special attack&harm (main naval base)
         atomicBomb: 1, //ab; special attack&harm
         raider: 2, //p
         mine: 6, //m; special attack&harm
